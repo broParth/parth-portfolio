@@ -4,7 +4,7 @@
 - **Phase:** Phase 1 — Project Foundation & Architecture Planning (COMPLETE)
 - **Last Updated:** 2026-09-28
 - **Git Commit:** `be125de` (`chore: initialize portfolio foundation`)
-- **Build Status:** Verified (`npm run build` completed with 0 errors across all 8 routes)
+- **Build Status:** Verified (`npm run build` completed with 0 errors across 7 route placeholders)
 
 ---
 
@@ -16,7 +16,7 @@
   - [`PROJECT_SPEC.md`](file:///d:/Documents/PARTH/PortfolioWebsite/portfolio/docs/PROJECT_SPEC.md) — Vision, Chimes inspiration boundary, design rules, strict carousel scope, multi-page structure.
   - [`DECISIONS.md`](file:///d:/Documents/PARTH/PortfolioWebsite/portfolio/docs/DECISIONS.md) — ADR 001 to ADR 005.
   - [`CURRENT_STATE.md`](file:///d:/Documents/PARTH/PortfolioWebsite/portfolio/docs/CURRENT_STATE.md) — Live phase and verification status.
-  - [`AI_HANDOFF.md`](file:///d:/Documents/PARTH/PortfolioWebsite/portfolio/docs/AI_HANDOFF.md) — Cross-agent instructions.
+  - `AI_HANDOFF.md` — Local cross-agent handoff file (untracked in git).
 - [x] AI agent guidelines created:
   - [`AGENTS.md`](file:///d:/Documents/PARTH/PortfolioWebsite/portfolio/AGENTS.md)
   - [`CLAUDE.md`](file:///d:/Documents/PARTH/PortfolioWebsite/portfolio/CLAUDE.md)
@@ -54,4 +54,4 @@
 ---
 
 ## 5. Verification Log
-- `npm run build`: **SUCCESS** (8 static & dynamic routes compiled in 2.1s with zero errors).
+- `npm run build`: **SUCCESS** (7 route placeholders compiled in 2.1s with zero errors).
