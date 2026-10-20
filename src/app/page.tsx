@@ -39,6 +39,28 @@ export default function Home() {
           />
 
           {/* ─────────────────────────────────────────────────────────────
+           * FLUORESCENT CEILING-LIGHT FLICKER
+           * Overlay positioned over the tube fixture (upper-center of image).
+           * mix-blend-mode: screen ensures it only adds light, never darkens.
+           * Elliptical radial gradient mimics the tube's soft ambient spill.
+           * ───────────────────────────────────────────────────────────── */}
+          <div
+            aria-hidden="true"
+            className="absolute pointer-events-none animate-fluoro-flicker"
+            style={{
+              /* Tube fixture sits at roughly x:30%–58%, y:16%–26% of the canvas */
+              left: "28%",
+              top: "12%",
+              width: "32%",
+              height: "22%",
+              background:
+                "radial-gradient(ellipse 70% 55% at 50% 40%, rgba(210,225,245,0.38) 0%, rgba(195,215,240,0.12) 55%, transparent 100%)",
+              mixBlendMode: "screen",
+              filter: "blur(8px)",
+            }}
+          />
+
+          {/* ─────────────────────────────────────────────────────────────
            * 2. INTERACTIVE CRT TERMINAL OVERLAY
            * Precisely aligned with the inner curved CRT glass in archive-room.png
            * Coordinates: x ≈ 72.4% -> 86.8%, y ≈ 43.5% -> 64.7%

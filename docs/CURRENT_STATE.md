@@ -1,9 +1,9 @@
 # CURRENT STATE (CURRENT_STATE.md)
 
 ## Current Status Overview
-- **Phase:** Phase 3A — CRT Screen Alignment, Glass Integration & Typography Color Polish (APPROVED & COMMITTED)
+- **Phase:** Phase 3B.1 — Subtle Environmental Fluorescent Light Flicker (COMPLETE, AWAITING VISUAL REVIEW)
 - **Last Updated:** 2026-10-20
-- **Git Commit:** `34d5490` (`feat: refine CRT terminal overlay`)
+- **Git Commit:** `34d5490` (`feat: refine CRT terminal overlay`) — Phase 3B.1 changes not yet committed
 - **Build Status:** Verified (`npm run build` completed with 0 errors across 9 routes)
 
 ---
@@ -44,10 +44,24 @@
   - On mobile, identity text sits cleanly in the upper third while the glowing CRT monitor is unobstructed in the lower half.
 - [x] **Visual Review & Approval**: Visually reviewed and explicitly approved by the user.
 
+### Phase 3B.1 — Subtle Environmental Fluorescent Light Flicker
+- [x] **CSS Keyframe Animation** (`@keyframes fluoro-flicker` in `globals.css`):
+  - 14-second cycle with long stable baseline periods (~8%, 10–34%, 35–62%, 68–88%, 90–100%).
+  - Occasional clustered brief blinks (8.5–9.8%, 34.3–34.6%, 88.4–89.5%) for realism.
+  - Single slow sag-and-recovery segment (65–67%).
+  - `prefers-reduced-motion` disables animation and fixes a neutral opacity.
+- [x] **Screen-Blend Overlay Element** (`page.tsx`):
+  - Absolutely positioned `<div>` at `left: 28%, top: 12%, width: 32%, height: 22%` — matching the fluorescent tube fixture location in `archive-room.png`.
+  - `background: radial-gradient(ellipse)` in a cool blue-white (`rgba(210,225,245,...)`) mimics tube spill.
+  - `mix-blend-mode: screen` — only adds brightness, never darkens the underlying artwork.
+  - `filter: blur(8px)` softens the overlay into a natural ambient glow.
+  - `aria-hidden="true"` and `pointer-events-none` — purely decorative, invisible to AT.
+- [x] **Build verified**: `npm run build` exits 0, all 9 routes clean.
+
 ---
 
 ## 2. Current Work
-- Phase 3A visually approved. Creating local commit `feat: refine CRT terminal overlay`.
+- Phase 3B.1 implemented. Awaiting visual approval before committing.
 
 ---
 
@@ -56,9 +70,9 @@
 
 ---
 
-## 4. Next Recommended Phase (Phase 3B / Phase 4)
-- **Target:** Subtle environmental animations (fluorescent light flicker, water droplets, dust) or beginning portfolio content routes (`/projects`, `/about`, etc.).
-- **Wait for user explicit prompt before starting.**
+## 4. Next Recommended Phase (Phase 3B.2 / Phase 4)
+- **Phase 3B.2 options**: Atmospheric water-drip sound, dust particle overlay, or beginning portfolio content routes (`/projects`, `/about`, etc.).
+- **Wait for user explicit approval of Phase 3B.1 before starting.**
 
 ---
 
