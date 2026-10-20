@@ -45,3 +45,8 @@ next-env.d.ts
 # local AI handoff
 docs/AI_HANDOFF.md
 
+# local AI coding instructions
+/AGENTS.md
+/CLAUDE.md
+/GEMINI.md
+/.github/copilot-instructions.md
