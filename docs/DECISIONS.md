@@ -40,3 +40,10 @@ This log records major design, technical, and architectural decisions. Decisions
 - **Context:** Development may be performed across different AI sessions and agents.
 - **Decision:** Establish `/docs/` and root agent instruction files (`AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, `copilot-instructions.md`) as the canonical repository truth.
 - **Consequences:** Every agent turn updates `CURRENT_STATE.md` and `AI_HANDOFF.md`.
+
+### ADR-006: Homepage Pivot — Abandoned Archive Environment & Interactive CRT Computer
+- **Date:** 2026-10-20
+- **Status:** Approved
+- **Context:** The typography-curtain reveal experiment was cancelled in favor of an atmospheric, physical digital environment with immediate narrative impact.
+- **Decision:** Pivot the homepage to use the approved full-screen artwork `public/images/archive-room.png`. Overlay real, accessible HTML elements: left-side editorial identity (`PARTH`, `COMPUTER SCIENCE`, `AI • SOFTWARE • SECURITY`) and an interactive phosphor-green CRT terminal (`SYSTEM ERROR / PARTH_ARCHIVE // 01 / [ CLICK ME ]`) on the vintage monitor in the lower-right desk. Clicking the CRT navigates directly to the portfolio interface (`/projects`).
+- **Consequences:** Removed the previous 400vh scroll canvas, sticky curtain stage, and typography reveal from the homepage. The components `LetterCurtain`, `RevealSection`, `HeroEnvironment`, and `ArchiveEnvironment` are preserved in the codebase but unused on the new homepage. Layout is responsive across desktop and portrait mobile viewports.
