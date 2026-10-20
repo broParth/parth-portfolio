@@ -1,10 +1,10 @@
 # CURRENT STATE (CURRENT_STATE.md)
 
 ## Current Status Overview
-- **Phase:** Phase 3B.1 — Subtle Environmental Fluorescent Light Flicker (COMPLETE, AWAITING VISUAL REVIEW)
+- **Phase:** Phase 3B.2 — Continuous Environmental Water Dripping (COMPLETE, AWAITING VISUAL REVIEW)
 - **Last Updated:** 2026-10-20
-- **Git Commit:** `34d5490` (`feat: refine CRT terminal overlay`) — Phase 3B.1 changes not yet committed
-- **Build Status:** Verified (`npm run build` completed with 0 errors across 9 routes)
+- **Git Commit:** `ca92d9b` (`feat: add subtle fluorescent light flicker`) — Phase 3B.2 not yet committed
+- **Build Status:** Verified (`npm run build` exit 0, all 9 routes, 0 TS errors)
 
 ---
 
@@ -58,10 +58,28 @@
   - `aria-hidden="true"` and `pointer-events-none` — purely decorative, invisible to AT.
 - [x] **Build verified**: `npm run build` exits 0, all 9 routes clean.
 
+### Phase 3B.2 — Continuous Environmental Water Dripping
+- [x] **New component** [`src/components/WaterDrip.tsx`](file:///d:/Documents/PARTH/PortfolioWebsite/portfolio/src/components/WaterDrip.tsx):
+  - Two drip streams anchored to the existing ceiling-leak area in `archive-room.png` (`x ≈ 56–59%, y ≈ 1–2%`).
+  - Each stream renders 3 staggered drop elements + 1 trail element.
+  - Drop timing: stream A base 4.8s (delays 0 / 1.7 / 3.3s), stream B base 5.4s (delays 0.9 / 2.6 / 4.1s) — never synchronized.
+  - Teardrop shape via `border-radius`, cool-blue radial gradient, subtle `box-shadow` glow.
+  - Thin wet trail (thin linear gradient, `scaleY` animation, `transform-origin: top`).
+  - All animations: `infinite linear` — continuous without page interaction.
+  - `aria-hidden="true"`, `pointer-events-none` throughout.
+  - `z-index: 10` — above background + fluorescent overlay, below CRT (`z-20`).
+- [x] **CSS keyframes** in `globals.css`:
+  - `droplet-fall`: opacity arc (form → fall → impact fade), `translateY(0→114%)`.
+  - `drip-trail`: `scaleY(0→0.9)` from `transform-origin: top`, fades throughout.
+  - `prefers-reduced-motion`: hides all `[class*="droplet-"]` and `[class*="drip-trail-"]` via `opacity: 0 !important`.
+- [x] **`WaterDrip` imported into `page.tsx`**, inserted between the fluorescent light overlay and the CRT terminal overlay.
+- [x] **Build verified**: `npm run build` exit 0, 9/9 routes, 0 TypeScript errors.
+- [x] **Browser verified**: Droplets visible in correct zone over multiple animation cycles. CRT interaction intact. No console errors.
+
 ---
 
 ## 2. Current Work
-- Phase 3B.1 implemented. Awaiting visual approval before committing.
+- Phase 3B.2 implemented. Awaiting visual approval before committing.
 
 ---
 

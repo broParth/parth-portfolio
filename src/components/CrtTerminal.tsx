@@ -1,19 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useEffect } from "react";
 
 export default function CrtTerminal() {
-  const [cursorVisible, setCursorVisible] = useState(true);
-
-  // Hydration-safe subtle blinking cursor
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCursorVisible((prev) => !prev);
-    }, 530);
-    return () => clearInterval(timer);
-  }, []);
-
   return (
     <Link
       href="/projects"
@@ -31,7 +20,7 @@ export default function CrtTerminal() {
        * The HTML layer renders purely as green phosphor text glowing directly on the glass.
        */}
       <div className="relative w-full h-full flex flex-col justify-between items-center text-center font-mono py-[14%] px-[8%] text-[#4af626] leading-none animate-crt-flicker">
-        
+
         {/* Top Diagnostic Header */}
         <div className="space-y-[3%] drop-shadow-[0_0_5px_rgba(74,246,38,0.7)] group-hover:drop-shadow-[0_0_9px_rgba(74,246,38,1)] transition-all duration-300">
           <div className="flex items-center justify-center gap-[3.5%] text-[8.5cqw] font-bold tracking-widest uppercase text-[#4af626]">
@@ -51,12 +40,7 @@ export default function CrtTerminal() {
         {/* Bottom Interactive Action Prompt with Blinking Cursor */}
         <div className="flex flex-col items-center gap-[2.5%] drop-shadow-[0_0_6px_rgba(74,246,38,0.75)] group-hover:drop-shadow-[0_0_12px_rgba(74,246,38,1)] transition-all duration-300">
           <div className="flex items-center justify-center gap-[1.5%] text-[9cqw] font-bold tracking-widest uppercase text-[#4af626] group-hover:text-[#88ff6a] transition-colors duration-200">
-            <span>[ CLICK ME ]</span>
-            <span
-              className={`inline-block w-[1.5cqw] h-[4cqw] bg-[#4af626] transition-opacity duration-100 ${
-                cursorVisible ? "opacity-100" : "opacity-0"
-              }`}
-            />
+            <span className="whitespace-nowrap crt-click-prompt">[ CLICK ME ]</span>
           </div>
           <span className="text-[4.5cqw] tracking-widest text-[#4af626]/50 uppercase">
             INITIALIZE DIRECTORY

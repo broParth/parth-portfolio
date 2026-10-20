@@ -25,7 +25,8 @@
   --font-mono: var(--font-mono);
 }
 
-html, body {
+html,
+body {
   background-color: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), sans-serif;
@@ -64,13 +65,16 @@ html, body {
 ::-webkit-scrollbar {
   width: 6px;
 }
+
 ::-webkit-scrollbar-track {
   background: var(--background);
 }
+
 ::-webkit-scrollbar-thumb {
   background: var(--muted-dim);
   border-radius: 3px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: var(--accent);
 }
@@ -91,12 +95,31 @@ html, body {
 
 /* Subtle CRT Phosphor Glow / Flicker Animation */
 @keyframes crt-phosphor-flicker {
-  0%, 100% { opacity: 0.98; }
-  22% { opacity: 0.95; }
-  35% { opacity: 1; }
-  58% { opacity: 0.96; }
-  73% { opacity: 0.99; }
-  87% { opacity: 0.94; }
+
+  0%,
+  100% {
+    opacity: 0.98;
+  }
+
+  22% {
+    opacity: 0.95;
+  }
+
+  35% {
+    opacity: 1;
+  }
+
+  58% {
+    opacity: 0.96;
+  }
+
+  73% {
+    opacity: 0.99;
+  }
+
+  87% {
+    opacity: 0.94;
+  }
 }
 
 .animate-crt-flicker {
@@ -117,32 +140,88 @@ html, body {
  * Uses mix-blend-mode: screen so it only brightens the light area.
  * ───────────────────────────────────────────────────────────── */
 @keyframes fluoro-flicker {
+
   /*  Long stable baseline  */
-  0%,   8%  { opacity: 0.55; }
+  0%,
+  8% {
+    opacity: 0.55;
+  }
+
   /*  Sudden brief dip  */
-  8.5%       { opacity: 0.20; }
-  9%         { opacity: 0.52; }
-  9.4%       { opacity: 0.10; }
-  9.8%       { opacity: 0.55; }
+  8.5% {
+    opacity: 0.20;
+  }
+
+  9% {
+    opacity: 0.52;
+  }
+
+  9.4% {
+    opacity: 0.10;
+  }
+
+  9.8% {
+    opacity: 0.55;
+  }
+
   /*  Quiet period  */
-  10%, 34%  { opacity: 0.55; }
+  10%,
+  34% {
+    opacity: 0.55;
+  }
+
   /*  Single quick blink  */
-  34.3%      { opacity: 0.15; }
-  34.6%      { opacity: 0.55; }
+  34.3% {
+    opacity: 0.15;
+  }
+
+  34.6% {
+    opacity: 0.55;
+  }
+
   /*  Long quiet period  */
-  35%, 62%  { opacity: 0.55; }
+  35%,
+  62% {
+    opacity: 0.55;
+  }
+
   /*  Slow sag then recovery  */
-  65%        { opacity: 0.38; }
-  67%        { opacity: 0.55; }
+  65% {
+    opacity: 0.38;
+  }
+
+  67% {
+    opacity: 0.55;
+  }
+
   /*  Quiet period  */
-  68%, 88%  { opacity: 0.55; }
+  68%,
+  88% {
+    opacity: 0.55;
+  }
+
   /*  Rapid double-blink near end  */
-  88.4%      { opacity: 0.08; }
-  88.7%      { opacity: 0.55; }
-  89.1%      { opacity: 0.22; }
-  89.5%      { opacity: 0.55; }
+  88.4% {
+    opacity: 0.08;
+  }
+
+  88.7% {
+    opacity: 0.55;
+  }
+
+  89.1% {
+    opacity: 0.22;
+  }
+
+  89.5% {
+    opacity: 0.55;
+  }
+
   /*  Back to stable  */
-  90%, 100% { opacity: 0.55; }
+  90%,
+  100% {
+    opacity: 0.55;
+  }
 }
 
 .animate-fluoro-flicker {
@@ -153,5 +232,130 @@ html, body {
   .animate-fluoro-flicker {
     animation: none;
     opacity: 0.42;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+ * Water Drip Effect — Phase 3B.2
+ * Individual droplets fall from ceiling leak points and fade out.
+ * Two keyframes:
+ *   droplet-fall  — the falling bead itself
+ *   drip-trail    — the thin wet streak left on the surface above
+ * Both are used with staggered delays for irregular natural timing.
+ * ───────────────────────────────────────────────────────────── */
+
+/* Individual falling droplet */
+@keyframes droplet-fall {
+
+  /* Held at origin, barely visible — waiting between drips */
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+
+  /* Droplet forms and becomes visible */
+  3% {
+    transform: translateY(0);
+    opacity: 0.55;
+  }
+
+  /* Falls naturally under gravity */
+  18% {
+    transform: translateY(35%);
+    opacity: 0.65;
+  }
+
+  45% {
+    transform: translateY(72%);
+    opacity: 0.60;
+  }
+
+  70% {
+    transform: translateY(100%);
+    opacity: 0.45;
+  }
+
+  /* Impact zone — fades and splashes out */
+  85% {
+    transform: translateY(110%);
+    opacity: 0.15;
+  }
+
+  100% {
+    transform: translateY(114%);
+    opacity: 0;
+  }
+}
+
+/* Thin trailing wet streak from drip source */
+@keyframes drip-trail {
+  0% {
+    transform: scaleY(0);
+    opacity: 0;
+    transform-origin: top;
+  }
+
+  5% {
+    transform: scaleY(0.1);
+    opacity: 0.25;
+    transform-origin: top;
+  }
+
+  40% {
+    transform: scaleY(0.6);
+    opacity: 0.20;
+    transform-origin: top;
+  }
+
+  75% {
+    transform: scaleY(0.85);
+    opacity: 0.12;
+    transform-origin: top;
+  }
+
+  90% {
+    transform: scaleY(0.9);
+    opacity: 0.06;
+    transform-origin: top;
+  }
+
+  100% {
+    transform: scaleY(0.9);
+    opacity: 0;
+    transform-origin: top;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  [class*="droplet-"],
+  [class*="drip-trail-"] {
+    animation: none !important;
+    opacity: 0 !important;
+  }
+}
+
+
+
+@keyframes crt-click-flicker {
+
+  0%,
+  48% {
+    opacity: 1;
+  }
+
+  49%,
+  100% {
+    opacity: 0.2;
+  }
+}
+
+.crt-click-prompt {
+  animation: crt-click-flicker 500ms steps(1, end) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .crt-click-prompt {
+    animation: none;
   }
 }

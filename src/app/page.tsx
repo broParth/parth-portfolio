@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import CrtTerminal from "@/components/CrtTerminal";
+import WaterDrip from "@/components/WaterDrip";
 
 export default function Home() {
   return (
@@ -61,7 +62,15 @@ export default function Home() {
           />
 
           {/* ─────────────────────────────────────────────────────────────
-           * 2. INTERACTIVE CRT TERMINAL OVERLAY
+           * 2. WATER DRIP STREAMS (Phase 3B.2)
+           * Two staggered drip streams anchored to the existing ceiling
+           * leak area visible in archive-room.png (~x:56–59%, y:1–2%).
+           * z-index 10: above background & fluorescent overlay, below CRT.
+           * ───────────────────────────────────────────────────────────── */}
+          <WaterDrip />
+
+          {/* ─────────────────────────────────────────────────────────────
+           * 3. INTERACTIVE CRT TERMINAL OVERLAY
            * Precisely aligned with the inner curved CRT glass in archive-room.png
            * Coordinates: x ≈ 72.4% -> 86.8%, y ≈ 43.5% -> 64.7%
            * ───────────────────────────────────────────────────────────── */}
