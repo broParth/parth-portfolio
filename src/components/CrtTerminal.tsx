@@ -5,9 +5,10 @@ import Link from "next/link";
 export default function CrtTerminal() {
   return (
     <Link
-      href="/projects"
+      href="/portfolio#about"
       role="button"
-      aria-label="Enter Parth Archive — System Error detected. Click to initialize project directory."
+      prefetch={true}
+      aria-label="Enter Parth Archive — Navigate to the portfolio journey, starting with About Me."
       className="group relative block w-full h-full select-none cursor-pointer bg-transparent
                  focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#4af626]/70 focus-visible:ring-offset-1 focus-visible:ring-offset-black/50 rounded-[12%_/_14%]"
       style={{

@@ -51,7 +51,7 @@ export default function NavOverlay({ isOpen, onClose }: NavOverlayProps) {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
+          exit={{ opacity: 0, transition: { duration: 0.2, ease: "easeOut" } }}
           transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
           className="fixed inset-0 z-40 bg-[#0c0b0a]/95 backdrop-blur-xl flex flex-col justify-between p-8 md:p-16 lg:p-24 overflow-y-auto"
         >
@@ -75,7 +75,11 @@ export default function NavOverlay({ isOpen, onClose }: NavOverlayProps) {
                   key={item.href}
                   initial={{ opacity: 0, x: -30 }}
                   animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
+                  exit={{
+                    opacity: 0,
+                    x: -12,
+                    transition: { duration: 0.15, ease: "easeOut" },
+                  }}
                   transition={{
                     duration: 0.4,
                     delay: index * 0.06,

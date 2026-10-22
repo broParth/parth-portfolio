@@ -1,10 +1,10 @@
 # CURRENT STATE (CURRENT_STATE.md)
 
 ## Current Status Overview
-- **Phase:** Phase 3B.2 — Continuous Environmental Water Dripping (COMPLETE, AWAITING VISUAL REVIEW)
-- **Last Updated:** 2026-10-20
-- **Git Commit:** `ca92d9b` (`feat: add subtle fluorescent light flicker`) — Phase 3B.2 not yet committed
-- **Build Status:** Verified (`npm run build` exit 0, all 9 routes, 0 TS errors)
+- **Phase:** Phase 3C — Navigation Architecture Correction (COMPLETE, AWAITING VISUAL REVIEW)
+- **Last Updated:** 2026-10-22
+- **Git Commit:** `1d48e8c` (base) — Phase 3C changes not yet committed
+- **Build Status:** Verified (`npm run build` exit 0, all 10 routes, 0 TS errors)
 
 ---
 
@@ -58,28 +58,59 @@
   - `aria-hidden="true"` and `pointer-events-none` — purely decorative, invisible to AT.
 - [x] **Build verified**: `npm run build` exits 0, all 9 routes clean.
 
-### Phase 3B.2 — Continuous Environmental Water Dripping
-- [x] **New component** [`src/components/WaterDrip.tsx`](file:///d:/Documents/PARTH/PortfolioWebsite/portfolio/src/components/WaterDrip.tsx):
-  - Two drip streams anchored to the existing ceiling-leak area in `archive-room.png` (`x ≈ 56–59%, y ≈ 1–2%`).
-  - Each stream renders 3 staggered drop elements + 1 trail element.
-  - Drop timing: stream A base 4.8s (delays 0 / 1.7 / 3.3s), stream B base 5.4s (delays 0.9 / 2.6 / 4.1s) — never synchronized.
-  - Teardrop shape via `border-radius`, cool-blue radial gradient, subtle `box-shadow` glow.
-  - Thin wet trail (thin linear gradient, `scaleY` animation, `transform-origin: top`).
-  - All animations: `infinite linear` — continuous without page interaction.
-  - `aria-hidden="true"`, `pointer-events-none` throughout.
-  - `z-index: 10` — above background + fluorescent overlay, below CRT (`z-20`).
-- [x] **CSS keyframes** in `globals.css`:
-  - `droplet-fall`: opacity arc (form → fall → impact fade), `translateY(0→114%)`.
-  - `drip-trail`: `scaleY(0→0.9)` from `transform-origin: top`, fades throughout.
-  - `prefers-reduced-motion`: hides all `[class*="droplet-"]` and `[class*="drip-trail-"]` via `opacity: 0 !important`.
-- [x] **`WaterDrip` imported into `page.tsx`**, inserted between the fluorescent light overlay and the CRT terminal overlay.
-- [x] **Build verified**: `npm run build` exit 0, 9/9 routes, 0 TypeScript errors.
-- [x] **Browser verified**: Droplets visible in correct zone over multiple animation cycles. CRT interaction intact. No console errors.
+### Phase 3B.2 / Phase 3B.3 — Environmental Water Experiments (CANCELLED)
+- **Status**: Cancelled by user decision.
+- **Reason**: Video generation visual quality was insufficient, contained a watermark, and had a loop seam discontinuity; CSS water prototype lacked sufficient fidelity to justify overriding the approved artwork.
+- **Action Taken**:
+  - Fully rolled back to approved static background `public/images/archive-room.png`.
+  - Removed `<video>` background rendering element from `src/app/page.tsx`.
+  - Removed `WaterDrip` component from `src/app/page.tsx` and removed `src/components/WaterDrip.tsx`.
+  - Removed all water-specific keyframes, classes, and reduced-motion rules from `src/app/globals.css`.
+  - Removed unused public asset `public/videos/archive-room-water.mp4`.
+  - Preserved Phase 3B.1 fluorescent ceiling light flicker overlay (`.animate-fluoro-flicker` with `mix-blend-mode: screen`).
+  - Preserved Phase 3A CRT alignment, glowing phosphor green text, `.crt-click-prompt` 500ms flicker, and click interaction.
+  - Preserved all typography, navigation, and layout styling.
 
 ---
 
 ## 2. Current Work
-- Phase 3B.2 implemented. Awaiting visual approval before committing.
+
+### Phase 3C — Navigation Architecture Correction (COMPLETE)
+- [x] **Homepage (`/`) is a standalone full-screen, non-scrolling archive room.**
+  - `src/app/page.tsx` uses `<main class="h-screen overflow-hidden">` — visitor cannot scroll.
+  - Removed stale `WaterDrip` import (component deleted in Phase 3B.2 rollback).
+  - All approved visuals intact: archive-room.png, CRT overlay, fluorescent flicker, identity text.
+- [x] **New continuous portfolio journey at `/portfolio`.**
+  - `src/app/portfolio/page.tsx` — scrollable long-page with 5 semantic sections in order:
+    1. `id="about"` — About Me
+    2. `id="projects"` — Projects
+    3. `id="experience"` — Experience
+    4. `id="stack"` — Tech Stack *(carousel permitted here only)*
+    5. `id="contact"` — Contact
+- [x] **CRT `[ CLICK ME ]` destination updated to `/portfolio#about`.**
+  - `src/components/CrtTerminal.tsx` `href` changed from `/#about` → `/portfolio#about`.
+  - Aria-label updated to reflect new destination.
+- [x] **Individual standalone section routes — each shows only its own section:**
+  - `/about` — About Me section only (`h1`)
+  - `/projects` — Projects section only (`h1`)
+  - `/experience` — Experience section only (`h1`)
+  - `/stack` — Tech Stack section only (`h1`)
+  - `/contact` — Contact section only (`h1`)
+- [x] **Hamburger navigation (`NavOverlay.tsx`) unchanged** — already pointed to individual routes correctly.
+- [x] **Build verified:** `npm run build` exit 0, 10 routes, 0 TS errors.
+
+### Phase 3C.1 — Navigation Responsiveness Audit & Optimization (COMPLETE)
+- [x] **Dev vs. Production Mode Root-Cause Diagnosis**:
+  - In development mode (`next dev`), Next.js with Turbopack compiles each route on demand upon the first click (`/portfolio` took 4.9s, `/projects` took 1.2s on first hit). This on-demand compilation pause is expected in development mode and does not occur in production.
+  - In production mode (`next start`), all 10 routes are statically pre-rendered (`○ (Static)`), yielding instantaneous page transitions (0–10ms).
+- [x] **Menu Overlay Exit Delay Eliminated ([`NavOverlay.tsx`](file:///d:/Documents/PARTH/PortfolioWebsite/portfolio/src/components/NavOverlay.tsx))**:
+  - Previously, `exit={{ opacity: 0, x: -20 }}` shared the entrance transition with `delay: index * 0.06s`, causing the 6th item to take up to 700ms to exit while the full-screen backdrop remained mounted and masking the destination page.
+  - Preserved the staggered cinematic cascade on open (`duration: 0.4s`, `delay: index * 0.06s`).
+  - Added dedicated swift exit transitions: `0.15s` for menu items and `0.2s` for the backdrop overlay, revealing destination pages immediately.
+- [x] **Eager Route Prefetching ([`CrtTerminal.tsx`](file:///d:/Documents/PARTH/PortfolioWebsite/portfolio/src/components/CrtTerminal.tsx))**:
+  - Added `prefetch={true}` to the CRT `[ CLICK ME ]` `<Link>` component so the full route bundle for `/portfolio#about` is preloaded ahead of user interaction in production.
+- [x] **Verification**: Tested repeatedly across both development mode and production mode via automated browser sessions. All 6 navigation paths verified with zero errors.
+- **Status:** Complete. Awaiting user review. Not yet committed.
 
 ---
 
@@ -88,15 +119,21 @@
 
 ---
 
-## 4. Next Recommended Phase (Phase 3B.2 / Phase 4)
-- **Phase 3B.2 options**: Atmospheric water-drip sound, dust particle overlay, or beginning portfolio content routes (`/projects`, `/about`, etc.).
-- **Wait for user explicit approval of Phase 3B.1 before starting.**
+## 4. Next Recommended Phase (Phase 4 — Section Content)
+- User to visually verify the three-layer architecture:
+  1. `/` — standalone archive-room hero, non-scrolling
+  2. `/portfolio#about` — CRT click destination, continuous 5-section journey
+  3. `/about`, `/projects`, `/experience`, `/stack`, `/contact` — individual standalone pages via hamburger
+- Once approved, commit: `feat: separate homepage from continuous portfolio journey`
+- Then begin adding real content to each section (no placeholder/invented content).
+  - Carousels allowed ONLY on `#stack` (technologies & tools).
+  - Do NOT push to GitHub unless user explicitly instructs.
 
 ---
 
 ## 5. Verification Log
-- `npm run build`: **SUCCESS** (0 TypeScript/lint errors, all 9 routes compiled cleanly in 3.2s).
+- `npm run build`: **SUCCESS** (0 TypeScript/lint errors, all 10 routes compiled cleanly in 2.4s Turbopack).
 - **Console & Hydration Check**: 0 errors/warnings (`[HMR] connected`).
 - **Visual Desktop Verification**: Confirmed transparent CRT overlay with glowing phosphor text directly on glass; underlying glass cracks completely visible; sage-grey `#B8C6BE` accent typography applied.
-- **CRT Hover & Navigation**: Confirmed text glow intensifies on hover without card border; clicking CRT navigates to `/projects`.
+- **CRT Hover & Navigation**: Confirmed text glow intensifies on hover without card border; clicking CRT navigates to `/portfolio#about`.
 - **Mobile Verification**: Confirmed 375x812 layout with zero text overlap and unobstructed clickable CRT monitor.
