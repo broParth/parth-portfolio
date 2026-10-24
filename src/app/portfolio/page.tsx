@@ -1,4 +1,5 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
+import CrtScreenBackground from "@/components/CrtScreenBackground";
 
 export const metadata: Metadata = {
   title: "Portfolio | Parth",
@@ -38,6 +39,10 @@ function Placeholder({ note }: { note?: string }) {
 export default function PortfolioPage() {
   return (
     <div className="relative w-full bg-[#0c0b0a] select-none overflow-x-hidden">
+      {/* Vintage CRT Background Environment */}
+      <CrtScreenBackground />
+
+      <div className="relative z-10 w-full">
 
       {/* ─────────────────────────────────────────────────────────────
        * SECTION 1 — ABOUT ME
@@ -124,6 +129,7 @@ export default function PortfolioPage() {
         </div>
       </section>
 
+      </div>
     </div>
   );
 }

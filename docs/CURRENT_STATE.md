@@ -1,9 +1,9 @@
 # CURRENT STATE (CURRENT_STATE.md)
 
 ## Current Status Overview
-- **Phase:** Phase 3C — Navigation Architecture Correction (COMPLETE, AWAITING VISUAL REVIEW)
-- **Last Updated:** 2026-10-22
-- **Git Commit:** `1d48e8c` (base) — Phase 3C changes not yet committed
+- **Phase:** Phase 4 — CRT Background & Phosphor Burst Transition (PROTOTYPE COMPLETE, AWAITING VISUAL REVIEW)
+- **Last Updated:** 2026-10-24
+- **Git Commit:** `bf3eaa7` (base)
 - **Build Status:** Verified (`npm run build` exit 0, all 10 routes, 0 TS errors)
 
 ---
@@ -99,18 +99,26 @@
 - [x] **Hamburger navigation (`NavOverlay.tsx`) unchanged** — already pointed to individual routes correctly.
 - [x] **Build verified:** `npm run build` exit 0, 10 routes, 0 TS errors.
 
-### Phase 3C.1 — Navigation Responsiveness Audit & Optimization (COMPLETE)
-- [x] **Dev vs. Production Mode Root-Cause Diagnosis**:
-  - In development mode (`next dev`), Next.js with Turbopack compiles each route on demand upon the first click (`/portfolio` took 4.9s, `/projects` took 1.2s on first hit). This on-demand compilation pause is expected in development mode and does not occur in production.
-  - In production mode (`next start`), all 10 routes are statically pre-rendered (`○ (Static)`), yielding instantaneous page transitions (0–10ms).
-- [x] **Menu Overlay Exit Delay Eliminated ([`NavOverlay.tsx`](file:///d:/Documents/PARTH/PortfolioWebsite/portfolio/src/components/NavOverlay.tsx))**:
-  - Previously, `exit={{ opacity: 0, x: -20 }}` shared the entrance transition with `delay: index * 0.06s`, causing the 6th item to take up to 700ms to exit while the full-screen backdrop remained mounted and masking the destination page.
-  - Preserved the staggered cinematic cascade on open (`duration: 0.4s`, `delay: index * 0.06s`).
-  - Added dedicated swift exit transitions: `0.15s` for menu items and `0.2s` for the backdrop overlay, revealing destination pages immediately.
-- [x] **Eager Route Prefetching ([`CrtTerminal.tsx`](file:///d:/Documents/PARTH/PortfolioWebsite/portfolio/src/components/CrtTerminal.tsx))**:
-  - Added `prefetch={true}` to the CRT `[ CLICK ME ]` `<Link>` component so the full route bundle for `/portfolio#about` is preloaded ahead of user interaction in production.
-- [x] **Verification**: Tested repeatedly across both development mode and production mode via automated browser sessions. All 6 navigation paths verified with zero errors.
-- **Status:** Complete. Awaiting user review. Not yet committed.
+### Phase 4 — CRT Background & Phosphor Burst Transition (PROTOTYPE COMPLETE)
+- [x] **Static CRT Screen Background (`public/images/crt-screen-background.png`)**:
+  - Implemented reusable [`CrtScreenBackground.tsx`](file:///d:/Documents/PARTH/PortfolioWebsite/portfolio/src/components/CrtScreenBackground.tsx) component.
+  - Positioned as a fixed CSS background (`fixed inset-0 pointer-events-none z-0`) with `bg-cover bg-center` scaling.
+  - Styled with a restrained dark contrast overlay (`rgba(12,11,10,0.72)`) and radial bezel curvature vignette, ensuring section typography and navigation remain crisp and readable.
+  - Applied to `/portfolio` and all standalone section routes (`/about`, `/projects`, `/experience`, `/stack`, `/contact`).
+  - Homepage (`/`) remains strictly on the approved `archive-room.png` artwork.
+- [x] **Cinematic Phosphor Burst Transition (`PhosphorBurstTransition.tsx`)**:
+  - Choreographed 5-beat analog CRT transition sequence (~1.4s total):
+    - **Beat A — Activation (0–250ms)**: CRT monitor begins rapid subtle vibration, green phosphor text glow flares.
+    - **Beat B — Pressure Buildup (250–550ms)**: Screen vibration intensifies, horizontal cathode beam flare expands across CRT monitor, electrical instability raster lines surge.
+    - **Beat C — Phosphor Burst (550–950ms)**: Luminous emerald radial wave (`#4af626`, `#10b981`) erupts from exact CRT bounding box coordinates (`originX, originY`), accompanied by subtle digital fragments.
+    - **Beat D — Whiteout (950–1080ms)**: Emerald-white peak flash covers viewport; client-side route navigation to `/portfolio#about` triggers underneath.
+    - **Beat E — Reveal (1080–1450ms)**: Flash dissolves smoothly, revealing the digital portfolio with its CRT screen background.
+  - **Technical Constraints Respected**:
+    - Uses exact CRT bounding rectangle coordinates from `getBoundingClientRect()`.
+    - Double-click prevention active via `isTransitioning`.
+    - `prefers-reduced-motion` bypasses transition and navigates immediately.
+    - Zero additional dependencies (pure Next.js, Framer Motion, and Tailwind CSS).
+- **Status:** Complete. Awaiting visual review. Not yet committed.
 
 ---
 
@@ -119,21 +127,15 @@
 
 ---
 
-## 4. Next Recommended Phase (Phase 4 — Section Content)
-- User to visually verify the three-layer architecture:
-  1. `/` — standalone archive-room hero, non-scrolling
-  2. `/portfolio#about` — CRT click destination, continuous 5-section journey
-  3. `/about`, `/projects`, `/experience`, `/stack`, `/contact` — individual standalone pages via hamburger
-- Once approved, commit: `feat: separate homepage from continuous portfolio journey`
-- Then begin adding real content to each section (no placeholder/invented content).
-  - Carousels allowed ONLY on `#stack` (technologies & tools).
-  - Do NOT push to GitHub unless user explicitly instructs.
+## 4. Next Recommended Phase (Phase 4.1 — Section Content & Enhancements)
+- User to review the Phosphor Burst transition and CRT screen background in browser.
+- Once approved, commit: `feat: add CRT background and phosphor burst transition`
+- Proceed to populating actual section content across `/portfolio` and standalone section routes.
 
 ---
 
 ## 5. Verification Log
-- `npm run build`: **SUCCESS** (0 TypeScript/lint errors, all 10 routes compiled cleanly in 2.4s Turbopack).
-- **Console & Hydration Check**: 0 errors/warnings (`[HMR] connected`).
-- **Visual Desktop Verification**: Confirmed transparent CRT overlay with glowing phosphor text directly on glass; underlying glass cracks completely visible; sage-grey `#B8C6BE` accent typography applied.
-- **CRT Hover & Navigation**: Confirmed text glow intensifies on hover without card border; clicking CRT navigates to `/portfolio#about`.
-- **Mobile Verification**: Confirmed 375x812 layout with zero text overlap and unobstructed clickable CRT monitor.
+- `npm run build`: **SUCCESS** (0 TypeScript/lint errors, all 10 routes compiled cleanly in 11.1s Turbopack).
+- **Visual Browser Verification**: Tested interactive CRT click on homepage; verified localized screen vibration, horizontal beam flare, radial emerald wave, peak flash, and smooth reveal into `/portfolio#about`.
+- **Contrast & Readability Check**: Verified `/portfolio`, `/about`, and `/projects` text contrast against the vintage CRT background across desktop viewports.
+- **Reduced Motion**: Confirmed `prefers-reduced-motion` check navigates immediately with zero flash.

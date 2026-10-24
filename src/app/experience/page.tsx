@@ -1,4 +1,5 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
+import CrtScreenBackground from "@/components/CrtScreenBackground";
 
 export const metadata: Metadata = {
   title: "Experience | Parth",
@@ -7,8 +8,9 @@ export const metadata: Metadata = {
 
 export default function ExperiencePage() {
   return (
-    <main className="relative w-full min-h-screen bg-[#0c0b0a] flex flex-col justify-center px-6 sm:px-10 lg:px-16 py-24">
-      <div className="max-w-4xl w-full mx-auto">
+    <main className="relative w-full min-h-screen bg-[#0c0b0a] flex flex-col justify-center px-6 sm:px-10 lg:px-16 py-24 select-none overflow-x-hidden">
+      <CrtScreenBackground />
+      <div className="relative z-10 max-w-4xl w-full mx-auto">
         <div className="flex items-center gap-4 mb-8">
           <div className="h-[1px] w-10 bg-[#d97736]" />
           <span className="font-mono text-[10px] tracking-widest text-[#B8C6BE] uppercase">

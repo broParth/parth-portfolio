@@ -3,6 +3,7 @@ import { Syne, Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import NavigationShell from "@/components/NavigationShell";
 import AtmosphericBackground from "@/components/AtmosphericBackground";
+import { PhosphorBurstProvider } from "@/components/PhosphorBurstTransition";
 
 const displayFont = Syne({
   variable: "--font-display",
@@ -51,8 +52,10 @@ export default function RootLayout({
         {/* Layer 50: Persistent Fixed Right-Side Navigation Shell */}
         <NavigationShell />
 
-        {/* Layer 20 & 30: Prepared Panel Layer Architecture + Main Hero Content */}
-        <div className="relative z-20 flex-1 flex flex-col">{children}</div>
+        {/* Persistent Phosphor Burst Transition Layer & Content Architecture */}
+        <PhosphorBurstProvider>
+          <div className="relative z-20 flex-1 flex flex-col">{children}</div>
+        </PhosphorBurstProvider>
       </body>
     </html>
   );
