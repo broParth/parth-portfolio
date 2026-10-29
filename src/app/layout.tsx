@@ -3,7 +3,6 @@ import { Syne, Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import NavigationShell from "@/components/NavigationShell";
 import AtmosphericBackground from "@/components/AtmosphericBackground";
-import { PhosphorBurstProvider } from "@/components/PhosphorBurstTransition";
 
 const displayFont = Syne({
   variable: "--font-display",
@@ -27,7 +26,7 @@ const monoFont = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Parth | Developer Portfolio & Interactive Environment",
+  title: "Parth | Developer Portfolio",
   description: "Personal portfolio of Parth — Computer Science, AI, Software Engineering, Cybersecurity.",
 };
 
@@ -52,10 +51,7 @@ export default function RootLayout({
         {/* Layer 50: Persistent Fixed Right-Side Navigation Shell */}
         <NavigationShell />
 
-        {/* Persistent Phosphor Burst Transition Layer & Content Architecture */}
-        <PhosphorBurstProvider>
-          <div className="relative z-20 flex-1 flex flex-col">{children}</div>
-        </PhosphorBurstProvider>
+        <div className="relative z-20 flex-1 flex flex-col">{children}</div>
       </body>
     </html>
   );

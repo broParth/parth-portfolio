@@ -58,7 +58,7 @@ export default function NavOverlay({ isOpen, onClose }: NavOverlayProps) {
           {/* Header Metadata inside Overlay */}
           <div className="flex justify-between items-center border-b border-[rgba(244,240,234,0.08)] pb-6">
             <span className="font-mono text-xs text-[#a8a29e] tracking-widest uppercase">
-              // NAVIGATION DIRECTORY
+              {"// NAVIGATION DIRECTORY"}
             </span>
             <span className="font-mono text-xs text-[#d97736] tracking-widest uppercase">
               PORTFOLIO ARCHIVE

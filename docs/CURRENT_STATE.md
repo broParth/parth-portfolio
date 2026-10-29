@@ -1,10 +1,10 @@
 # CURRENT STATE (CURRENT_STATE.md)
 
 ## Current Status Overview
-- **Phase:** Phase 4 — CRT Background & Phosphor Burst Transition (PROTOTYPE COMPLETE, AWAITING VISUAL REVIEW)
-- **Last Updated:** 2026-10-24
-- **Git Commit:** `bf3eaa7` (base)
-- **Build Status:** Verified (`npm run build` exit 0, all 10 routes, 0 TS errors)
+- **Phase:** Phase 5 — Unified Archival Portfolio
+- **Last Updated:** 2026-10-29
+- **Git Commit:** `5505133` (base)
+- **Build Status:** Verified (`npx tsc --noEmit` exit 0, webpack production build exit 0, all 10 routes compiled cleanly)
 
 ---
 
@@ -99,26 +99,47 @@
 - [x] **Hamburger navigation (`NavOverlay.tsx`) unchanged** — already pointed to individual routes correctly.
 - [x] **Build verified:** `npm run build` exit 0, 10 routes, 0 TS errors.
 
-### Phase 4 — CRT Background & Phosphor Burst Transition (PROTOTYPE COMPLETE)
-- [x] **Static CRT Screen Background (`public/images/crt-screen-background.png`)**:
-  - Implemented reusable [`CrtScreenBackground.tsx`](file:///d:/Documents/PARTH/PortfolioWebsite/portfolio/src/components/CrtScreenBackground.tsx) component.
-  - Positioned as a fixed CSS background (`fixed inset-0 pointer-events-none z-0`) with `bg-cover bg-center` scaling.
-  - Styled with a restrained dark contrast overlay (`rgba(12,11,10,0.72)`) and radial bezel curvature vignette, ensuring section typography and navigation remain crisp and readable.
-  - Applied to `/portfolio` and all standalone section routes (`/about`, `/projects`, `/experience`, `/stack`, `/contact`).
-  - Homepage (`/`) remains strictly on the approved `archive-room.png` artwork.
-- [x] **Cinematic Phosphor Burst Transition (`PhosphorBurstTransition.tsx`)**:
-  - Choreographed 5-beat analog CRT transition sequence (~1.4s total):
-    - **Beat A — Activation (0–250ms)**: CRT monitor begins rapid subtle vibration, green phosphor text glow flares.
-    - **Beat B — Pressure Buildup (250–550ms)**: Screen vibration intensifies, horizontal cathode beam flare expands across CRT monitor, electrical instability raster lines surge.
-    - **Beat C — Phosphor Burst (550–950ms)**: Luminous emerald radial wave (`#4af626`, `#10b981`) erupts from exact CRT bounding box coordinates (`originX, originY`), accompanied by subtle digital fragments.
-    - **Beat D — Whiteout (950–1080ms)**: Emerald-white peak flash covers viewport; client-side route navigation to `/portfolio#about` triggers underneath.
-    - **Beat E — Reveal (1080–1450ms)**: Flash dissolves smoothly, revealing the digital portfolio with its CRT screen background.
-  - **Technical Constraints Respected**:
-    - Uses exact CRT bounding rectangle coordinates from `getBoundingClientRect()`.
-    - Double-click prevention active via `isTransitioning`.
-    - `prefers-reduced-motion` bypasses transition and navigates immediately.
-    - Zero additional dependencies (pure Next.js, Framer Motion, and Tailwind CSS).
+### Phase 4.3 — Single-Document Archival Navigation Architecture (COMPLETE)
+- [x] **Transitioned from Continuous Scrolling to Single-Document Archival Workspace**:
+  - Eliminated the long scrolling portfolio page where all 5 sections were vertically stacked.
+  - Built [`src/components/ArchiveWorkshell.tsx`](file:///d:/Documents/PARTH/PortfolioWebsite/portfolio/src/components/ArchiveWorkshell.tsx) as the persistent, shared application chrome across all interior routes.
+  - Created modular section documents in `src/components/sections/`:
+    - `AboutDocument.tsx`: Full About Me identity narrative, investigations, personal notes, objective, and frontmatter.
+    - `ProjectsDocument.tsx`: Archival dossier layout for engineering works.
+    - `ExperienceDocument.tsx`: Archival dossier layout for work experience.
+    - `StackDocument.tsx`: Archival dossier layout for tech stack & tools (carousel permitted here only).
+    - `ContactDocument.tsx`: Archival dossier layout for operator contact.
+  - Converted `src/app/portfolio/page.tsx` into an immediate server-side redirect to `/about` (`307 Temporary Redirect`).
+  - Wrapped `src/app/projects/[slug]/page.tsx` inside `ArchiveWorkshell activeSection="projects"` with an archival dossier layout and back navigation to the directory.
+- [x] **Synchronized Navigation & Routing**:
+  - **CRT Entrance (`CrtTerminal.tsx`)**: Clicking `[ CLICK ME ]` triggers the tuned phosphor burst transition and lands directly on `/about` (or immediately with reduced motion).
+  - **Phosphor Burst Overlay (`PhosphorBurstTransition.tsx`)**: Navigates underneath the whiteout flash to `/about` with zero flash of unstyled content or old homepage elements.
+  - **Sidebar Navigator**: All entries (`Parth — Personnel File`, `Projects Portfolio`, `Work Experience`, `Technical Skills & Stack`, `Operator Contact`) link to distinct routes (`/about`, `/projects`, `/experience`, `/stack`, `/contact`) with active burgundy pill indicators.
+  - **Top Tab Strip**: All tabs link to real Next.js routes, with the active tab highlighted in burgundy (`#642D3D`).
+  - **Hamburger Menu (`NavOverlay.tsx`)**: Fully synchronized with individual routes.
+  - **Browser History**: Standard browser Back/Forward navigation works cleanly between documents without viewport jumping or anchor scrolling.
+- [x] **Preserved Visual Fidelity & Single Source of Truth**:
+  - `src/content/about.ts` remains the single source of truth for About Me copy.
+  - All styling details (warm cream stamped headings, Obsidian properties table, drafting ruler ticks, reticular graph view, bottom status bar, palette tokens) preserved exactly.
+- [x] **Build & Route Verification**:
+  - `npx tsc --noEmit` exited code 0 (zero TypeScript errors).
+  - `npx next build --webpack` exited code 0 (all 10 routes compiled cleanly).
+  - Live probe confirmed: `/` (200), `/about` (200), `/projects` (200), `/experience` (200), `/stack` (200), `/contact` (200), `/portfolio` (307 -> `/about`), `/projects/security-mesh` (200).
 - **Status:** Complete. Awaiting visual review. Not yet committed.
+
+### About Document Width & Readability Refinement
+- [x] Expanded the About-only desktop document canvas allocation while preserving the shared shell layout on other routes.
+- [x] Set the About document to use up to 640px where its canvas allows; at the current 1280px shell width, its inner document area is approximately 592px.
+- [x] Updated the stamped title to a conventional sans-serif treatment, improved content spacing, and removed clipping from long property values.
+- [x] Validation: `npx tsc --noEmit` passed; `npx next build --webpack` passed (10 routes). Default Turbopack build encountered an internal child-process error.
+- **Status:** Implemented in the working tree; not staged or committed.
+
+### Phase 5 — Unified Archival Portfolio
+- [x] `/` redirects to `/about`, reusing the existing About document and shared archival workspace.
+- [x] Removed the separate abandoned-room/CRT entrance, phosphor-burst provider, and their unused components, images, and animation styles.
+- [x] Kept the About route, all section documents, project detail route, shared navigation, and workspace chrome.
+- [x] Validation: TypeScript and webpack production build passed; compiled output confirms the root redirect and all document routes.
+- **Status:** Implemented in the working tree; not staged or committed.
 
 ---
 
@@ -127,15 +148,12 @@
 
 ---
 
-## 4. Next Recommended Phase (Phase 4.1 — Section Content & Enhancements)
-- User to review the Phosphor Burst transition and CRT screen background in browser.
-- Once approved, commit: `feat: add CRT background and phosphor burst transition`
-- Proceed to populating actual section content across `/portfolio` and standalone section routes.
+## 4. Next Recommended Phase
+- User to review the unified archival workspace at `/` and the five section documents.
 
 ---
 
 ## 5. Verification Log
-- `npm run build`: **SUCCESS** (0 TypeScript/lint errors, all 10 routes compiled cleanly in 11.1s Turbopack).
-- **Visual Browser Verification**: Tested interactive CRT click on homepage; verified localized screen vibration, horizontal beam flare, radial emerald wave, peak flash, and smooth reveal into `/portfolio#about`.
-- **Contrast & Readability Check**: Verified `/portfolio`, `/about`, and `/projects` text contrast against the vintage CRT background across desktop viewports.
-- **Reduced Motion**: Confirmed `prefers-reduced-motion` check navigates immediately with zero flash.
+- `npx tsc --noEmit`: **SUCCESS**.
+- `npx next build --webpack`: **SUCCESS**, all 10 routes compiled.
+- **Architecture Verification**: `/` redirects to `/about`; `/about`, `/projects`, `/experience`, `/stack`, `/contact`, and `/projects/[slug]` build as routes in the shared workspace.
