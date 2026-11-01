@@ -56,6 +56,89 @@ body {
   background: radial-gradient(circle at 50% 50%, transparent 40%, rgba(5, 4, 4, 0.75) 100%);
 }
 
+@keyframes about-tech-marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.about-tech-marquee {
+  overflow: hidden;
+  color: rgba(184, 198, 190, 0.76);
+  font-family: var(--font-mono), monospace;
+  font-size: 0.7rem;
+  line-height: 1.75;
+}
+
+.about-tech-marquee__track {
+  display: flex;
+  width: max-content;
+  animation: about-tech-marquee-scroll 48s linear infinite;
+}
+
+.about-tech-marquee:hover .about-tech-marquee__track {
+  animation-play-state: paused;
+}
+
+.about-tech-marquee__copy {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 0.8rem;
+  padding-right: 0.8rem;
+  white-space: nowrap;
+}
+
+.about-tech-marquee__copy::after {
+  content: "·";
+  color: rgba(184, 198, 190, 0.48);
+}
+
+.about-tech-marquee__entry {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.about-tech-marquee__separator {
+  color: rgba(184, 198, 190, 0.48);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-tech-marquee {
+    overflow: visible;
+  }
+
+  .about-tech-marquee__track {
+    display: block;
+    width: 100%;
+    animation: none;
+  }
+
+  .about-tech-marquee__copy {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.8rem;
+    padding-right: 0;
+    white-space: normal;
+  }
+
+  .about-tech-marquee__copy + .about-tech-marquee__copy {
+    display: none;
+  }
+
+  .about-tech-marquee__copy::after {
+    display: none;
+  }
+
+  .about-tech-marquee__entry {
+    gap: 0.5rem;
+  }
+}
+
 
 /* Custom Scrollbar for tactile feel */
 ::-webkit-scrollbar {

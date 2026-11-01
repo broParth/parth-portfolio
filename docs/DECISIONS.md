@@ -54,3 +54,10 @@ This log records major design, technical, and architectural decisions. Decisions
 - **Context:** The book authorization intro leads to a shared archival workspace whose own tabs and notebook navigator already provide route access. A separate global hamburger menu duplicates that navigation.
 - **Decision:** Remove the legacy global hamburger and overlay. Use the workspace's document tabs and left notebook navigator for portfolio routes; retain its NAV/DOC/GRAPH switcher on smaller screens.
 - **Consequences:** The shared layout has no persistent global menu. Workspace navigation remains route-aware and directly accessible on desktop and smaller screens.
+
+### ADR-008: Embedded Languages & Tools Marquee
+- **Date:** 2026-11-01
+- **Status:** Approved
+- **Context:** The user chose to retire the dedicated Tech Stack document and present the résumé inventory as a compact part of the existing About document.
+- **Decision:** Add a subdued, continuous CSS marquee inside the existing About Field Notes content box. Keep one accessible static text representation, pause the visual track on hover, and present a wrapped static fallback when reduced motion is preferred. Remove Stack from workspace navigation and redirect `/stack` to `/about` for existing links.
+- **Consequences:** The dedicated StackDocument and stack content source are obsolete and may be removed. No new route, dependency, skill claims, or project associations are introduced.

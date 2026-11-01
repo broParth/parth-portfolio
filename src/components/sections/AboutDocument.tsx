@@ -17,6 +17,22 @@ interface AboutDocumentProps {
   isStandalone?: boolean;
 }
 
+const technologies = [
+  "Java",
+  "Python",
+  "C",
+  "SQL",
+  "HTML",
+  "CSS",
+  "JavaScript",
+  "TypeScript",
+  "Git",
+  "GitHub",
+  "VS Code",
+  "Linux",
+  "AWS EC2",
+] as const;
+
 export default function AboutDocument({
   isStandalone = false,
 }: AboutDocumentProps) {
@@ -168,14 +184,11 @@ export default function AboutDocument({
           <span className="bg-[#F4EFE6] text-[#121211] font-display font-bold text-xs px-2.5 py-0.5 rounded-sm uppercase tracking-wide shadow-sm">
             01 // IDENTITY
           </span>
-          <span className="px-1.5 py-0.2 rounded bg-[#642D3D] text-[10px] font-mono text-white font-bold">
-            H2
-          </span>
         </div>
 
-        <h3 className="font-display text-xl sm:text-2xl font-bold text-[#E9E0D0] leading-snug">
+        <h2 className="font-display text-xl sm:text-2xl font-bold text-[#E9E0D0] leading-snug">
           {identity.headline}
-        </h3>
+        </h2>
 
         <div className="space-y-3 font-sans text-sm sm:text-base text-[#E9E0D0]/90 leading-7">
           <p>{identity.paragraphs[0]}</p>
@@ -215,9 +228,6 @@ export default function AboutDocument({
         <div className="flex items-center gap-2">
           <span className="bg-[#F4EFE6] text-[#121211] font-display font-bold text-xs px-2.5 py-0.5 rounded-sm uppercase tracking-wide shadow-sm">
             02 // INVESTIGATIONS
-          </span>
-          <span className="px-1.5 py-0.2 rounded bg-[#642D3D] text-[10px] font-mono text-white font-bold">
-            H2
           </span>
         </div>
 
@@ -268,6 +278,34 @@ export default function AboutDocument({
           {personalNotes.paragraphs.map((p, idx) => (
             <p key={idx}>{p}</p>
           ))}
+        </div>
+
+        <div className="mt-5 border-t border-[rgba(233,224,208,0.12)] pt-4">
+          <h4 className="mb-2 font-mono text-[10px] font-semibold tracking-[0.16em] text-[#A1AAA0]">
+            LANGUAGES &amp; TOOLS
+          </h4>
+          <p className="sr-only">
+            {`Languages and tools: ${technologies.join(", ")}.`}
+          </p>
+          <div className="about-tech-marquee" aria-hidden="true">
+            <div className="about-tech-marquee__track">
+              {[0, 1].map((copy) => (
+                <div className="about-tech-marquee__copy" key={copy}>
+                  {technologies.map((technology, index) => (
+                    <span
+                      className="about-tech-marquee__entry"
+                      key={`${copy}-${technology}`}
+                    >
+                      {index > 0 && (
+                        <span className="about-tech-marquee__separator">·</span>
+                      )}
+                      {technology}
+                    </span>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
     </article>

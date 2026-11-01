@@ -52,11 +52,10 @@ Inspired by the interaction principles of Marina Budarina's ["Chimes"](https://m
 | Route | Purpose & Design Focus |
 |---|---|
 | `/` | Homepage: High-impact introduction, interactive visual environment, narrative entry point |
-| `/about` | Deep dive into background, philosophy, technical journey |
+| `/about` | Deep dive into background, philosophy, technical journey, and a compact Languages & Tools marquee |
 | `/projects` | Complete index of software engineering & security projects |
 | `/projects/[slug]` | Individual project showcase (architecture, deep dive, links, media) |
 | `/experience` | Chronological career, hackathons, and CTF/cybersecurity milestones |
-| `/stack` | Technical toolkit, skills, platforms, and interactive skill carousels |
 | `/contact` | Minimalist, high-clarity communication hub |
 
 ---

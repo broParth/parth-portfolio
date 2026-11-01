@@ -10,7 +10,6 @@ import {
   Search,
   Bookmark,
   SlidersHorizontal,
-  Layers,
   Plus,
   Edit3,
   FileCode,
@@ -24,7 +23,6 @@ export type ActiveSection =
   | "about"
   | "projects"
   | "experience"
-  | "stack"
   | "contact";
 
 interface ArchiveWorkshellProps {
@@ -57,12 +55,6 @@ const TABS: {
     icon: <Briefcase className="w-3.5 h-3.5 opacity-60" />,
   },
   {
-    key: "stack",
-    label: "TECH_STACK",
-    href: "/stack",
-    icon: <Layers className="w-3.5 h-3.5 opacity-60" />,
-  },
-  {
     key: "contact",
     label: "CONTACT",
     href: "/contact",
@@ -78,7 +70,6 @@ const NAV_ITEMS: {
   { key: "about", href: "/about", label: "Parth — Personnel File" },
   { key: "projects", href: "/projects", label: "Projects Portfolio" },
   { key: "experience", href: "/experience", label: "Work Experience" },
-  { key: "stack", href: "/stack", label: "Technical Skills & Stack" },
   { key: "contact", href: "/contact", label: "Operator Contact" },
 ];
 
@@ -104,12 +95,6 @@ const SECTION_META: Record<
     statusLabel: "EMPLOYMENT",
     graphLabel: "NODES: 12",
     breadcrumb: "WORK EXPERIENCE",
-  },
-  stack: {
-    fileLabel: "FILE PROPERTIES: TECH STACK",
-    statusLabel: "SYSTEMS",
-    graphLabel: "NODES: 24",
-    breadcrumb: "TECH STACK & SKILLS",
   },
   contact: {
     fileLabel: "FILE PROPERTIES: CONTACT",
@@ -199,7 +184,7 @@ export default function ArchiveWorkshell({
                       </div>
                     );
                   }
-                  // Hide experience/contact on small screens like the original hid TECH_STACK
+                  // Keep experience and contact tabs to medium widths and above.
                   const hiddenOnSmall =
                     tab.key === "experience" || tab.key === "contact";
                   return (

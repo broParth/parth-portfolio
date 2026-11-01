@@ -242,3 +242,17 @@
 - [x] `npx tsc --noEmit` passed.
 - [ ] `npx next build --webpack` remains blocked by `ENOTFOUND fonts.googleapis.com` and also reported `EPERM` creating `.next/server/app/contact`. No Node process or listener on ports 3000, 3001, or 3010 was visible before the build.
 - **Status:** Implemented in the working tree; not staged or committed.
+
+### Professional Activity Record (2026-11-01)
+- Replaced the Experience placeholder with a personnel activity record covering current CSE student status, CSEH/CTF involvement, SAP Hackfest, Smart India Hackathon, Prwatech workshop, Scaler DBMS learning, and professional status.
+- Added `src/content/experience.ts` as a typed, updateable content source; the presentation remains in `ExperienceDocument.tsx` and the route continues using the existing `ArchiveWorkshell`.
+- Omitted dates and unspecified roles/results. Described Prwatech and Scaler as a workshop and learning programme, not awarded certifications. No formal employment or internships are listed.
+- Updated Experience route metadata to describe the broader activity record. Shared navigation, other routes, and audio were not changed.
+- Validation: `npx tsc --noEmit` and `git diff --check` passed. `npm run build` could not fetch the existing Google Fonts from `fonts.googleapis.com` in this network-restricted environment.
+
+## Follow-up: Embedded Languages & Tools Marquee (2026-11-01)
+- Added the exact 13-item résumé inventory as a subtle CSS marquee at the end of the existing About Field Notes box, separated by a fine rule and titled `LANGUAGES & TOOLS`.
+- The loop uses two matching visual copies for seamless motion, pauses on hover, hides visual duplicates from assistive technology, and switches to a wrapped static display for reduced-motion preferences.
+- Removed Stack from ArchiveWorkshell navigation and section metadata. `/stack` now redirects to `/about`; the unreferenced StackDocument and stack content source were removed.
+- Updated the project route specification and recorded ADR-008. No other section content, audio implementation, or audio assets were changed.
+- Validation: `npx tsc --noEmit` and `git diff --check` results are recorded in the implementation turn report.

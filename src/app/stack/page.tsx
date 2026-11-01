@@ -1,16 +1,5 @@
-import type { Metadata } from "next";
-import ArchiveWorkshell from "@/components/ArchiveWorkshell";
-import StackDocument from "@/components/sections/StackDocument";
-
-export const metadata: Metadata = {
-  title: "Tech Stack | Parth",
-  description: "Technologies, frameworks, tools, and platforms.",
-};
+import { redirect } from "next/navigation";
 
 export default function StackPage() {
-  return (
-    <ArchiveWorkshell activeSection="stack">
-      <StackDocument />
-    </ArchiveWorkshell>
-  );
+  redirect("/about");
 }
