@@ -22,10 +22,10 @@ This log records major design, technical, and architectural decisions. Decisions
 
 ### ADR-003: Fixed Asymmetric Layout Blueprint
 - **Date:** 2026-09-28
-- **Status:** Approved
+- **Status:** Superseded by ADR-007
 - **Context:** The site requires an editorial, non-conventional structure inspired by Chimes' interaction philosophy.
 - **Decision:** Position fixed hamburger navigation on one vertical edge, counterbalanced by asymmetric layout containers on the rest of the canvas.
-- **Consequences:** Layout components must account for fixed nav positioning across viewport sizes.
+- **Consequences:** The legacy fixed-menu approach is retired; workspace-native navigation is documented in ADR-007.
 
 ### ADR-004: Strict Carousel Scope Enforcer
 - **Date:** 2026-09-28
@@ -47,3 +47,10 @@ This log records major design, technical, and architectural decisions. Decisions
 - **Context:** The typography-curtain reveal experiment was cancelled in favor of an atmospheric, physical digital environment with immediate narrative impact.
 - **Decision:** Pivot the homepage to use the approved full-screen artwork `public/images/archive-room.png`. Overlay real, accessible HTML elements: left-side editorial identity (`PARTH`, `COMPUTER SCIENCE`, `AI • SOFTWARE • SECURITY`) and an interactive phosphor-green CRT terminal (`SYSTEM ERROR / PARTH_ARCHIVE // 01 / [ CLICK ME ]`) on the vintage monitor in the lower-right desk. Clicking the CRT navigates directly to the portfolio interface (`/projects`).
 - **Consequences:** Removed the previous 400vh scroll canvas, sticky curtain stage, and typography reveal from the homepage. The components `LetterCurtain`, `RevealSection`, `HeroEnvironment`, and `ArchiveEnvironment` are preserved in the codebase but unused on the new homepage. Layout is responsive across desktop and portrait mobile viewports.
+
+### ADR-007: Workspace-Native Portfolio Navigation
+- **Date:** 2026-10-29
+- **Status:** Approved
+- **Context:** The book authorization intro leads to a shared archival workspace whose own tabs and notebook navigator already provide route access. A separate global hamburger menu duplicates that navigation.
+- **Decision:** Remove the legacy global hamburger and overlay. Use the workspace's document tabs and left notebook navigator for portfolio routes; retain its NAV/DOC/GRAPH switcher on smaller screens.
+- **Consequences:** The shared layout has no persistent global menu. Workspace navigation remains route-aware and directly accessible on desktop and smaller screens.

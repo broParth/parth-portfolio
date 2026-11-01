@@ -20,17 +20,16 @@ interface AboutDocumentProps {
 export default function AboutDocument({
   isStandalone = false,
 }: AboutDocumentProps) {
-  const { meta, identity, investigations, personalNotes, objective } =
-    aboutContent;
+  const { meta, identity, investigations, personalNotes } = aboutContent;
 
   const HeadingTag = isStandalone ? "h1" : "h2";
 
   return (
-    <article className="w-full max-w-[640px] mx-auto space-y-12">
+    <article className="max-w-2xl mx-auto space-y-12 pr-2 sm:pr-4">
       {/* 1. Stamped Paper Title Banner */}
       <div className="space-y-3">
-        <div className="inline-block max-w-full bg-[#F4EFE6] text-[#121211] px-4 py-3 sm:px-5 sm:py-4 rounded-sm shadow-md border-b-2 border-[#642D3D]">
-          <HeadingTag className="font-sans text-xl sm:text-2xl font-extrabold uppercase tracking-tight leading-tight text-[#121211]">
+        <div className="inline-block max-w-full bg-[#F4EFE6] text-[#121211] px-4 py-2 rounded-sm shadow-md border-b-2 border-[#642D3D]">
+          <HeadingTag className="font-display text-2xl sm:text-3xl font-extrabold uppercase tracking-tight leading-none text-[#121211]">
             PARTH — {meta.sectionLabel}
           </HeadingTag>
         </div>
@@ -226,10 +225,6 @@ export default function AboutDocument({
           {investigations.title}
         </h3>
 
-        <p className="font-sans text-base text-[#E9E0D0] font-medium">
-          {investigations.lead}
-        </p>
-
         {/* Compact Dossier Focus Area Chips */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 py-2">
           {investigations.focusAreas.map((area) => (
@@ -248,12 +243,6 @@ export default function AboutDocument({
           ))}
         </div>
 
-        <div className="space-y-4 font-sans text-sm sm:text-base text-[#E9E0D0]/90 leading-7 pt-2">
-          <p>{investigations.paragraphs[0]}</p>
-          <p>{investigations.paragraphs[1]}</p>
-          <p>{investigations.paragraphs[2]}</p>
-          <p>{investigations.paragraphs[3]}</p>
-        </div>
       </section>
 
       {/* Thin Horizontal Divider */}
@@ -277,31 +266,6 @@ export default function AboutDocument({
 
         <div className="space-y-3 font-sans text-sm sm:text-base text-[#E9E0D0]/85 leading-7">
           {personalNotes.paragraphs.map((p, idx) => (
-            <p key={idx}>{p}</p>
-          ))}
-        </div>
-      </section>
-
-      {/* Thin Horizontal Divider */}
-      <div className="h-[1px] bg-[rgba(233,224,208,0.08)]" />
-
-      {/* 7. Section 04: THE OBJECTIVE */}
-      <section className="space-y-4">
-        <div className="flex items-center gap-2">
-          <span className="bg-[#F4EFE6] text-[#121211] font-display font-bold text-xs px-2.5 py-0.5 rounded-sm uppercase tracking-wide shadow-sm">
-            04 // OBJECTIVE
-          </span>
-          <span className="px-1.5 py-0.2 rounded bg-[#642D3D] text-[10px] font-mono text-white font-bold">
-            H2
-          </span>
-        </div>
-
-        <h3 className="font-display text-lg sm:text-xl font-bold text-[#E9E0D0]">
-          {objective.title}
-        </h3>
-
-        <div className="space-y-4 font-sans text-sm sm:text-base text-[#E9E0D0]/90 leading-7">
-          {objective.paragraphs.map((p, idx) => (
             <p key={idx}>{p}</p>
           ))}
         </div>

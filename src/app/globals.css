@@ -56,10 +56,6 @@ body {
   background: radial-gradient(circle at 50% 50%, transparent 40%, rgba(5, 4, 4, 0.75) 100%);
 }
 
-/* Architectural grid line effects */
-.border-editorial {
-  border-color: var(--surface-border);
-}
 
 /* Custom Scrollbar for tactile feel */
 ::-webkit-scrollbar {

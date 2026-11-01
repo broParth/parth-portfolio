@@ -22,7 +22,7 @@ Inspired by the interaction principles of Marina Budarina's ["Chimes"](https://m
 ## 3. Core Design System & Rules
 
 ### Layout & Composition
-- **Fixed Asymmetric Navigation:** A fixed hamburger menu positioned on one side of the screen (e.g., left/right margin), balanced by asymmetric composition of main visual elements on the opposite side.
+- **Archival Navigation:** The shared workspace's document tabs and notebook navigator are the primary navigation. On smaller screens, the workspace's NAV/DOC/GRAPH switcher exposes those existing regions without a separate global menu.
 - **Editorial Typography:** Large scale, structural typography used both for visual hierarchy and as interactive/reveal triggers.
 - **Physicality & Tactility:** Use of layers, curtains, sliding panels, overlapping architectural structures, and depth cues.
 - **Transformative Hover States:** Hovering elements transforms or reveals structural context (data, snippets, breakdown) rather than simple color toggles.

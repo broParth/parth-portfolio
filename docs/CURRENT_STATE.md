@@ -134,11 +134,58 @@
 - [x] Validation: `npx tsc --noEmit` passed; `npx next build --webpack` passed (10 routes). Default Turbopack build encountered an internal child-process error.
 - **Status:** Implemented in the working tree; not staged or committed.
 
+### Phase 18 — Operator Contact Document
+- [x] Replaced the Contact placeholder with an archival communication record, concise invitation, email/LinkedIn/GitHub channels, and a personnel-document résumé download.
+- [x] Email uses one `CONTACT_EMAIL` constant and renders a neutral pending state without exposing the placeholder or creating a broken mailto link.
+- [x] LinkedIn and GitHub use the supplied URLs and safe new-tab attributes; résumé action downloads `/resume.pdf` as `Parth_Chourasia_Resume.pdf`.
+- [x] Confirmed `public/resume.pdf` exists (69,281 bytes).
+- [x] `npx tsc --noEmit` passed. `npm run build -- --webpack` reached compilation but failed because the environment could not resolve `fonts.googleapis.com` while loading the existing Google Fonts in `src/app/layout.tsx` (`ENOTFOUND`).
+- **Status:** Implemented in the working tree; not staged or committed.
+
 ### Phase 5 — Unified Archival Portfolio
 - [x] `/` redirects to `/about`, reusing the existing About document and shared archival workspace.
 - [x] Removed the separate abandoned-room/CRT entrance, phosphor-burst provider, and their unused components, images, and animation styles.
 - [x] Kept the About route, all section documents, project detail route, shared navigation, and workspace chrome.
 - [x] Validation: TypeScript and webpack production build passed; compiled output confirms the root redirect and all document routes.
+- **Status:** Implemented in the working tree; not staged or committed.
+
+### Archival Workspace Desktop Proportions
+- [x] Increased the shell max width to 88rem and rebalanced the xl grid with minimum widths for navigator, spine, document, and properties sidebar.
+- [x] Preserved the About document's wider center allocation and the existing tablet/mobile collapse behavior.
+- **Status:** Implemented in the working tree; not staged or committed.
+
+### Phase 6 — Book Authorization Intro
+- [x] Replaced the root redirect with a keyboard-accessible, pointer-responsive 3D archive book authorization intro.
+- [x] Added a shared transition provider that covers the viewport, waits for the book departure, routes to `/about`, and reveals the existing workspace.
+- [x] Added a reduced-motion fade path; the book remains static and the transition uses short opacity fades when reduced motion is preferred.
+- [x] Preserved `/about`, all section routes, project details, workspace content, and existing navigation.
+- [x] Browser checks confirmed keyboard open/close, pointer open and hover-close, and AUTHORIZE navigation to `/about`.
+- [x] `npx tsc --noEmit` and `npx next build --webpack` passed after implementation.
+- **Status:** Implemented in the working tree; not staged or committed.
+
+### Phase 7 — Legacy Hamburger Removal
+- [x] Removed the global menu button, overlay, open/close state, and layout mount; all were exclusive to the legacy menu.
+- [x] Kept the archive's document tabs and notebook navigator. The existing mobile NAV/DOC/GRAPH switcher continues to expose navigation on narrow screens.
+- [x] Updated the project specification and recorded ADR-007 to reflect workspace-native navigation.
+- [x] `npx tsc --noEmit`, `npx next build --webpack`, and `git diff --check` passed.
+- [x] Browser checks confirmed no legacy menu on `/` or `/about`, AUTHORIZE still opens `/about`, desktop tabs and Back/Forward work, and all five mobile navigator links are visible and usable at 390px without horizontal overflow.
+- **Status:** Implemented in the working tree; not staged or committed.
+
+### Phase 8 — Book Levitation Refinement
+- [x] Separated vertical floating onto an outer transform wrapper and kept rotation/tilt on the inner book object.
+- [x] The book travels between ±7% of its height (about ±23px on desktop and ±13px on mobile) with smooth reverse easing; a full up/down cycle takes 3.6 seconds and repeats indefinitely.
+- [x] The elliptical shadow follows the same cycle. The hover/open state keeps floating while stabilizing rotation; authorization stops idle motion before the existing departure choreography.
+- [x] Reduced motion sets the book and shadow to static positions; the floating, rotation, and shadow loops stop on unmount.
+- [x] Browser observation over 9 seconds confirmed repeated vertical movement without a reset. Hover/open, pointer exit, and AUTHORIZE still work.
+- [x] `npx tsc --noEmit` and `npx next build --webpack` passed.
+- **Status:** Implemented in the working tree; not staged or committed.
+
+### Phase 9 — Restricted Book Rotation
+- [x] The book now sways between -7° and -37° around its -22° resting three-quarter angle, staying within a 30° arc rather than making a full revolution.
+- [x] Rotation eases between the endpoints in 6.4 seconds per direction (a 12.8-second full cycle, 25% faster than the previous 16-second cycle).
+- [x] Pointer exit smoothly returns to the sway path; hover stabilization, reduced-motion static rotation, and authorization control remain intact.
+- [x] Browser observation over 9.6 seconds confirmed a smooth reversal near each endpoint (-36.2° to -7.9° in sampled frames); hover, pointer exit, and AUTHORIZE still work without console errors.
+- [x] `npx tsc --noEmit` and `npx next build --webpack` passed.
 - **Status:** Implemented in the working tree; not staged or committed.
 
 ---
@@ -149,11 +196,49 @@
 ---
 
 ## 4. Next Recommended Phase
-- User to review the unified archival workspace at `/` and the five section documents.
+- User to review the book intro and workspace-native navigation across desktop and mobile.
 
 ---
 
 ## 5. Verification Log
 - `npx tsc --noEmit`: **SUCCESS**.
 - `npx next build --webpack`: **SUCCESS**, all 10 routes compiled.
-- **Architecture Verification**: `/` redirects to `/about`; `/about`, `/projects`, `/experience`, `/stack`, `/contact`, and `/projects/[slug]` build as routes in the shared workspace.
+- **Architecture Verification**: `/` renders the authorization intro; AUTHORIZE transitions to `/about`. `/about`, `/projects`, `/experience`, `/stack`, `/contact`, and `/projects/[slug]` remain available in the shared workspace.
+
+### Phase 12 — About Document Content Trim
+- [x] Removed the dedicated Objectives section and its section-only content shape from `src/content/about.ts`.
+- [x] Removed the Current Investigations lead and explanatory paragraphs while preserving its heading and all five focus-area cards.
+- [x] Removed only the first Field Notes paragraph. Remaining copy and the shared Quick Reference metadata, including its long-term objective fact, remain unchanged.
+- [x] `npx tsc --noEmit` passed. Live About preview confirmed the remaining sections and quick facts render without Objective or removed paragraphs.
+- [ ] `npx next build --webpack` could not complete in this environment: generated `.next/types` directory creation failed with `EPERM` while the development server was active.
+- **Status:** Implemented in the working tree; not staged or committed.
+
+### Phase 14 — About Header Typography Match
+- [x] Matched the About document's main title to the existing Projects/Experience/Stack/Contact header font family and classes: `font-display`, responsive 2xl/3xl sizing, extra-bold uppercase, tight tracking, and single-line leading.
+- [x] Preserved the About banner, colors, borders, padding, text, and responsive wrapping behavior.
+- [x] `npx tsc --noEmit` passed. Browser preview at 866px confirmed the Syne display face, weight 800, 30px responsive size, tight tracking, and two-line wrapping without horizontal overflow.
+- [ ] `npx next build --webpack` compiled but failed during generated `.next` directory creation (`EPERM`) while the development server was active.
+- **Status:** Implemented in the working tree; not staged or committed.
+
+### Phase 15 — About Width Alignment with Projects
+- [x] Set About's center-column horizontal padding to the same `xl:px-12` used by the other routes, without changing the workspace grid or side panels.
+- [x] Matched About's article width and responsive right gutter to the existing Projects rule (`max-w-2xl mx-auto pr-2 sm:pr-4`); About's larger vertical section spacing remains unchanged.
+- [x] Same-viewport browser measurements at 866px showed About and Projects with identical 672px article widths, 656px card widths, matching left edges, and no page overflow. Other section and project-detail wrappers use the same width/gutter classes.
+- [x] `npx tsc --noEmit` passed. `npx next build --webpack` failed during compilation when Windows denied a generated `.next/server/app/stack` directory creation (`EPERM`) while the development server was active.
+- **Status:** Implemented in the working tree; not staged or committed.
+
+### Phase 16 — About Title Box Spacing
+- [x] Matched About's cream title box to Projects' horizontal and vertical padding (`px-4 py-2`), retaining `max-w-full` for narrow screens. Typography, border, colors, rounding, and the shared `space-y-3` heading/subtitle spacing remain unchanged.
+- [x] About's narrower shared width alignment from Phase 15 is preserved.
+- [x] Same-viewport browser preview confirmed both title boxes have 8px vertical and 16px horizontal padding, 30px line height, and no horizontal overflow at 866px.
+- [x] `npx tsc --noEmit` passed. `npx next build --webpack` compiled and passed TypeScript, then failed during prerender on a generated `.next` directory creation (`EPERM`).
+- **Status:** Implemented in the working tree; not staged or committed.
+
+### Phase 17 — Adaptive UI Engine Project Presentation
+- [x] Added a shared project record for Adaptive UI Engine, used by both the Projects index and `/projects/adaptive-ui-engine`.
+- [x] Replaced the Projects placeholder entry with a collaborative project listing, concise technical summary, technology preview, and dossier link.
+- [x] Added an archival project dossier covering overview, input-to-output architecture, the four FSM states, implementation, Parth's UI/Windows integration contribution, Nishant's architecture/FSM contribution, the supplied technologies, and repository link.
+- [x] Kept the dynamic route's existing generic dossier fallback for other slugs and did not change workspace, route, or intro behavior.
+- [x] `npx tsc --noEmit` passed.
+- [ ] `npx next build --webpack` remains blocked by `ENOTFOUND fonts.googleapis.com` and also reported `EPERM` creating `.next/server/app/contact`. No Node process or listener on ports 3000, 3001, or 3010 was visible before the build.
+- **Status:** Implemented in the working tree; not staged or committed.

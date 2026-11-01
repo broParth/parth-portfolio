@@ -1,5 +1,11 @@
-import { redirect } from "next/navigation";
+import type { Metadata } from "next";
+import AuthorizationIntro from "@/components/AuthorizationIntro";
+
+export const metadata: Metadata = {
+  title: "Parth Archive | Authorization",
+  description: "Authorize access to the Parth Archive.",
+};
 
 export default function HomePage() {
-  redirect("/about");
+  return <AuthorizationIntro />;
 }

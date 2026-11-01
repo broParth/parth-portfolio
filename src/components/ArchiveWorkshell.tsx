@@ -136,7 +136,7 @@ export default function ArchiveWorkshell({
 
   return (
     <div className="relative w-full min-h-screen bg-[#121211] flex flex-col justify-center px-4 sm:px-8 lg:px-12 py-16 sm:py-24 select-none overflow-x-hidden">
-      <div className="relative z-10 max-w-7xl w-full mx-auto">
+      <div className="relative z-10 max-w-[88rem] w-full mx-auto">
         <div
           className={`w-full bg-[#121211] text-[#E9E0D0] border border-[rgba(233,224,208,0.08)] rounded-xl shadow-2xl overflow-hidden font-sans`}
         >
@@ -262,10 +262,10 @@ export default function ArchiveWorkshell({
           {/* ─────────────────────────────────────────────────────────────
            * MAIN THREE-REGION WORKSPACE
            * ───────────────────────────────────────────────────────────── */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[750px] bg-[#121211]">
+          <div className="grid grid-cols-1 lg:grid-cols-12 xl:grid-cols-[minmax(15rem,0.95fr)_minmax(2.75rem,0.35fr)_minmax(38rem,2.2fr)_minmax(18rem,1.1fr)] min-h-[750px] bg-[#121211]">
             {/* ─── LEFT PANEL: ARCHIVE NAVIGATOR (Obsidian File Tree) ─── */}
             <aside
-              className={`lg:col-span-3 border-r border-[rgba(233,224,208,0.08)] bg-[#151413] p-3 lg:flex flex-col justify-between ${
+              className={`lg:col-span-3 xl:col-span-1 border-r border-[rgba(233,224,208,0.08)] bg-[#151413] p-3 lg:flex flex-col justify-between ${
                 mobilePanel === "nav" ? "flex" : "hidden lg:flex"
               }`}
             >
@@ -435,7 +435,7 @@ export default function ArchiveWorkshell({
 
             {/* ─── CENTER PANEL: THE DOCUMENT CANVAS ─── */}
             <main
-              className={`lg:col-span-6 ${activeSection === "about" ? "xl:col-span-6 xl:px-6" : "xl:col-span-5 xl:px-12"} relative p-6 sm:p-10 lg:p-12 overflow-y-auto bg-[#121211] ${
+              className={`lg:col-span-6 xl:col-span-1 xl:px-12 relative p-6 sm:p-10 lg:p-12 overflow-y-auto bg-[#121211] ${
                 mobilePanel === "doc" ? "block" : "hidden lg:block"
               }`}
             >
@@ -459,7 +459,7 @@ export default function ArchiveWorkshell({
 
             {/* ─── RIGHT PANEL: CONTEXT & PROPERTIES ─── */}
             <aside
-              className={`lg:col-span-3 ${activeSection === "about" ? "xl:col-span-2" : "xl:col-span-3"} border-l border-[rgba(233,224,208,0.08)] bg-[#151413] p-4 lg:flex flex-col gap-5 overflow-y-auto ${
+              className={`lg:col-span-3 xl:col-span-1 border-l border-[rgba(233,224,208,0.08)] bg-[#151413] p-4 lg:flex flex-col gap-5 overflow-y-auto ${
                 mobilePanel === "props" ? "flex" : "hidden lg:flex"
               }`}
             >

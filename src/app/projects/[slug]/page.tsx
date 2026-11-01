@@ -1,19 +1,42 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import ArchiveWorkshell from "@/components/ArchiveWorkshell";
+import AdaptiveUIEngineDocument from "@/components/projects/AdaptiveUIEngineDocument";
+import { adaptiveUIEngine } from "@/content/projects";
 import { ArrowLeft, Tag, FileCode, Clock } from "lucide-react";
-
-export const metadata: Metadata = {
-  title: "Project Detail | Portfolio",
-  description: "Detailed breakdown of engineering project",
-};
 
 interface ProjectDetailPageProps {
   params: Promise<{ slug: string }>;
 }
 
+export async function generateMetadata({
+  params,
+}: ProjectDetailPageProps): Promise<Metadata> {
+  const { slug } = await params;
+
+  if (slug === adaptiveUIEngine.slug) {
+    return {
+      title: `${adaptiveUIEngine.title} | Parth`,
+      description: adaptiveUIEngine.summary,
+    };
+  }
+
+  return {
+    title: "Project Detail | Portfolio",
+    description: "Detailed breakdown of engineering project",
+  };
+}
+
 export default async function ProjectDetailPage({ params }: ProjectDetailPageProps) {
   const { slug } = await params;
+
+  if (slug === adaptiveUIEngine.slug) {
+    return (
+      <ArchiveWorkshell activeSection="projects">
+        <AdaptiveUIEngineDocument />
+      </ArchiveWorkshell>
+    );
+  }
 
   return (
     <ArchiveWorkshell activeSection="projects">

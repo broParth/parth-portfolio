@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Syne, Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-import NavigationShell from "@/components/NavigationShell";
 import AtmosphericBackground from "@/components/AtmosphericBackground";
+import AuthorizationTransitionProvider from "@/components/AuthorizationTransition";
 
 const displayFont = Syne({
   variable: "--font-display",
@@ -27,7 +27,7 @@ const monoFont = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: "Parth | Developer Portfolio",
-  description: "Personal portfolio of Parth — Computer Science, AI, Software Engineering, Cybersecurity.",
+  description: "Personal portfolio of Parth â€” Computer Science, AI, Software Engineering, Cybersecurity.",
 };
 
 export default function RootLayout({
@@ -45,13 +45,12 @@ export default function RootLayout({
         suppressHydrationWarning
         className="min-h-full flex flex-col bg-[#0c0b0a] text-[#f4f0ea] font-sans selection:bg-[#d97736]/30 selection:text-[#f4f0ea]"
       >
-        {/* Layer 10: Film Grain, Vignette & Ambient Light Overlay */}
-        <AtmosphericBackground />
+        <AuthorizationTransitionProvider>
+          {/* Layer 10: Film Grain, Vignette & Ambient Light Overlay */}
+          <AtmosphericBackground />
 
-        {/* Layer 50: Persistent Fixed Right-Side Navigation Shell */}
-        <NavigationShell />
-
-        <div className="relative z-20 flex-1 flex flex-col">{children}</div>
+          <div className="relative z-20 flex-1 flex flex-col">{children}</div>
+        </AuthorizationTransitionProvider>
       </body>
     </html>
   );
