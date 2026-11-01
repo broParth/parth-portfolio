@@ -18,7 +18,7 @@ export default function AdaptiveUIEngineDocument() {
     <article className="mx-auto max-w-2xl space-y-8 pr-2 sm:pr-4">
       <Link
         href="/projects"
-        className="inline-flex items-center gap-1.5 font-mono text-xs text-[#A1AAA0] transition-colors hover:text-[#E9E0D0]"
+        className="inline-flex min-h-11 xl:min-h-0 items-center gap-1.5 font-mono text-xs text-[#A1AAA0] transition-colors hover:text-[#E9E0D0] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8C6BE]"
       >
         <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />
         <span>BACK TO PROJECTS DIRECTORY</span>
@@ -26,7 +26,7 @@ export default function AdaptiveUIEngineDocument() {
 
       <header className="space-y-3">
         <div className="inline-block max-w-full rounded-sm border-b-2 border-[#642D3D] bg-[#F4EFE6] px-4 py-2 text-[#121211] shadow-md">
-          <h1 className="font-display text-2xl font-extrabold uppercase leading-tight tracking-tight sm:text-3xl">
+          <h1 className="archive-document-heading font-display font-extrabold uppercase text-[#121211]">
             {project.title}
           </h1>
         </div>
@@ -223,7 +223,7 @@ export default function AdaptiveUIEngineDocument() {
           href={project.github}
           target="_blank"
           rel="noreferrer"
-          className="group flex items-center justify-between gap-4 border border-[rgba(233,224,208,0.1)] bg-[#181716] p-4 transition-colors hover:border-[#642D3D] sm:p-5"
+          className="group flex min-h-11 items-center justify-between gap-4 border border-[rgba(233,224,208,0.1)] bg-[#181716] p-4 transition-colors hover:border-[#642D3D] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8C6BE] sm:p-5"
         >
           <span className="min-w-0">
             <span className="block font-display text-sm font-bold text-[#E9E0D0]">

@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { aboutContent } from "@/content/about";
 import {
   FileText,
@@ -37,6 +37,7 @@ export default function AboutDocument({
   isStandalone = false,
 }: AboutDocumentProps) {
   const { meta, identity, investigations, personalNotes } = aboutContent;
+  const [directiveRevealed, setDirectiveRevealed] = useState(false);
 
   const HeadingTag = isStandalone ? "h1" : "h2";
 
@@ -45,7 +46,7 @@ export default function AboutDocument({
       {/* 1. Stamped Paper Title Banner */}
       <div className="space-y-3">
         <div className="inline-block max-w-full bg-[#F4EFE6] text-[#121211] px-4 py-2 rounded-sm shadow-md border-b-2 border-[#642D3D]">
-          <HeadingTag className="font-display text-2xl sm:text-3xl font-extrabold uppercase tracking-tight leading-none text-[#121211]">
+          <HeadingTag className="archive-document-heading font-display font-extrabold uppercase text-[#121211]">
             PARTH — {meta.sectionLabel}
           </HeadingTag>
         </div>
@@ -207,12 +208,16 @@ export default function AboutDocument({
                 cybersecurity protocols
               </span>
               , and{" "}
-              <span
-                title="Hover to reveal redaction"
-                className="bg-[#121211] text-[#121211] hover:text-[#74F65B] hover:bg-[#1a1918] px-1.5 py-0.5 rounded border border-[#3d3a37] transition-all cursor-help"
+              <button
+                type="button"
+                aria-label="Toggle classified directive redaction"
+                aria-pressed={directiveRevealed}
+                onClick={() => setDirectiveRevealed((revealed) => !revealed)}
+                title="Activate to reveal or conceal the redaction"
+                className={`rounded border border-[#3d3a37] px-1.5 py-0.5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8C6BE] ${directiveRevealed ? "bg-[#1a1918] text-[#74F65B]" : "bg-[#121211] text-[#121211] hover:bg-[#1a1918] hover:text-[#74F65B]"}`}
               >
                 [ CLASSIFIED DIRECTIVE ]
-              </span>
+              </button>
               .
             </div>
           </div>

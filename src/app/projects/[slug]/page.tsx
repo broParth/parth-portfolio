@@ -43,7 +43,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
       <article className="max-w-2xl mx-auto space-y-8 pr-2 sm:pr-4">
         <Link
           href="/projects"
-          className="inline-flex items-center gap-1.5 font-mono text-xs text-[#A1AAA0] hover:text-[#E9E0D0] transition-colors"
+          className="inline-flex min-h-11 xl:min-h-0 items-center gap-1.5 font-mono text-xs text-[#A1AAA0] hover:text-[#E9E0D0] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8C6BE]"
         >
           <ArrowLeft className="w-3.5 h-3.5" />
           <span>BACK TO PROJECTS DIRECTORY</span>
@@ -51,8 +51,8 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
 
         {/* Stamped Paper Title Banner */}
         <div className="space-y-3">
-          <div className="inline-block bg-[#F4EFE6] text-[#121211] px-4 py-2 rounded-sm shadow-md border-b-2 border-[#642D3D]">
-            <h1 className="font-display text-2xl sm:text-3xl font-extrabold uppercase tracking-tight leading-none text-[#121211]">
+          <div className="inline-block max-w-full bg-[#F4EFE6] text-[#121211] px-4 py-2 rounded-sm shadow-md border-b-2 border-[#642D3D]">
+            <h1 className="archive-document-heading font-display font-extrabold uppercase text-[#121211]">
               PROJECT // {slug}
             </h1>
           </div>

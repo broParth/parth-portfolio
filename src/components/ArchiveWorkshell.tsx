@@ -166,8 +166,8 @@ export default function ArchiveWorkshell({
             </div>
 
             {/* Tab Strip */}
-            <div className="flex items-center justify-between px-2 sm:px-3 pt-1 border-t border-[rgba(233,224,208,0.04)] bg-[#141312] overflow-x-auto scrollbar-none">
-              <div className="flex items-center gap-1">
+            <div className="flex items-center justify-between gap-2 px-2 sm:px-3 pt-1 border-t border-[rgba(233,224,208,0.04)] bg-[#141312] overflow-hidden">
+              <div className="flex min-w-0 flex-1 items-center gap-1 overflow-x-auto scrollbar-none">
                 {TABS.map((tab) => {
                   const isActive = activeSection === tab.key;
                   if (isActive) {
@@ -191,7 +191,7 @@ export default function ArchiveWorkshell({
                     <Link
                       key={tab.key}
                       href={tab.href}
-                      className={`${hiddenOnSmall ? "hidden md:flex" : "flex"} items-center gap-1.5 px-3 py-1.5 text-[#A1AAA0] hover:text-[#E9E0D0] hover:bg-[#22201E]/60 rounded-t text-xs font-mono transition-colors`}
+                      className={`${hiddenOnSmall ? "hidden md:flex" : "flex"} min-h-11 xl:min-h-0 items-center gap-1.5 px-3 py-1.5 text-[#A1AAA0] hover:text-[#E9E0D0] hover:bg-[#22201E]/60 rounded-t text-xs font-mono transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8C6BE]`}
                     >
                       {tab.icon}
                       <span>{tab.label}</span>
@@ -209,10 +209,11 @@ export default function ArchiveWorkshell({
               </div>
 
               {/* Mobile View Switcher */}
-              <div className="flex lg:hidden items-center gap-1 text-[11px] font-mono pb-1">
+              <div className="flex shrink-0 lg:hidden items-center gap-1 text-[11px] font-mono pb-1">
                 <button
                   onClick={() => setMobilePanel("nav")}
-                  className={`px-2 py-0.5 rounded ${
+                  aria-pressed={mobilePanel === "nav"}
+                  className={`min-h-11 min-w-11 px-2 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8C6BE] ${
                     mobilePanel === "nav"
                       ? "bg-[#22201E] text-[#E9E0D0]"
                       : "text-[#A1AAA0]"
@@ -222,7 +223,8 @@ export default function ArchiveWorkshell({
                 </button>
                 <button
                   onClick={() => setMobilePanel("doc")}
-                  className={`px-2 py-0.5 rounded ${
+                  aria-pressed={mobilePanel === "doc"}
+                  className={`min-h-11 min-w-11 px-2 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8C6BE] ${
                     mobilePanel === "doc"
                       ? "bg-[#22201E] text-[#E9E0D0]"
                       : "text-[#A1AAA0]"
@@ -232,7 +234,8 @@ export default function ArchiveWorkshell({
                 </button>
                 <button
                   onClick={() => setMobilePanel("props")}
-                  className={`px-2 py-0.5 rounded ${
+                  aria-pressed={mobilePanel === "props"}
+                  className={`min-h-11 min-w-11 px-2 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8C6BE] ${
                     mobilePanel === "props"
                       ? "bg-[#22201E] text-[#E9E0D0]"
                       : "text-[#A1AAA0]"
@@ -275,10 +278,11 @@ export default function ArchiveWorkshell({
                   {/* Commonplace Section */}
                   <div>
                     <button
+                      aria-expanded={personnelFolderOpen}
                       onClick={() =>
                         setPersonnelFolderOpen(!personnelFolderOpen)
                       }
-                      className="w-full flex items-center gap-1.5 px-1.5 py-1 text-[#A1AAA0] hover:text-[#E9E0D0] hover:bg-[#22201E]/50 rounded text-left"
+                      className="w-full min-h-10 xl:min-h-0 flex items-center gap-1.5 px-1.5 py-1 text-[#A1AAA0] hover:text-[#E9E0D0] hover:bg-[#22201E]/50 rounded text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8C6BE]"
                     >
                       {personnelFolderOpen ? (
                         <ChevronDown className="w-3.5 h-3.5 opacity-70" />
@@ -303,7 +307,7 @@ export default function ArchiveWorkshell({
                         ) : (
                           <Link
                             href="/about"
-                            className="flex items-center gap-2 px-2.5 py-1 text-[#A1AAA0]/70 hover:text-[#E9E0D0] hover:bg-[#22201E]/40 rounded text-[11px] transition-colors"
+                            className="min-h-10 xl:min-h-0 flex items-center gap-2 px-2.5 py-1 text-[#A1AAA0]/70 hover:text-[#E9E0D0] hover:bg-[#22201E]/40 rounded text-[11px] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8C6BE]"
                           >
                             <span className="w-1.5 h-1.5 rounded-full bg-[#A1AAA0]/30" />
                             <span className="truncate">
@@ -325,8 +329,9 @@ export default function ArchiveWorkshell({
                   {/* Daily Section */}
                   <div>
                     <button
+                      aria-expanded={dailyFolderOpen}
                       onClick={() => setDailyFolderOpen(!dailyFolderOpen)}
-                      className="w-full flex items-center gap-1.5 px-1.5 py-1 text-[#A1AAA0] hover:text-[#E9E0D0] hover:bg-[#22201E]/50 rounded text-left"
+                      className="w-full min-h-10 xl:min-h-0 flex items-center gap-1.5 px-1.5 py-1 text-[#A1AAA0] hover:text-[#E9E0D0] hover:bg-[#22201E]/50 rounded text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8C6BE]"
                     >
                       {dailyFolderOpen ? (
                         <ChevronDown className="w-3.5 h-3.5 opacity-70" />
@@ -341,8 +346,9 @@ export default function ArchiveWorkshell({
                     {dailyFolderOpen && (
                       <div className="ml-3 pl-2 border-l border-[rgba(233,224,208,0.08)] space-y-0.5 mt-0.5">
                         <button
+                          aria-expanded={yearFolderOpen}
                           onClick={() => setYearFolderOpen(!yearFolderOpen)}
-                          className="w-full flex items-center gap-1 px-2 py-0.5 text-[#A1AAA0]/70 hover:text-[#E9E0D0] text-[10px] text-left"
+                          className="w-full min-h-10 xl:min-h-0 flex items-center gap-1 px-2 py-0.5 text-[#A1AAA0]/70 hover:text-[#E9E0D0] text-[10px] text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8C6BE]"
                         >
                           {yearFolderOpen ? (
                             <ChevronDown className="w-3 h-3 opacity-60" />
@@ -382,7 +388,7 @@ export default function ArchiveWorkshell({
                       <Link
                         key={navItem.key}
                         href={navItem.href}
-                        className="flex items-center gap-1.5 px-1.5 py-1 text-[#A1AAA0] hover:text-[#E9E0D0] hover:bg-[#22201E]/50 rounded text-[11px] transition-colors"
+                        className="min-h-10 xl:min-h-0 flex items-center gap-1.5 px-1.5 py-1 text-[#A1AAA0] hover:text-[#E9E0D0] hover:bg-[#22201E]/50 rounded text-[11px] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8C6BE]"
                       >
                         <ChevronRight className="w-3.5 h-3.5 opacity-50" />
                         <span>{navItem.label}</span>
@@ -420,7 +426,7 @@ export default function ArchiveWorkshell({
 
             {/* ─── CENTER PANEL: THE DOCUMENT CANVAS ─── */}
             <main
-              className={`lg:col-span-6 xl:col-span-1 xl:px-12 relative p-6 sm:p-10 lg:p-12 overflow-y-auto bg-[#121211] ${
+              className={`@container lg:col-span-6 xl:col-span-1 xl:px-12 relative p-6 sm:p-10 lg:p-12 overflow-y-auto bg-[#121211] ${
                 mobilePanel === "doc" ? "block" : "hidden lg:block"
               }`}
             >

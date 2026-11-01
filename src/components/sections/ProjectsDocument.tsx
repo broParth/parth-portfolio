@@ -6,8 +6,8 @@ export default function ProjectsDocument() {
   return (
     <article className="mx-auto max-w-2xl space-y-10 pr-2 sm:pr-4">
       <header className="space-y-3">
-        <div className="inline-block bg-[#F4EFE6] px-4 py-2 text-[#121211] shadow-md border-b-2 border-[#642D3D] rounded-sm">
-          <h1 className="font-display text-2xl sm:text-3xl font-extrabold uppercase tracking-tight leading-none text-[#121211]">
+        <div className="inline-block max-w-full bg-[#F4EFE6] px-4 py-2 text-[#121211] shadow-md border-b-2 border-[#642D3D] rounded-sm">
+          <h1 className="archive-document-heading font-display font-extrabold uppercase text-[#121211]">
             PARTH — PROJECTS PORTFOLIO
           </h1>
         </div>
@@ -94,7 +94,7 @@ export default function ProjectsDocument() {
 
               <Link
                 href={`/projects/${project.slug}`}
-                className="flex items-center justify-between gap-3 border-t border-[rgba(233,224,208,0.08)] pt-3 font-mono text-[10px] font-bold tracking-wide text-[#E9E0D0] transition-colors group-hover:text-[#F4EFE6]"
+                className="flex min-h-11 xl:min-h-0 items-center justify-between gap-3 border-t border-[rgba(233,224,208,0.08)] pt-3 font-mono text-[10px] font-bold tracking-wide text-[#E9E0D0] transition-colors group-hover:text-[#F4EFE6] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8C6BE]"
               >
                 <span>OPEN PROJECT DOSSIER</span>
                 <ArrowUpRight

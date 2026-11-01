@@ -11,7 +11,7 @@ export default function ExperienceDocument() {
     <article className="mx-auto max-w-2xl space-y-10 pr-2 sm:pr-4">
       <header className="space-y-3">
         <div className="inline-block max-w-full rounded-sm border-b-2 border-[#642D3D] bg-[#F4EFE6] px-4 py-2 text-[#121211] shadow-md">
-          <h1 className="font-display text-2xl font-extrabold uppercase leading-none tracking-tight text-[#121211] sm:text-3xl">
+          <h1 className="archive-document-heading font-display font-extrabold uppercase text-[#121211]">
             PARTH — PROFESSIONAL ACTIVITY RECORD
           </h1>
         </div>

@@ -256,3 +256,15 @@
 - Removed Stack from ArchiveWorkshell navigation and section metadata. `/stack` now redirects to `/about`; the unreferenced StackDocument and stack content source were removed.
 - Updated the project route specification and recorded ADR-008. No other section content, audio implementation, or audio assets were changed.
 - Validation: `npx tsc --noEmit` and `git diff --check` results are recorded in the implementation turn report.
+
+## Follow-up: Responsive Interaction Corrections (2026-11-01)
+- Separated horizontal tab scrolling from the NAV/DOC/GRAPH workspace switcher so narrow screens retain access to all three controls.
+- Added 44px switcher and project navigation targets, visible keyboard focus, selected/expanded semantics, and tap activation for the About redaction reveal.
+- Allowed long fallback project slugs to wrap within the stamped heading.
+- Source-reviewed the homepage, document routes, project detail, About marquee, Experience, Contact, and `/stack` redirect against the requested viewport breakpoints. A live browser viewport audit could not be performed: no local server was running, and sandboxed localhost requests were denied.
+- Validation: `npx tsc --noEmit` and `git diff --check` passed. No audio code or assets were changed.
+
+## Follow-up: Responsive Archival Document Headings (2026-11-01)
+- Added one shared `archive-document-heading` style for all stamped cream document titles. Font size now follows the document pane width through container query units, scales down proportionally, and wraps long words instead of clipping.
+- Applied it to About, Projects, project dossiers (including the generic slug fallback), Experience, and Contact. Added the missing `max-w-full` constraint to the Projects title banner.
+- Validation: `npx tsc --noEmit` passed and `git diff --check` passed. Browser verification used the running IDE server at its available viewport; exact narrow viewport widths could not be set in the available browser controls.
