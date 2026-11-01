@@ -230,7 +230,7 @@ export default function AuthorizationIntro() {
               if (event.pointerType === "mouse") setIsHovered(false);
             }}
             onClick={toggleBook}
-            className="group relative mb-8 h-[11.5rem] w-[9rem] cursor-pointer overflow-visible rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A1AAA0] focus-visible:ring-offset-8 focus-visible:ring-offset-[#121211] disabled:cursor-default sm:mb-10 sm:h-[18.5rem] sm:w-[14rem] lg:h-[20.5rem] lg:w-[16rem]"
+            className="group relative mb-8 h-[11.5rem] w-[min(18rem,calc(100vw-2rem))] cursor-pointer overflow-visible rounded-md focus-visible:outline-none disabled:cursor-default sm:mb-10 sm:h-[18.5rem] sm:w-[14rem] lg:h-[20.5rem] lg:w-[16rem]"
             style={{ perspective: "1200px" }}
           >
             <motion.div
@@ -239,110 +239,120 @@ export default function AuthorizationIntro() {
               className="absolute inset-0"
               style={{ transformStyle: "preserve-3d" }}
             >
-              <motion.div
-                initial={{ rotateX: -8, rotateY: -22, rotateZ: -1 }}
-                animate={rotationControls}
-                className="absolute inset-0"
+              <div
+                className={`absolute inset-y-0 left-1/4 w-1/2 transition-transform motion-reduce:transition-none sm:inset-0 sm:w-full sm:transition-none ${
+                  bookOpen
+                    ? "translate-x-1/2 duration-[720ms] ease-[cubic-bezier(0.22,1,0.36,1)] sm:translate-x-0"
+                    : "translate-x-0 duration-[560ms] ease-[cubic-bezier(0.4,0,0.2,1)]"
+                }`}
                 style={{ transformStyle: "preserve-3d" }}
               >
-                {/* Back board and cloth-bound page block */}
-                <div
-                  className="absolute inset-0 rounded-[5px] bg-[#642D3D] shadow-[0_25px_45px_rgba(0,0,0,0.5)]"
-                  style={{ transform: "translateZ(-8px)" }}
-                />
-                <div
-                  className="absolute inset-y-[2.5%] left-[4%] right-[-3%] overflow-hidden rounded-[2px] border border-[#d4c8b4]/60 bg-[#E9E0D0]"
-                  style={{
-                    transform: "translateZ(1px)",
-                    backgroundImage:
-                      "repeating-linear-gradient(to bottom, rgba(88,72,58,0.16) 0 1px, transparent 1px 4px), linear-gradient(90deg, #d9cebb, #f2eadc 9%, #e9e0d0 100%)",
-                  }}
-                >
-                  <div className="absolute inset-x-[10%] top-[16%] h-px bg-[#642D3D]/35" />
-                  <div className="absolute inset-x-[10%] top-[21%] h-px bg-[#642D3D]/20" />
-                  <div className="absolute inset-x-[10%] bottom-[14%] h-px bg-[#642D3D]/30" />
-                </div>
-
-                {/* Visible page edges and restrained spine */}
-                <div
-                  aria-hidden="true"
-                  className="absolute inset-y-[5%] right-[1%] w-[4%] border-l border-[#b7a890] bg-[repeating-linear-gradient(to_bottom,#efe6d7_0_2px,#cfc2ad_2px_3px)]"
-                  style={{ transform: "translateZ(5px)" }}
-                />
-                <div
-                  aria-hidden="true"
-                  className="absolute inset-y-[1%] left-[1%] w-[7%] rounded-l-[4px] bg-[linear-gradient(90deg,#48212d_0%,#642D3D_48%,#7a3949_100%)] shadow-[inset_3px_0_5px_rgba(0,0,0,0.25)]"
-                  style={{ transform: "translateZ(10px)" }}
-                >
-                  <span className="absolute inset-y-[8%] left-1/2 w-px -translate-x-1/2 bg-[#A1AAA0]/35" />
-                  <span className="absolute inset-x-[30%] top-[12%] h-px bg-[#A1AAA0]/45" />
-                  <span className="absolute inset-x-[30%] bottom-[12%] h-px bg-[#A1AAA0]/45" />
-                </div>
-
-                {/* Hinged front board: its reverse face becomes visible when opened */}
                 <motion.div
-                  initial={{ rotateY: 0 }}
-                  animate={coverControls}
-                  className="absolute inset-0 rounded-[5px]"
-                  style={{
-                    transformStyle: "preserve-3d",
-                    transformOrigin: "left center",
-                  }}
+                  initial={{ rotateX: -8, rotateY: -22, rotateZ: -1 }}
+                  animate={rotationControls}
+                  className="absolute inset-0"
+                  style={{ transformStyle: "preserve-3d" }}
                 >
+                  {/* Back board and cloth-bound page block */}
                   <div
-                    className="absolute inset-0 overflow-hidden rounded-[5px] border border-[#8c5360]/50 bg-[linear-gradient(130deg,#743747_0%,#642D3D_40%,#512431_100%)] shadow-[4px_8px_16px_rgba(0,0,0,0.32)]"
-                    style={{ transform: "translateZ(11px)", backfaceVisibility: "hidden" }}
-                  >
-                    <div className="absolute inset-[5%] rounded-[2px] border border-[#A1AAA0]/25" />
-                    <div className="absolute inset-x-[12%] top-[14%] h-px bg-[#E9E0D0]/40" />
-                    <div className="absolute inset-x-[12%] bottom-[14%] h-px bg-[#E9E0D0]/40" />
-                    <div className="absolute inset-0 flex flex-col items-center justify-center px-5 text-[#E9E0D0]">
-                      <span className="font-mono text-[8px] tracking-[0.35em] text-[#A1AAA0] sm:text-[10px]">
-                        PARTH ARCHIVE
-                      </span>
-                      <span className="mt-3 font-display text-lg font-bold tracking-[0.12em] sm:text-2xl">
-                        BUREAU
-                      </span>
-                      <span className="mt-1 font-mono text-[8px] tracking-[0.28em] text-[#E9E0D0]/60 sm:text-[9px]">
-                        PERSONNEL FILE · 001
-                      </span>
-                      <span className="mt-6 h-5 w-5 rotate-45 border border-[#A1AAA0]/55" />
-                    </div>
-                    <div className="absolute inset-y-0 left-0 w-[22%] bg-gradient-to-r from-white/[0.07] to-transparent" />
-                  </div>
+                    className="absolute inset-0 rounded-[5px] bg-[#642D3D] shadow-[0_25px_45px_rgba(0,0,0,0.5)]"
+                    style={{ transform: "translateZ(-8px)" }}
+                  />
                   <div
-                    className="absolute inset-0 flex flex-col items-center justify-center rounded-[5px] border border-[#c9b99f] bg-[linear-gradient(145deg,#f0e7d8,#d7c9b3)] text-[#342b25]"
+                    className="absolute inset-y-[2.5%] left-[4%] right-[-3%] overflow-hidden rounded-[2px] border border-[#d4c8b4]/60 bg-[#E9E0D0]"
                     style={{
-                      transform: "rotateY(180deg) translateZ(10px)",
-                      backfaceVisibility: "hidden",
+                      transform: "translateZ(1px)",
+                      backgroundImage:
+                        "repeating-linear-gradient(to bottom, rgba(88,72,58,0.16) 0 1px, transparent 1px 4px), linear-gradient(90deg, #d9cebb, #f2eadc 9%, #e9e0d0 100%)",
                     }}
                   >
-                    <span className="font-mono text-[8px] tracking-[0.28em] text-[#642D3D] sm:text-[10px]">
-                      ARCHIVE ACCESS
-                    </span>
-                    <span className="mt-3 font-display text-lg font-semibold tracking-wide sm:text-xl">
-                      BUREAU FILE
-                    </span>
-                    <span className="mt-2 h-px w-12 bg-[#642D3D]/50" />
-                    <span className="mt-3 font-mono text-[8px] tracking-[0.16em] text-[#5c5c54] sm:text-[9px]">
-                      HANDLE WITH CARE
-                    </span>
+                    <div className="absolute inset-x-[10%] top-[16%] h-px bg-[#642D3D]/35" />
+                    <div className="absolute inset-x-[10%] top-[21%] h-px bg-[#642D3D]/20" />
+                    <div className="absolute inset-x-[10%] bottom-[14%] h-px bg-[#642D3D]/30" />
                   </div>
-                </motion.div>
-              </motion.div>
-            </motion.div>
 
-            {/* Magnetic suspension shadow, intentionally faint */}
-            <motion.span
-              aria-hidden="true"
-              initial={{ opacity: reduceMotion ? 0.26 : 0.2, scale: reduceMotion ? 0.92 : 0.84 }}
-              animate={shadowControls}
-              className="pointer-events-none absolute -bottom-7 left-[10%] h-3 w-[80%] rounded-[50%] bg-[#E9E0D0]/20 blur-md"
-            />
-            <span
-              aria-hidden="true"
-              className="pointer-events-none absolute -bottom-7 left-[13%] h-3 w-[74%] rounded-[50%] border border-[#A1AAA0]/15"
-            />
+                  {/* Visible page edges and restrained spine */}
+                  <div
+                    aria-hidden="true"
+                    className="absolute inset-y-[5%] right-[1%] w-[4%] border-l border-[#b7a890] bg-[repeating-linear-gradient(to_bottom,#efe6d7_0_2px,#cfc2ad_2px_3px)]"
+                    style={{ transform: "translateZ(5px)" }}
+                  />
+                  <div
+                    aria-hidden="true"
+                    className="absolute inset-y-[1%] left-[1%] w-[7%] rounded-l-[4px] bg-[linear-gradient(90deg,#48212d_0%,#642D3D_48%,#7a3949_100%)] shadow-[inset_3px_0_5px_rgba(0,0,0,0.25)]"
+                    style={{ transform: "translateZ(10px)" }}
+                  >
+                    <span className="absolute inset-y-[8%] left-1/2 w-px -translate-x-1/2 bg-[#A1AAA0]/35" />
+                    <span className="absolute inset-x-[30%] top-[12%] h-px bg-[#A1AAA0]/45" />
+                    <span className="absolute inset-x-[30%] bottom-[12%] h-px bg-[#A1AAA0]/45" />
+                  </div>
+
+                  {/* Hinged front board: its reverse face becomes visible when opened */}
+                  <motion.div
+                    initial={{ rotateY: 0 }}
+                    animate={coverControls}
+                    className="absolute inset-0 rounded-[5px]"
+                    style={{
+                      transformStyle: "preserve-3d",
+                      transformOrigin: "left center",
+                    }}
+                  >
+                    <div
+                      className="absolute inset-0 overflow-hidden rounded-[5px] border border-[#8c5360]/50 bg-[linear-gradient(130deg,#743747_0%,#642D3D_40%,#512431_100%)] shadow-[4px_8px_16px_rgba(0,0,0,0.32)]"
+                      style={{ transform: "translateZ(11px)", backfaceVisibility: "hidden" }}
+                    >
+                      <div className="absolute inset-[5%] rounded-[2px] border border-[#A1AAA0]/25" />
+                      <div className="absolute inset-x-[12%] top-[14%] h-px bg-[#E9E0D0]/40" />
+                      <div className="absolute inset-x-[12%] bottom-[14%] h-px bg-[#E9E0D0]/40" />
+                      <div className="absolute inset-0 flex flex-col items-center justify-center px-5 text-[#E9E0D0]">
+                        <span className="font-mono text-[8px] tracking-[0.35em] text-[#A1AAA0] sm:text-[10px]">
+                          PARTH ARCHIVE
+                        </span>
+                        <span className="mt-3 font-display text-lg font-bold tracking-[0.12em] sm:text-2xl">
+                          BUREAU
+                        </span>
+                        <span className="mt-1 font-mono text-[8px] tracking-[0.28em] text-[#E9E0D0]/60 sm:text-[9px]">
+                          PERSONNEL FILE · 001
+                        </span>
+                        <span className="mt-6 h-5 w-5 rotate-45 border border-[#A1AAA0]/55" />
+                      </div>
+                      <div className="absolute inset-y-0 left-0 w-[22%] bg-gradient-to-r from-white/[0.07] to-transparent" />
+                    </div>
+                    <div
+                      className="absolute inset-0 flex flex-col items-center justify-center rounded-[5px] border border-[#c9b99f] bg-[linear-gradient(145deg,#f0e7d8,#d7c9b3)] text-[#342b25]"
+                      style={{
+                        transform: "rotateY(180deg) translateZ(10px)",
+                        backfaceVisibility: "hidden",
+                      }}
+                    >
+                      <span className="font-mono text-[8px] tracking-[0.28em] text-[#642D3D] sm:text-[10px]">
+                        ARCHIVE ACCESS
+                      </span>
+                      <span className="mt-3 font-display text-lg font-semibold tracking-wide sm:text-xl">
+                        BUREAU FILE
+                      </span>
+                      <span className="mt-2 h-px w-12 bg-[#642D3D]/50" />
+                      <span className="mt-3 font-mono text-[8px] tracking-[0.16em] text-[#5c5c54] sm:text-[9px]">
+                        HANDLE WITH CARE
+                      </span>
+                    </div>
+                  </motion.div>
+                </motion.div>
+
+              </div>
+
+              {/* Magnetic suspension shadow follows the book's original float */}
+              <motion.span
+                aria-hidden="true"
+                initial={{ opacity: reduceMotion ? 0.26 : 0.2, scale: reduceMotion ? 0.92 : 0.84 }}
+                animate={shadowControls}
+                className="pointer-events-none absolute -bottom-7 left-[30%] h-3 w-[40%] rounded-[50%] bg-[#E9E0D0]/20 blur-md sm:left-[10%] sm:w-[80%]"
+              />
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute -bottom-7 left-[31.5%] h-3 w-[37%] rounded-[50%] border border-[#A1AAA0]/15 sm:left-[13%] sm:w-[74%]"
+              />
+            </motion.div>
           </button>
 
           <div className="space-y-2">

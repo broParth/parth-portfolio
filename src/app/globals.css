@@ -93,10 +93,6 @@ body {
   animation: about-tech-marquee-scroll 48s linear infinite;
 }
 
-.about-tech-marquee:hover .about-tech-marquee__track {
-  animation-play-state: paused;
-}
-
 .about-tech-marquee__copy {
   display: flex;
   flex: none;
