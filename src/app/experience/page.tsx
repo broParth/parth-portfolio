@@ -4,7 +4,8 @@ import ExperienceDocument from "@/components/sections/ExperienceDocument";
 
 export const metadata: Metadata = {
   title: "Experience | Parth",
-  description: "Work history, CTF achievements, and hackathon milestones.",
+  description:
+    "A professional activity record of student status, club involvement, hackathons, and learning programmes.",
 };
 
 export default function ExperiencePage() {
