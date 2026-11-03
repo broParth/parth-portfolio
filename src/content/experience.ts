@@ -48,10 +48,10 @@ export const activityRecords: readonly ActivityRecord[] = [
   {
     id: "ACTIVITY 04",
     category: "CERTIFICATIONS & LEARNING",
-    title: "Data Science with AI",
-    organization: "Prwatech",
-    description: "Workshop.",
-    status: "WORKSHOP",
+    title: "Computer Networks",
+    organization: "NPTEL",
+    description: "Learning programme",
+    status: "LEARNING PROGRAMME",
   },
   {
     id: "ACTIVITY 05",
