@@ -50,7 +50,7 @@ export const activityRecords: readonly ActivityRecord[] = [
     category: "CERTIFICATIONS & LEARNING",
     title: "Computer Networks",
     organization: "NPTEL",
-    description: "Learning programme",
+    description: "Learning programme / course",
     status: "LEARNING PROGRAMME",
   },
   {
