@@ -27,7 +27,7 @@ const monoFont = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: "Parth | Developer Portfolio",
-  description: "Personal portfolio of Parth â€” Computer Science, AI, Software Engineering, Cybersecurity.",
+  description: "Personal portfolio of Parth — Computer Science, AI, Software Engineering, Cybersecurity.",
 };
 
 export default function RootLayout({
@@ -43,7 +43,7 @@ export default function RootLayout({
     >
       <body
         suppressHydrationWarning
-        className="min-h-full flex flex-col bg-[#0c0b0a] text-[#f4f0ea] font-sans selection:bg-[#d97736]/30 selection:text-[#f4f0ea]"
+        className="min-h-full flex flex-col bg-desk text-ink font-sans selection:bg-accent/60 selection:text-ink"
       >
         <AuthorizationTransitionProvider>
           {/* Layer 10: Film Grain, Vignette & Ambient Light Overlay */}

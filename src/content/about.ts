@@ -2,7 +2,8 @@
  * About Me Content Source of Truth
  *
  * Keep content easy to edit so copy and visual details can be refined.
- * Rendered inside ArchiveWorkshell at `/about`.
+ * `fieldNotes` renders on `/about`; `quickReference` renders in the
+ * workspace's File Properties panel on every page.
  */
 
 export interface QuickReferenceItem {
@@ -10,28 +11,21 @@ export interface QuickReferenceItem {
   value: string;
 }
 
+export interface Offering {
+  title: string;
+  detail: string;
+}
+
 export interface AboutContent {
   meta: {
     sectionLabel: string;
-    record: string;
-    title: string;
     subtitle: string;
   };
-  identity: {
+  fieldNotes: {
     headline: string;
-    paragraphs: string[];
-  };
-  investigations: {
-    title: string;
-    focusAreas: {
-      domain: string;
-      note: string;
-    }[];
-  };
-  personalNotes: {
-    title: string;
-    headline: string;
-    paragraphs: string[];
+    intro: string;
+    offeringsTitle: string;
+    offerings: Offering[];
   };
   quickReference: {
     title: string;
@@ -42,34 +36,32 @@ export interface AboutContent {
 export const aboutContent: AboutContent = {
   meta: {
     sectionLabel: "PERSONNEL FILE",
-    record: "001",
-    title: "About Me",
     subtitle: "A little about the person behind the interface.",
   },
-  identity: {
+  fieldNotes: {
     headline: "I want to know what happens behind the button.",
-    paragraphs: [
-      "I'm Parth, a Computer Science student who likes looking beneath the surface of technology. Using an application is one thing; understanding how it's put together, how its systems communicate, and what makes the experience work is much more interesting to me.",
-      "What got me interested in tech in the first place? Money, obviously.",
-      "But the curiosity stuck. I started wanting to understand the machinery behind the things we use every day, not just learn which buttons to press.",
-    ],
-  },
-  investigations: {
-    title: "Current investigations",
-    focusAreas: [
-      { domain: "Software Engineering", note: "Structures & system architecture" },
-      { domain: "Cybersecurity", note: "System behavior, resilience & failure points" },
-      { domain: "UI/UX & Interaction", note: "Intuitive, visual & engaging experiences" },
-      { domain: "Product & Growth", note: "Customer acquisition & audience engagement" },
-      { domain: "AI / Machine Learning", note: "Intelligent systems & software synergy" },
-    ],
-  },
-  personalNotes: {
-    title: "Personal notes",
-    headline: "Curiosity: high. Motivation: varies by day.",
-    paragraphs: [
-      "I'm curious, occasionally lazy, and still figuring things out. I'd rather acknowledge that I'm learning than pretend I've already got everything sorted.",
-      "I find myself drawn to questions, ideas, and the details other people might overlook. The curiosity is there, even when the motivation takes a little longer to show up.",
+    intro:
+      "I'm Parth, a Computer Science student at New Horizon College of Engineering. I build software and like understanding how it's put together underneath — across software engineering, cybersecurity, and UI/UX.",
+    offeringsTitle: "What I bring",
+    offerings: [
+      {
+        title: "Software engineering",
+        detail:
+          "Desktop tooling in Python — dashboards, background services, and Windows-level integration (Adaptive UI Engine).",
+      },
+      {
+        title: "Security mindset",
+        detail:
+          "Built SQL injection challenges for the CSEH club's CTF, Cache Me If You Can.",
+      },
+      {
+        title: "Interface design",
+        detail: "Intuitive, visual interfaces people actually enjoy using.",
+      },
+      {
+        title: "Hackathon pace",
+        detail: "SAP Hackfest finalist; Smart India Hackathon project.",
+      },
     ],
   },
   quickReference: {

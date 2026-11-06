@@ -61,3 +61,24 @@ This log records major design, technical, and architectural decisions. Decisions
 - **Context:** The user chose to retire the dedicated Tech Stack document and present the résumé inventory as a compact part of the existing About document.
 - **Decision:** Add a subdued, continuous CSS marquee inside the existing About Field Notes content box. Keep one accessible static text representation, pause the visual track on hover, and present a wrapped static fallback when reduced motion is preferred. Remove Stack from workspace navigation and redirect `/stack` to `/about` for existing links.
 - **Consequences:** The dedicated StackDocument and stack content source are obsolete and may be removed. No new route, dependency, skill claims, or project associations are introduced.
+
+### ADR-009: Remove Archive Soundtrack
+- **Date:** 2026-11-06
+- **Status:** Approved
+- **Context:** The looping soundtrack (`public/audio/archive-theme.mp3`) carried potential copyright risk, and autoplaying audio is intrusive for portfolio visitors.
+- **Decision:** Remove the audio asset, the persistent `ArchiveAudioProvider`, the workspace mute control, and the intro autoplay behavior. Also remove the unused `RevealSection` component noted in ADR-006.
+- **Consequences:** The site is silent. The book intro and AUTHORIZE transition are unchanged apart from no longer starting playback.
+
+### ADR-010: Simplified Reading Layout and Design Tokens
+- **Date:** 2026-11-06
+- **Status:** Proposed (on `improvements` branch, pending user review)
+- **Context:** Visitor feedback: background too dark, text too small, layout too cluttered. Audit found ~66% of About text ≤12px, low-contrast secondary text, seven accent colours, and a faux Obsidian workspace full of non-functional chrome and invented metadata that conflicted with the no-invented-content rule. Supersedes ADR-007's workspace-native navigation.
+- **Decision:** Centralise colours as theme tokens; lift the base background and text contrast; set 16–18px body and ≥12px labels; replace the three-panel workspace with a top nav, centred reading column and footer; remove fake properties/graph/status UI; reduce accents to burgundy + cream; show name and role on the landing page; return real 404s for unknown project slugs.
+- **Consequences:** Archive identity is carried by the stamped cream headings, mono section labels, burgundy accent, grain, and the book intro rather than by simulated app chrome. Visual changes are now made in `globals.css` tokens.
+
+### ADR-011: Restore the Archive Workspace (Readable Edition)
+- **Date:** 2026-11-06
+- **Status:** Proposed (on `improvements` branch, pending user review). Supersedes the layout portion of ADR-010; ADR-010's tokens, type sizes, accent reduction, landing name/role, and 404 handling remain.
+- **Context:** The simplified top-nav layout read as generic; the user wants to keep the archival workspace idea while making it easier on the eyes and keeping About brief.
+- **Decision:** Reinstate the multi-panel archive workspace with only real, functional content (navigator of real documents, clickable graph of real documents, real status values), readable text sizes and lighter reading canvas. Reduce About to a single Field Notes record: intro, what I bring, Languages & Tools ticker.
+- **Consequences:** The workspace remains the site's identity; new pages/projects must be added to the navigator/graph data (FOLDERS / projects list) to appear.
