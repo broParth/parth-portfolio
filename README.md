@@ -42,53 +42,6 @@ Then open [http://localhost:3000](http://localhost:3000).
 | `npm run start` | Serve the production build      |
 | `npm run lint`  | Run ESLint                      |
 
-## Project structure
-
-```
-src/
-├── app/                          Routes (App Router)
-│   ├── page.tsx                  Landing page (book authorization intro)
-│   ├── about/                    About — personnel file
-│   ├── projects/                 Projects index and /projects/[slug] dossiers
-│   ├── experience/               Activity record
-│   ├── contact/                  Contact and résumé
-│   ├── stack/, portfolio/        Old addresses, redirect to /about
-│   ├── not-found.tsx             404 page
-│   ├── layout.tsx                Fonts, metadata, background, page scroll indicator
-│   └── globals.css               Theme tokens and global styles
-├── components/
-│   ├── ArchiveWorkshell.tsx      Workspace shell (tabs, navigator, panels, status bar)
-│   ├── ArchiveGraph.tsx          Rotating 3D graph view
-│   ├── AuthorizationIntro.tsx    Landing book and AUTHORIZE button
-│   ├── AuthorizationTransition.tsx  Curtain transition into the workspace
-│   ├── AtmosphericBackground.tsx Grain, vignette, glow, and grid backdrop
-│   ├── DocumentParts.tsx         Shared page header and section labels
-│   ├── ScrollThumb.tsx           Small custom scroll indicator
-│   ├── SocialLinks.tsx           Status-bar email / GitHub / Instagram icons
-│   ├── sections/                 About, Projects, Experience, Contact pages
-│   └── projects/
-│       └── ProjectDossier.tsx    Shared layout for every project dossier
-└── content/
-    ├── about.ts                  About copy and quick-reference facts
-    ├── experience.ts             Activity records
-    ├── projects.ts               Project records
-    ├── contact.ts                Email, social links, résumé file
-    └── fileProperties.ts         Builds the side panel's properties for each page
-public/
-└── resume.pdf                    Downloadable résumé
-```
-
-## Editing content
-
-Copy lives in typed files under `src/content/`, so text can be updated without touching layout code:
-
-- **About:** `src/content/about.ts`
-- **Experience:** `src/content/experience.ts`
-- **Projects:** `src/content/projects.ts`. A new project record automatically gets a card, a dossier page at `/projects/<slug>`, a navigator entry, and a graph node.
-- **Contact details and social links:** `src/content/contact.ts`
-- **Résumé:** replace `public/resume.pdf`
-- **Colours:** the theme tokens at the top of `src/app/globals.css`
-
 ## Projects featured
 
 - **[Adaptive UI Engine](https://github.com/broParth/Adaptive-UI-Interface).** A context-aware Windows desktop utility that reads keyboard and pointer activity, classifies it with a threshold-based finite state machine, and adapts the interface. Built with Nishant Chakravarthy.
