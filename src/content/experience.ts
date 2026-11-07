@@ -64,6 +64,6 @@ export const activityRecords: readonly ActivityRecord[] = [
 ];
 
 export const professionalStatus = {
-  label: "EMPLOYMENT & INTERNSHIPS",
-  statement: "No formal employment or internships to date.",
+  label: "AVAILABILITY",
+  statement: "Open to internships and software engineering opportunities.",
 } as const;
