@@ -1,10 +1,6 @@
 import { aboutContent } from "@/content/about";
 import { PageHeader } from "@/components/DocumentParts";
 
-interface AboutDocumentProps {
-  isStandalone?: boolean;
-}
-
 const technologies = [
   "Java",
   "Python",
@@ -21,15 +17,12 @@ const technologies = [
   "AWS EC2",
 ] as const;
 
-export default function AboutDocument({
-  isStandalone = false,
-}: AboutDocumentProps) {
+export default function AboutDocument() {
   const { meta, fieldNotes } = aboutContent;
 
   return (
     <article className="space-y-10">
       <PageHeader
-        as={isStandalone ? "h1" : "h2"}
         title={<>Parth — {meta.sectionLabel}</>}
         subtitle={meta.subtitle}
       />
@@ -84,7 +77,7 @@ export default function AboutDocument({
         </div>
 
         <div className="border-t border-line pt-5">
-          <h3 className="mb-2 font-mono text-xs font-semibold uppercase tracking-widest text-ink-faint">
+          <h3 className="mb-2 font-mono text-xs font-semibold uppercase tracking-widest text-ink-muted">
             Languages &amp; tools
           </h3>
           <p className="sr-only">

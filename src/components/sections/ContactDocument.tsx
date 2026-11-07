@@ -7,21 +7,21 @@ import {
   Network,
 } from "lucide-react";
 import { PageHeader, focusRing } from "@/components/DocumentParts";
+import { contactInfo } from "@/content/contact";
 
-// Keep the email value here only.
-const CONTACT_EMAIL = "parthchourasia6@gmail.com";
+const CONTACT_EMAIL = contactInfo.email;
 
 const channels = [
   {
     label: "LinkedIn",
     detail: "Professional profile and conversation",
-    href: "https://www.linkedin.com/in/parth-chourasia/",
+    href: contactInfo.linkedin.href,
     icon: Network,
   },
   {
     label: "GitHub",
     detail: "Code, repositories, and ongoing work",
-    href: "https://github.com/broParth",
+    href: contactInfo.github.href,
     icon: Code2,
   },
 ];
@@ -35,6 +35,9 @@ export default function ContactDocument() {
       />
 
       <section aria-labelledby="contact-intro" className="space-y-3">
+        <p className="font-mono text-xs font-bold uppercase tracking-[0.16em] text-sage">
+          OPEN TRANSMISSION
+        </p>
         <h2
           id="contact-intro"
           className="font-display text-xl font-bold text-ink sm:text-2xl"
@@ -53,7 +56,7 @@ export default function ContactDocument() {
       >
         <div className="flex flex-col gap-4 py-5 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex min-w-0 items-start gap-3">
-            <AtSign className="mt-1 h-5 w-5 shrink-0 text-accent-text" aria-hidden="true" />
+            <AtSign className="mt-1 h-5 w-5 shrink-0 text-sage" aria-hidden="true" />
             <div className="min-w-0 space-y-1">
               <h3 className="font-mono text-sm font-bold uppercase tracking-widest text-ink">
                 Email
@@ -79,9 +82,9 @@ export default function ContactDocument() {
             className={`group flex min-h-20 items-center justify-between gap-4 py-5 transition-colors ${focusRing}`}
           >
             <span className="flex min-w-0 items-start gap-3">
-              <Icon className="mt-1 h-5 w-5 shrink-0 text-accent-text" aria-hidden="true" />
+              <Icon className="mt-1 h-5 w-5 shrink-0 text-sage" aria-hidden="true" />
               <span className="min-w-0 space-y-1">
-                <span className="block font-mono text-sm font-bold uppercase tracking-widest text-ink group-hover:text-accent-text">
+                <span className="block font-mono text-sm font-bold uppercase tracking-widest text-ink group-hover:text-paper">
                   {label}
                 </span>
                 <span className="block text-[15px] text-ink-muted">{detail}</span>
@@ -99,15 +102,18 @@ export default function ContactDocument() {
         aria-labelledby="resume-title"
         className="overflow-hidden rounded border border-line bg-surface"
       >
-        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line px-5 py-3 font-mono text-xs uppercase tracking-widest text-ink-faint">
+        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line px-5 py-3 font-mono text-xs uppercase tracking-widest text-ink-muted">
           <span className="flex items-center gap-2">
-            <FileText className="h-4 w-4 text-accent-text" aria-hidden="true" />
+            <FileText className="h-4 w-4 text-sage" aria-hidden="true" />
             Curriculum vitae
           </span>
           <span>PDF</span>
         </div>
         <div className="flex flex-col gap-5 p-5 sm:flex-row sm:items-center sm:justify-between">
           <div className="min-w-0 space-y-1">
+            <p className="break-words font-mono text-xs tracking-wide text-sage">
+              FILE: PARTH_CHOURASIA_RESUME.PDF
+            </p>
             <h2 id="resume-title" className="font-display text-lg font-bold text-ink">
               Personnel document
             </h2>
@@ -116,8 +122,8 @@ export default function ContactDocument() {
             </p>
           </div>
           <a
-            href="/resume.pdf"
-            download="Parth_Chourasia_Resume.pdf"
+            href={contactInfo.resume.href}
+            download={contactInfo.resume.fileName}
             aria-label="Download Parth Chourasia résumé as a PDF"
             className={`inline-flex min-h-11 shrink-0 items-center justify-center gap-2 self-start rounded-sm border border-accent-text/60 bg-accent/40 px-5 font-mono text-sm font-bold tracking-wide text-ink transition-colors hover:bg-accent sm:self-center ${focusRing}`}
           >

@@ -29,7 +29,7 @@ export function PageHeader({
   );
 }
 
-/** Small archival section marker, e.g. "01 // Identity". */
+/** Archival section header: cream number chip + sage label, e.g. [01] CLUBS & COMMUNITY. */
 export function SectionLabel({
   number,
   children,
@@ -44,10 +44,13 @@ export function SectionLabel({
   return (
     <Tag
       id={id}
-      className="flex items-center gap-2 font-mono text-xs font-semibold uppercase tracking-widest text-ink-faint"
+      className="flex items-center gap-2 font-mono text-xs font-bold uppercase tracking-wider text-sage"
     >
-      {number && <span className="text-accent-text">{number}</span>}
-      {number && <span aria-hidden="true">{"//"}</span>}
+      {number && (
+        <span className="rounded-sm bg-paper px-2 py-0.5 font-display text-[11px] font-bold tracking-wide text-paper-ink shadow-sm">
+          {number}
+        </span>
+      )}
       <span>{children}</span>
     </Tag>
   );

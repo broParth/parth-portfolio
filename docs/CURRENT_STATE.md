@@ -360,3 +360,60 @@
 
 ## Revision: Thinner Spine (2026-11-07)
 - The vertical "PARTH // BUREAU" spine column is now a fixed 1.75rem (28px) instead of `minmax(2.75rem, 0.35fr)`, which grew to ~80px on wide screens. The freed width goes to the document column (xl track `minmax(38rem, 2.4fr)`). Checked at 1600px: spine 28px, no overflow.
+
+## Revision: Original Archive Red Restored (2026-11-07)
+- `accent-text` token set back to the original red `#C24141` (was a softened `#E0707A`). It drives every red marker: section/record numbers, "INFO", "UNFILTERED MEMO", Experience status labels, project card index, contact icons/arrows, and the active graph label.
+- Restored the red "PROPERTIES / PROJECT RECORD" header on the Adaptive UI Engine facts block and the red Workflow icon on "Input to adaptive response".
+- Graph: the active node is now red with a cream ring (like the original "SPECIMEN" node).
+- Note: `#C24141` is ~3.6:1 on the canvas — fine for bold/uppercase labels and icons, not for body text.
+- Dev server note: the "Jest worker encountered 2 child process exceptions" 500 recurred on a long-running dev server; restarting `next dev` clears it (environment issue, not code).
+- `tsc` and ESLint clean; checked at 1440px.
+
+## Revision: Original Text Palette Restored (2026-11-07)
+- Restored the first version's per-element text colours (tokens, no hex):
+  - **Sage `#B8C6BE`** (`text-sage`): section header labels, Experience "Current status" and organisation lines, project category line, Projects/dossier/source arrows, Contact channel icons, dossier supporting-system labels, state "RESPONSE" lines, implementation labels, technology chips, Languages & Tools ticker.
+  - **Burgundy-pink `#A83D50`** (`text-accent-bright`): Experience status labels and the architecture arrows.
+  - **Red `#C24141`** (`text-accent-text`): numbers, PROPERTIES, INFO, UNFILTERED MEMO (unchanged from last pass).
+  - **Grey `#A1AAA0`** (`text-ink-muted`): secondary labels where the original used it.
+  - **Neon `#74F65B`**: status markers in the chrome (unchanged).
+- `SectionLabel` restored to the original Experience header style: cream number chip + bold sage uppercase label.
+- Restored the original sage "OPEN TRANSMISSION" label and "FILE: PARTH_CHOURASIA_RESUME.PDF" line on Contact.
+- `tsc` and ESLint clean; checked Experience and Contact at 1440px.
+
+## Revision: Sticky Panels + Page-Specific File Properties (2026-11-07)
+- **Sticky side panels (lg+/md+):** the Notebook Navigator and the Graph/File Properties panel stay pinned 16px from the top while the document scrolls; the right panel scrolls internally if taller than the screen. Required changing the window from `overflow-hidden` to `overflow-clip`, and `html, body { overflow-x }` from `hidden` to `clip` (hidden made `body` a scroll container, which silently disables `position: sticky`).
+- **Page-specific File Properties:** new `src/content/fileProperties.ts` derives the panel from existing content per route — About/404: personnel quick reference; Projects: count, index, focus, technologies, source; project dossier: category, role, collaborator, states, stack, source; Experience: status, institution, record counts, hackathons, community; Contact: email, LinkedIn, GitHub, résumé, channels. Header reads "FILE PROPERTIES FOR {SUBJECT}".
+- New `src/content/contact.ts` holds email/LinkedIn/GitHub/résumé; ContactDocument now reads from it (single source).
+- Item 5 (mobile spacing) was mocked up in the browser only — not implemented. Proposal: phone outer padding 8px, short tab labels (ABOUT/PROJECTS/EXPERIENCE/CONTACT) so all fit, NAV/DOC/GRAPH as a full-width bar under the tabs, document padding 16–20px.
+- `tsc` and ESLint clean; sticky verified at 1440px (panels at top: 16px after scrolling 1600px); no horizontal overflow at 375px.
+
+## Revision: Phone Layout + Subtle Scrollbars (2026-11-07)
+- **Phone layout (item 5), desktop untouched:** all changes use `max-md:` / `max-sm:` variants only. Below 768px: short tab labels (ABOUT / PROJECTS / EXPERIENCE / CONTACT, icons hidden) so all four fit; NAV / DOC / GRAPH moved to a full-width bar under the tabs (equal thirds, 40px tall). Below 640px: outer padding 8px/6px (was 64px/16px), document padding 20px/16px, and no forced 750px workspace height. Verified at 1440px that outer padding (96/48), document padding (48), tab labels, and 750px min-height are unchanged; no horizontal overflow at 375px or 768px.
+- **Scrollbars:** replaced the grey/white defaults with a thin, semi-transparent magenta thumb (`#A83D50` at 45%, 75–80% on hover) on a transparent track; no arrow buttons. Standard `scrollbar-width`/`scrollbar-color` in `@layer base` (so utilities like the tab strip's `scrollbar-width:none` still win) plus `::-webkit-scrollbar` fallbacks. Removed the per-panel `[scrollbar-width:thin]`, which had made Chrome draw its default light bar.
+- `tsc` and ESLint clean.
+
+## Revision: Short Custom Scroll Thumb (2026-11-07)
+- Native scrollbar thumbs scale with content length (the graph panel's was nearly full height), and CSS cannot cap that. Added `src/components/ScrollThumb.tsx`: a fixed 36px × 3px magenta pill (`#A83D50` at 45%, 85% on hover) that slides to show scroll position and can be dragged with a mouse.
+- Used for the page (rendered once in `layout.tsx`, fixed to the right edge) and the sticky graph/properties panel (absolute, inside a `relative` sticky wrapper around the scroller). Native bars are hidden only there (`html { scrollbar-width: none }` + `html::-webkit-scrollbar`; panel `[scrollbar-width:none]`). Other scroll areas keep the thin magenta native style.
+- Thumbs hide when there is nothing to scroll. Verified at 1366×680: page thumb position matches scroll (400/663 → 387px), panel thumb reaches the bottom, dragging the page thumb scrolls the page. `tsc` and ESLint clean.
+
+## Cleanup: Unused Code Removed (2026-11-07)
+- Uninstalled unused dependencies `clsx` and `tailwind-merge` (never imported).
+- Removed the ignored `activeSection` prop from every page and the `ActiveSection` type (the workspace reads the URL), the always-true `isStandalone` prop on `AboutDocument` (About title stays the page `h1`), the never-displayed `quickReference.title`, the unused Plus Jakarta Sans 300 weight, and the empty `public/images/` folder.
+- Intentionally kept: `/stack` and `/portfolio` redirects (protect any old shared links), `AtmosphericBackground` (unchanged by request).
+- Verified: `tsc` and ESLint clean; all routes respond as before (`/`, `/about`, `/projects`, `/projects/adaptive-ui-engine`, `/experience`, `/contact` 200; `/projects/banana` 404; `/stack`, `/portfolio` 307; `/resume.pdf` 200); About renders with no console errors.
+
+## Addition: Parth Archive (this portfolio) as Project 02 (2026-11-07)
+- New record `parthArchive` in `src/content/projects.ts` (slug `parth-archive`, repo https://github.com/broParth/parth-portfolio). Content is factual to this codebase: overview, architecture flow (content sources → derived data → archive workshell → documents), design tokens and routing, four signature features (book authorization, reticular graph, archive workspace, scroll thumb), implementation notes, design iterations (feedback → rework → refinement), solo contribution, and the real stack from `package.json`.
+- New dossier `src/components/projects/ParthArchiveDocument.tsx` (same visual structure as Adaptive UI Engine); route map in `src/app/projects/[slug]/page.tsx` updated.
+- Projects card label is now per-project (`label` field: COLLABORATIVE SYSTEMS / PERSONAL BUILD) instead of a hardcoded string.
+- File Properties for a project now adapt: collaborator vs "Built by: Solo project", interaction states vs signature features, stack summary.
+- Graph: project nodes fan out ±0.95 rad around Projects on the inner ring so labels don't stack; checked at several rotation angles.
+- Navigator, graph (NODES: 7), breadcrumbs, and status bar ("2 PROJECTS") pick up the new project automatically.
+- Verified: `tsc` and ESLint clean; `/projects`, both dossiers 200; `/projects/banana` 404; no console errors.
+
+## Revision: Parth Archive — Ownership Labels Removed (2026-11-07)
+- Removed "My role", "Built by / Solo project", and the "My contribution" section from the Parth Archive dossier (it's self-evidently Parth's own build). The record no longer has a `contribution` field.
+- Dossier properties are now Category · Framework (Next.js 16 · React 19) · Language (TypeScript); sections renumbered 01–07.
+- File Properties shows MY ROLE / COLLABORATOR only for projects that have a `contribution` (Adaptive UI Engine keeps both, plus its "My contribution" section).
+- `tsc` and ESLint clean; both dossiers checked in the browser with no console errors.

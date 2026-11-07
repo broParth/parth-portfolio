@@ -8,8 +8,9 @@
  *
  * Text tokens are used at full opacity so they stay readable:
  *   ink #E9E0D0 ~14:1 · ink-muted #A1AAA0 ~7.5:1 · ink-faint ~5:1 on canvas.
- *   accent-text is a brightened burgundy-red for text (original #C24141 is
- *   too dim for small text); accent/accent-bright keep the original fills.
+ *   accent-text is the original archive red #C24141 (labels, numbers,
+ *   INFO/PROPERTIES markers, active graph node). It is ~3.6:1 on canvas, so
+ *   use it for bold/uppercase labels and icons rather than body text.
  */
 @theme {
   /* desk: page behind the window · panel: chrome & sidebars · canvas: document */
@@ -29,7 +30,7 @@
   --color-accent: #642d3d;
   --color-accent-deep: #642d3d;
   --color-accent-bright: #a83d50;
-  --color-accent-text: #e0707a;
+  --color-accent-text: #c24141;
 
   --color-neon: #74f65b;
   --color-ember: #d97736;
@@ -50,7 +51,7 @@ body {
   background-color: var(--color-desk);
   color: var(--color-ink);
   font-family: var(--font-sans), sans-serif;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 /* Typography Utility Classes */
@@ -102,7 +103,7 @@ body {
 
 .about-tech-marquee {
   overflow: hidden;
-  color: var(--color-ink-muted);
+  color: rgba(184, 198, 190, 0.76);
   font-family: var(--font-mono), monospace;
   font-size: 0.75rem;
   line-height: 1.75;
@@ -125,7 +126,7 @@ body {
 
 .about-tech-marquee__copy::after {
   content: "·";
-  color: var(--color-ink-faint);
+  color: rgba(184, 198, 190, 0.48);
 }
 
 .about-tech-marquee__entry {
@@ -135,7 +136,7 @@ body {
 }
 
 .about-tech-marquee__separator {
-  color: var(--color-ink-faint);
+  color: rgba(184, 198, 190, 0.48);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -170,20 +171,50 @@ body {
   }
 }
 
-/* Custom Scrollbar for tactile feel */
+/*
+ * Scrollbars: thin, subtle magenta (#A83D50) thumb on an invisible track —
+ * present but not obvious. The standard properties cover Chrome 121+,
+ * Edge and Firefox; the ::-webkit rules cover Safari / older Chromium.
+ */
+@layer base {
+  /* In the base layer so utilities (e.g. the tab strip's scrollbar-width:none) still win. */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(168, 61, 80, 0.45) transparent;
+  }
+
+  *:hover {
+    scrollbar-color: rgba(168, 61, 80, 0.75) transparent;
+  }
+
+  /* The page uses the small custom <ScrollThumb /> instead of the native bar. */
+  html {
+    scrollbar-width: none;
+  }
+}
+
+html::-webkit-scrollbar {
+  display: none;
+}
+
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 4px;
+  height: 4px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--color-desk);
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-surface-raised);
-  border-radius: 4px;
+  background: rgba(168, 61, 80, 0.45);
+  border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-accent);
+  background: rgba(168, 61, 80, 0.8);
+}
+
+::-webkit-scrollbar-button {
+  display: none;
 }

@@ -71,8 +71,13 @@ export default function ArchiveGraph({ pathname }: { pathname: string }) {
 
   const projectsAngle = sections[1].angle;
   const projectNodes = projects.map((project, i) => {
-    // Trail slightly ahead of Projects so node and label never overlap it.
-    const angle = projectsAngle + 0.75 + i * 0.45;
+    // Fan projects out on the inner ring around Projects: one project trails just
+    // ahead of it; several spread evenly ~1.9 rad apart so labels never stack.
+    const spread = 1.9;
+    const angle =
+      (projects.length as number) === 1
+        ? projectsAngle + 0.75
+        : projectsAngle + (i - (projects.length - 1) / 2) * spread;
     return {
       href: `/projects/${project.slug}`,
       label: project.title,
@@ -109,8 +114,8 @@ export default function ArchiveGraph({ pathname }: { pathname: string }) {
             <stop offset="100%" stopColor="var(--color-ink-faint)" />
           </radialGradient>
           <radialGradient id="graph-node-active" cx="35%" cy="30%" r="75%">
-            <stop offset="0%" stopColor="#ffd6db" />
-            <stop offset="100%" stopColor="var(--color-accent-bright)" />
+            <stop offset="0%" stopColor="#f4c6c6" />
+            <stop offset="100%" stopColor="var(--color-accent-text)" />
           </radialGradient>
         </defs>
 
@@ -180,7 +185,7 @@ export default function ArchiveGraph({ pathname }: { pathname: string }) {
               <circle cx={node.x} cy={node.y} r="14" fill="transparent" />
               <ellipse cx={node.x} cy={node.y + r + 1.5} rx={r * 0.9} ry={r * 0.3} className="fill-desk" opacity="0.6" />
               {active && (
-                <circle cx={node.x} cy={node.y} r={r + 3.5} fill="none" className="stroke-accent-bright" strokeWidth="0.8" />
+                <circle cx={node.x} cy={node.y} r={r + 3.5} fill="none" className="stroke-paper" strokeWidth="0.8" />
               )}
               <circle
                 cx={node.x}

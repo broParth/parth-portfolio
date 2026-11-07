@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import ArchiveWorkshell from "@/components/ArchiveWorkshell";
 import AdaptiveUIEngineDocument from "@/components/projects/AdaptiveUIEngineDocument";
+import ParthArchiveDocument from "@/components/projects/ParthArchiveDocument";
 import { projects } from "@/content/projects";
 
 interface ProjectDetailPageProps {
@@ -15,6 +16,7 @@ interface ProjectDetailPageProps {
  */
 const projectDocuments: Record<string, ComponentType> = {
   "adaptive-ui-engine": AdaptiveUIEngineDocument,
+  "parth-archive": ParthArchiveDocument,
 };
 
 // Only slugs listed above exist; anything else returns a real 404 via notFound().
@@ -42,7 +44,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
   if (!findProject(slug) || !Document) notFound();
 
   return (
-    <ArchiveWorkshell activeSection="projects">
+    <ArchiveWorkshell>
       <Document />
     </ArchiveWorkshell>
   );

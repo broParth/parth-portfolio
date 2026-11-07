@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <ArchiveWorkshell activeSection="contact">
+    <ArchiveWorkshell>
       <ContactDocument />
     </ArchiveWorkshell>
   );

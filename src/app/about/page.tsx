@@ -9,8 +9,8 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <ArchiveWorkshell activeSection="about">
-      <AboutDocument isStandalone={true} />
+    <ArchiveWorkshell>
+      <AboutDocument />
     </ArchiveWorkshell>
   );
 }

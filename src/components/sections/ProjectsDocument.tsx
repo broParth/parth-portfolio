@@ -17,18 +17,18 @@ export default function ProjectsDocument() {
             key={project.slug}
             className="group overflow-hidden rounded border border-line bg-surface transition-colors hover:border-accent-text/60"
           >
-            <div className="flex items-center justify-between gap-3 border-b border-line px-5 py-3 font-mono text-xs uppercase tracking-widest text-ink-faint sm:px-6">
+            <div className="flex items-center justify-between gap-3 border-b border-line px-5 py-3 font-mono text-xs uppercase tracking-widest text-ink-muted sm:px-6">
               <span className="flex items-center gap-2">
                 <span className="text-accent-text">
                   {String(index + 1).padStart(2, "0")}
                 </span>
-                <span>Collaborative systems</span>
+                <span>{project.label}</span>
               </span>
             </div>
 
             <div className="space-y-5 p-5 sm:p-6">
               <div className="space-y-2">
-                <p className="font-mono text-xs uppercase tracking-widest text-ink-faint">
+                <p className="font-mono text-xs uppercase tracking-widest text-sage">
                   {project.category}
                 </p>
                 <h2 className="font-display text-xl font-bold tracking-tight text-ink sm:text-2xl">
@@ -58,7 +58,7 @@ export default function ProjectsDocument() {
               >
                 <span>Open project dossier</span>
                 <ArrowUpRight
-                  className="h-5 w-5 shrink-0 text-accent-text transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                  className="h-5 w-5 shrink-0 text-sage transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
                   aria-hidden="true"
                 />
               </Link>

@@ -28,7 +28,6 @@ export interface AboutContent {
     offerings: Offering[];
   };
   quickReference: {
-    title: string;
     items: QuickReferenceItem[];
   };
 }
@@ -65,7 +64,6 @@ export const aboutContent: AboutContent = {
     ],
   },
   quickReference: {
-    title: "Quick reference",
     items: [
       {
         label: "CURRENT CHAPTER",

@@ -21,7 +21,7 @@ export default function ExperienceDocument() {
       >
         <h2
           id="current-status-heading"
-          className="font-mono text-xs font-bold uppercase tracking-widest text-ink-faint"
+          className="font-mono text-xs font-bold uppercase tracking-widest text-sage"
         >
           Current status
         </h2>
@@ -73,11 +73,11 @@ export default function ExperienceDocument() {
                     <h3 className="font-display text-lg font-bold leading-snug text-ink">
                       {record.title}
                     </h3>
-                    <span className="font-mono text-xs uppercase tracking-widest text-accent-text">
+                    <span className="font-mono text-xs uppercase tracking-widest text-accent-bright">
                       {record.status}
                     </span>
                   </div>
-                  <p className="font-mono text-sm text-ink-muted">
+                  <p className="font-mono text-sm text-sage">
                     {record.organization}
                   </p>
                   <p className="max-w-prose text-[15px] leading-relaxed text-ink/90 sm:text-[17px]">
@@ -96,7 +96,7 @@ export default function ExperienceDocument() {
       >
         <h2
           id="professional-status-heading"
-          className="font-mono text-xs font-bold uppercase tracking-widest text-ink-faint"
+          className="font-mono text-xs font-bold uppercase tracking-widest text-ink-muted"
         >
           {professionalStatus.label}
         </h2>

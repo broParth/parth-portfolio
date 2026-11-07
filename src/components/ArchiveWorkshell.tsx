@@ -1,7 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -15,24 +15,22 @@ import {
   Search,
   SlidersHorizontal,
 } from "lucide-react";
-import { aboutContent } from "@/content/about";
+import { getFileProperties } from "@/content/fileProperties";
 import { projects } from "@/content/projects";
 import { focusRing } from "@/components/DocumentParts";
 import ArchiveGraph from "@/components/ArchiveGraph";
+import ScrollThumb from "@/components/ScrollThumb";
 
-export type ActiveSection = "about" | "projects" | "experience" | "contact";
-
+/** The active document is read from the URL, so no section prop is needed. */
 interface ArchiveWorkshellProps {
-  /** Kept for existing call sites; the active document is read from the URL. */
-  activeSection?: ActiveSection;
   children: ReactNode;
 }
 
 const TABS = [
-  { href: "/about", label: "PARTH — PERSONNEL FILE", icon: FileText },
-  { href: "/projects", label: "PROJECTS", icon: FileCode },
-  { href: "/experience", label: "EXPERIENCE", icon: Briefcase },
-  { href: "/contact", label: "CONTACT", icon: Mail },
+  { href: "/about", label: "PARTH — PERSONNEL FILE", short: "ABOUT", icon: FileText },
+  { href: "/projects", label: "PROJECTS", short: "PROJECTS", icon: FileCode },
+  { href: "/experience", label: "EXPERIENCE", short: "EXPERIENCE", icon: Briefcase },
+  { href: "/contact", label: "CONTACT", short: "CONTACT", icon: Mail },
 ];
 
 /** Flat menu of real documents. Project dossiers sit indented under Projects. */
@@ -64,7 +62,8 @@ export default function ArchiveWorkshell({ children }: ArchiveWorkshellProps) {
   const pathname = usePathname();
   const [mobilePanel, setMobilePanel] = useState<"nav" | "doc" | "info">("doc");
   const [folderLabel, docLabel] = breadcrumbFor(pathname);
-  const { quickReference } = aboutContent;
+  const fileProperties = getFileProperties(pathname);
+  const infoScrollRef = useRef<HTMLDivElement>(null);
 
   const isTabActive = (href: string) =>
     pathname === href || pathname.startsWith(`${href}/`);
@@ -74,7 +73,7 @@ export default function ArchiveWorkshell({ children }: ArchiveWorkshellProps) {
       type="button"
       onClick={() => setMobilePanel(key)}
       aria-pressed={mobilePanel === key}
-      className={`min-h-11 min-w-11 rounded px-2 font-mono text-[11px] ${focusRing} ${extra} ${
+      className={`min-h-11 min-w-11 rounded px-2 font-mono text-[11px] max-md:min-h-10 max-md:flex-1 ${focusRing} ${extra} ${
         mobilePanel === key ? "bg-surface-raised text-ink" : "text-ink-muted"
       }`}
     >
@@ -83,7 +82,7 @@ export default function ArchiveWorkshell({ children }: ArchiveWorkshellProps) {
   );
 
   return (
-    <div className="relative flex min-h-screen w-full flex-col justify-center px-4 py-16 sm:px-8 sm:py-24 lg:px-12">
+    <div className="relative flex min-h-screen w-full flex-col justify-center px-1.5 py-2 sm:px-8 sm:py-24 lg:px-12">
       <a
         href="#document"
         className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-paper focus:px-3 focus:py-2 focus:text-paper-ink"
@@ -92,7 +91,7 @@ export default function ArchiveWorkshell({ children }: ArchiveWorkshellProps) {
       </a>
 
       <div className="relative z-10 mx-auto w-full max-w-[88rem]">
-        <div className="w-full overflow-hidden rounded-xl border border-line bg-canvas text-ink shadow-2xl">
+        <div className="w-full overflow-clip rounded-xl border border-line bg-canvas text-ink shadow-2xl">
           {/* ─── Title bar & tabs ─── */}
           <div className="border-b border-line bg-surface">
             <div className="flex items-center justify-between gap-3 px-3 py-2 font-mono text-[11px] text-ink-muted sm:px-4">
@@ -120,24 +119,25 @@ export default function ArchiveWorkshell({ children }: ArchiveWorkshellProps) {
               </span>
             </div>
 
-            <div className="flex items-center justify-between gap-2 border-t border-line bg-panel px-2 pt-1 sm:px-3">
-              <nav aria-label="Documents" className="min-w-0 flex-1">
+            <div className="flex items-center justify-between gap-2 border-t border-line bg-panel px-2 pt-1 max-md:flex-wrap max-md:gap-0 sm:px-3">
+              <nav aria-label="Documents" className="min-w-0 flex-1 max-md:basis-full">
                 <ul className="flex items-center gap-1 overflow-x-auto [scrollbar-width:none]">
-                  {TABS.map(({ href, label, icon: Icon }) => {
+                  {TABS.map(({ href, label, short, icon: Icon }) => {
                     const active = isTabActive(href);
                     return (
                       <li key={href} className="shrink-0">
                         <Link
                           href={href}
                           aria-current={active ? "page" : undefined}
-                          className={`flex min-h-11 items-center gap-2 rounded-t px-3 font-mono text-xs transition-colors xl:min-h-0 xl:py-1.5 sm:px-4 ${focusRing} ${
+                          className={`flex min-h-11 items-center gap-2 rounded-t px-3 font-mono text-xs transition-colors max-md:min-h-10 max-md:px-2.5 max-md:text-[11px] xl:min-h-0 xl:py-1.5 sm:px-4 ${focusRing} ${
                             active
                               ? "border-t-2 border-accent-bright bg-accent font-medium text-ink shadow-sm"
                               : "text-ink-muted hover:bg-surface-raised/60 hover:text-ink"
                           }`}
                         >
-                          <Icon className={`h-3.5 w-3.5 ${active ? "" : "opacity-60"}`} aria-hidden="true" />
-                          <span className="whitespace-nowrap tracking-tight">{label}</span>
+                          <Icon className={`h-3.5 w-3.5 max-md:hidden ${active ? "" : "opacity-60"}`} aria-hidden="true" />
+                          <span className="whitespace-nowrap tracking-tight max-md:hidden">{label}</span>
+                          <span className="whitespace-nowrap tracking-tight md:hidden">{short}</span>
                           {active && (
                             <span aria-hidden="true" className="ml-1.5 text-[11px] text-ink/70">
                               ×
@@ -155,7 +155,7 @@ export default function ArchiveWorkshell({ children }: ArchiveWorkshellProps) {
               </nav>
 
               {/* Small-screen view switcher */}
-              <div className="flex shrink-0 items-center gap-1 pb-1 lg:hidden" role="group" aria-label="Workspace panels">
+              <div className="flex shrink-0 items-center gap-1 pb-1 max-md:w-full max-md:border-t max-md:border-line max-md:py-1 lg:hidden" role="group" aria-label="Workspace panels">
                 {panelButton("nav", "NAV", "md:hidden")}
                 {panelButton("doc", "DOC")}
                 {panelButton("info", "GRAPH")}
@@ -164,12 +164,14 @@ export default function ArchiveWorkshell({ children }: ArchiveWorkshellProps) {
           </div>
 
           {/* ─── Workspace ─── */}
-          <div className="grid min-h-[750px] grid-cols-1 bg-canvas md:grid-cols-[15rem_minmax(0,1fr)] lg:grid-cols-12 xl:grid-cols-[minmax(15rem,0.95fr)_1.75rem_minmax(38rem,2.4fr)_minmax(18rem,1.1fr)]">
+          <div className="grid min-h-[750px] grid-cols-1 bg-canvas max-sm:min-h-0 md:grid-cols-[15rem_minmax(0,1fr)] lg:grid-cols-12 xl:grid-cols-[minmax(15rem,0.95fr)_1.75rem_minmax(38rem,2.4fr)_minmax(18rem,1.1fr)]">
             {/* Left: notebook navigator (flat menu) */}
             <aside
               aria-label="Notebook navigator"
-              className={`${mobilePanel === "nav" ? "flex" : "hidden"} flex-col justify-between border-line bg-panel p-3 md:flex md:border-r lg:col-span-3 xl:col-span-1`}
+              className={`${mobilePanel === "nav" ? "block" : "hidden"} border-line bg-panel p-3 md:block md:border-r lg:col-span-3 xl:col-span-1`}
             >
+              {/* Sticky: stays in view while the document scrolls */}
+              <div className="md:sticky md:top-4">
               <div className="space-y-3">
                 <div className="flex items-center justify-between border-b border-line pb-2 font-mono text-[10px] uppercase tracking-wider text-ink-muted">
                   <p className="flex items-center gap-2">
@@ -217,6 +219,7 @@ export default function ArchiveWorkshell({ children }: ArchiveWorkshellProps) {
                 </div>
                 <div>RECORD ENTRIES: {String(MENU.length).padStart(2, "0")} ACTIVE</div>
               </div>
+              </div>
             </aside>
 
             {/* Spine */}
@@ -240,7 +243,7 @@ export default function ArchiveWorkshell({ children }: ArchiveWorkshellProps) {
                   : mobilePanel === "doc"
                     ? "block"
                     : "hidden md:block"
-              } @container relative overflow-y-auto bg-canvas p-6 sm:p-10 lg:col-span-6 lg:p-12 xl:col-span-1 xl:px-12`}
+              } @container relative overflow-y-auto bg-canvas px-4 py-5 sm:p-10 lg:col-span-6 lg:p-12 xl:col-span-1 xl:px-12`}
             >
               {/* Ruler ticks */}
               <div
@@ -257,8 +260,14 @@ export default function ArchiveWorkshell({ children }: ArchiveWorkshellProps) {
             {/* Right: graph + file properties */}
             <aside
               aria-label="Graph and quick reference"
-              className={`${mobilePanel === "info" ? "flex" : "hidden"} flex-col gap-5 overflow-y-auto border-line bg-panel p-4 md:col-span-2 lg:col-span-3 lg:flex lg:border-l xl:col-span-1`}
+              className={`${mobilePanel === "info" ? "block" : "hidden"} border-line bg-panel p-4 md:col-span-2 lg:col-span-3 lg:block lg:border-l xl:col-span-1`}
             >
+              {/* Sticky: graph + properties stay in view; scrolls internally if taller than the screen */}
+              <div className="relative lg:sticky lg:top-4">
+              <div
+                ref={infoScrollRef}
+                className="flex flex-col gap-5 lg:max-h-[calc(100vh-2rem)] lg:overflow-y-auto lg:pr-2.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+              >
               <section className="space-y-2">
                 <h2 className="flex items-center justify-between border-b border-line pb-2 font-mono text-[10px] uppercase tracking-wider text-ink-muted">
                   <span className="flex items-center gap-1.5 text-ink">
@@ -272,11 +281,11 @@ export default function ArchiveWorkshell({ children }: ArchiveWorkshellProps) {
 
               <section className="space-y-2.5 font-mono">
                 <h2 className="flex items-center justify-between border-b border-line pb-1 text-[10px] uppercase tracking-wider text-ink-muted">
-                  <span>FILE PROPERTIES FOR PARTH</span>
+                  <span className="truncate">FILE PROPERTIES FOR {fileProperties.subject}</span>
                   <span className="font-bold text-accent-text">INFO</span>
                 </h2>
                 <dl className="space-y-2">
-                  {quickReference.items.map((item) => (
+                  {fileProperties.items.map((item) => (
                     <div key={item.label} className="space-y-0.5 rounded border border-line bg-surface p-2">
                       <dt className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider text-ink-muted">
                         <span className="h-1 w-1 rounded-full bg-accent-bright" aria-hidden="true" />
@@ -287,6 +296,9 @@ export default function ArchiveWorkshell({ children }: ArchiveWorkshellProps) {
                   ))}
                 </dl>
               </section>
+              </div>
+              <ScrollThumb target={infoScrollRef} />
+              </div>
             </aside>
           </div>
 
@@ -297,7 +309,7 @@ export default function ArchiveWorkshell({ children }: ArchiveWorkshellProps) {
             </span>
             <span className="flex items-center gap-4">
               <span className="text-ink-faint">
-                {TABS.length} SECTIONS · {projects.length} PROJECT{projects.length === 1 ? "" : "S"}
+                {TABS.length} SECTIONS · {projects.length} PROJECT{(projects.length as number) === 1 ? "" : "S"}
               </span>
               <span className="hidden text-line-strong sm:inline" aria-hidden="true">•</span>
               <span className="hidden text-neon sm:inline">UTF-8 // VERIFIED</span>
