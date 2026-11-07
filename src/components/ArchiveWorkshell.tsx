@@ -1,7 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { useRef, useState } from "react";
+import { useRef, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -20,6 +20,7 @@ import { projects } from "@/content/projects";
 import { focusRing } from "@/components/DocumentParts";
 import ArchiveGraph from "@/components/ArchiveGraph";
 import ScrollThumb from "@/components/ScrollThumb";
+import SocialLinks from "@/components/SocialLinks";
 
 /** The active document is read from the URL, so no section prop is needed. */
 interface ArchiveWorkshellProps {
@@ -212,12 +213,8 @@ export default function ArchiveWorkshell({ children }: ArchiveWorkshellProps) {
                 </ul>
               </div>
 
-              <div className="mt-6 space-y-1 border-t border-line pt-4 font-mono text-[10px] text-ink-muted">
-                <div className="flex justify-between">
-                  <span>STORAGE // LOCAL</span>
-                  <span className="text-neon">VAULT: VERIFIED</span>
-                </div>
-                <div>RECORD ENTRIES: {String(MENU.length).padStart(2, "0")} ACTIVE</div>
+              <div className="mt-6 border-t border-line pt-4 font-mono text-[10px] text-ink-muted">
+                STORAGE // LOCAL · {String(MENU.length).padStart(2, "0")} RECORDS
               </div>
               </div>
             </aside>
@@ -304,19 +301,48 @@ export default function ArchiveWorkshell({ children }: ArchiveWorkshellProps) {
 
           {/* ─── Status bar ─── */}
           <footer className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 border-t border-line bg-panel px-4 py-2 font-mono text-[11px] text-ink-muted">
-            <span>
-              {folderLabel} / <span className="text-ink">{docLabel}</span>
-            </span>
+            <SocialLinks />
             <span className="flex items-center gap-4">
               <span className="text-ink-faint">
                 {TABS.length} SECTIONS · {projects.length} PROJECT{(projects.length as number) === 1 ? "" : "S"}
               </span>
               <span className="hidden text-line-strong sm:inline" aria-hidden="true">•</span>
-              <span className="hidden text-neon sm:inline">UTF-8 // VERIFIED</span>
+              <IstClock />
             </span>
           </footer>
         </div>
       </div>
     </div>
+  );
+}
+
+/* ───────────────────────────────────────────────────────────────
+ * Live clock in Parth's time zone (IST) for the status bar.
+ * useSyncExternalStore keeps server and first client render identical
+ * ("IST --:--"), then ticks every 15 seconds.
+ * ─────────────────────────────────────────────────────────────── */
+const istFormatter = new Intl.DateTimeFormat("en-GB", {
+  hour: "2-digit",
+  minute: "2-digit",
+  hour12: false,
+  timeZone: "Asia/Kolkata",
+});
+
+function subscribeToClock(onChange: () => void) {
+  const id = window.setInterval(onChange, 15_000);
+  return () => window.clearInterval(id);
+}
+
+function IstClock() {
+  const time = useSyncExternalStore(
+    subscribeToClock,
+    () => istFormatter.format(new Date()),
+    () => null
+  );
+  return (
+    <span className="hidden sm:inline" title="Parth's local time (IST, UTC+5:30)">
+      <span className="sr-only">Parth&apos;s local time: </span>
+      IST <span className="text-ink">{time ?? "--:--"}</span>
+    </span>
   );
 }

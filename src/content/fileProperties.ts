@@ -5,7 +5,7 @@
  */
 
 import { aboutContent } from "@/content/about";
-import { activityRecords, currentStatus } from "@/content/experience";
+import { activityRecords } from "@/content/experience";
 import { projects } from "@/content/projects";
 import { contactInfo } from "@/content/contact";
 
@@ -38,20 +38,7 @@ function projectProperties(slug: string): FilePropertySet | null {
             },
           ]
         : []),
-      ...("states" in project
-        ? [{ label: "INTERACTION STATES", value: project.states.map((s) => s.name).join(" · ") }]
-        : []),
-      ...("features" in project
-        ? [{ label: "SIGNATURE FEATURES", value: project.features.map((f) => f.name).join(" · ") }]
-        : []),
-      {
-        label: "STACK",
-        value:
-          project.technologies.length > 5
-            ? `${project.technologies.slice(0, 5).join(" · ")} +${project.technologies.length - 5} more`
-            : project.technologies.join(" · "),
-      },
-      { label: "SOURCE", value: project.github.replace("https://", "") },
+      { label: "PRIMARY STACK", value: project.technologies.slice(0, 3).join(" · ") },
     ],
   };
 }
@@ -63,8 +50,6 @@ export function getFileProperties(pathname: string): FilePropertySet {
       subject: "PROJECTS",
       items: [
         { label: "DOCUMENTED PROJECTS", value: pad(projects.length) },
-        { label: "INDEX", value: projects.map((p) => p.title).join(" · ") },
-        { label: "FOCUS", value: projects.map((p) => p.category).join(" · ") },
         { label: "TECHNOLOGIES USED", value: `${technologies.size} across all projects` },
         { label: "SOURCE", value: contactInfo.github.href.replace("https://", "") },
       ],
@@ -81,26 +66,13 @@ export function getFileProperties(pathname: string): FilePropertySet {
     return {
       subject: "EXPERIENCE",
       items: [
-        { label: "CURRENT STATUS", value: `${currentStatus.level} · ${currentStatus.discipline}` },
-        { label: "INSTITUTION", value: currentStatus.institution },
         {
           label: "RECORDS",
           value: `${pad(activityRecords.length)} activities across ${categories.size} categories`,
         },
-        {
-          label: "HACKATHONS",
-          value: activityRecords
-            .filter((r) => r.category === "HACKATHONS & TECHNICAL ACTIVITIES")
-            .map((r) => `${r.title} (${r.status.toLowerCase()})`)
-            .join(" · "),
-        },
-        {
-          label: "COMMUNITY",
-          value: activityRecords
-            .filter((r) => r.category === "CLUBS & COMMUNITY")
-            .map((r) => `${r.title} — ${r.organization}`)
-            .join(" · "),
-        },
+        ...activityRecords
+          .filter((r) => r.status === "FINALIST")
+          .map((r) => ({ label: "HIGHLIGHT", value: `${r.title} — finalist` })),
       ],
     };
   }
@@ -110,9 +82,6 @@ export function getFileProperties(pathname: string): FilePropertySet {
       subject: "CONTACT",
       items: [
         { label: "EMAIL", value: contactInfo.email },
-        { label: "LINKEDIN", value: contactInfo.linkedin.handle },
-        { label: "GITHUB", value: contactInfo.github.handle },
-        { label: "RÉSUMÉ", value: `${contactInfo.resume.fileName} · PDF` },
         { label: "CHANNELS", value: "Email · LinkedIn · GitHub" },
       ],
     };

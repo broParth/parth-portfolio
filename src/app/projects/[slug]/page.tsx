@@ -1,9 +1,7 @@
-import type { ComponentType } from "react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import ArchiveWorkshell from "@/components/ArchiveWorkshell";
-import AdaptiveUIEngineDocument from "@/components/projects/AdaptiveUIEngineDocument";
-import ParthArchiveDocument from "@/components/projects/ParthArchiveDocument";
+import ProjectDossier from "@/components/projects/ProjectDossier";
 import { projects } from "@/content/projects";
 
 interface ProjectDetailPageProps {
@@ -11,15 +9,9 @@ interface ProjectDetailPageProps {
 }
 
 /**
- * Each documented project's detail page. To add a project, add its record to
- * `src/content/projects.ts` and map its slug to a document component here.
+ * Every project in `src/content/projects.ts` gets a dossier at /projects/<slug>.
+ * Unknown slugs return a real 404 via notFound().
  */
-const projectDocuments: Record<string, ComponentType> = {
-  "adaptive-ui-engine": AdaptiveUIEngineDocument,
-  "parth-archive": ParthArchiveDocument,
-};
-
-// Only slugs listed above exist; anything else returns a real 404 via notFound().
 function findProject(slug: string) {
   return projects.find((project) => project.slug === slug);
 }
@@ -39,13 +31,12 @@ export async function generateMetadata({
 
 export default async function ProjectDetailPage({ params }: ProjectDetailPageProps) {
   const { slug } = await params;
-  const Document = projectDocuments[slug];
-
-  if (!findProject(slug) || !Document) notFound();
+  const project = findProject(slug);
+  if (!project) notFound();
 
   return (
     <ArchiveWorkshell>
-      <Document />
+      <ProjectDossier project={project} />
     </ArchiveWorkshell>
   );
 }

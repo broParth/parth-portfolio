@@ -13,6 +13,10 @@ export const contactInfo = {
     href: "https://github.com/broParth",
     handle: "broParth",
   },
+  instagram: {
+    href: "https://www.instagram.com/pxrthh_h",
+    handle: "pxrthh_h",
+  },
   resume: {
     href: "/resume.pdf",
     fileName: "Parth_Chourasia_Resume.pdf",

@@ -1,7 +1,11 @@
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { projects } from "@/content/projects";
 import { PageHeader, focusRing } from "@/components/DocumentParts";
+import { SourceLink } from "@/components/projects/ProjectDossier";
+
+/** Technology chips shown on a card before "+N more". */
+const CHIP_LIMIT = 6;
 
 export default function ProjectsDocument() {
   return (
@@ -42,7 +46,7 @@ export default function ProjectsDocument() {
               </p>
 
               <ul className="flex flex-wrap gap-2" aria-label="Technologies">
-                {project.technologies.map((technology) => (
+                {project.technologies.slice(0, CHIP_LIMIT).map((technology) => (
                   <li
                     key={technology}
                     className="rounded-sm border border-line bg-surface-raised px-2.5 py-1 font-mono text-xs text-ink-muted"
@@ -50,18 +54,24 @@ export default function ProjectsDocument() {
                     {technology}
                   </li>
                 ))}
+                {project.technologies.length > CHIP_LIMIT && (
+                  <li className="px-1 py-1 font-mono text-xs text-ink-faint">
+                    +{project.technologies.length - CHIP_LIMIT} more
+                  </li>
+                )}
               </ul>
 
-              <Link
-                href={`/projects/${project.slug}`}
-                className={`flex min-h-11 items-center justify-between gap-3 rounded border-t border-line pt-4 font-mono text-sm font-bold uppercase tracking-wide text-ink transition-colors hover:text-accent-text ${focusRing}`}
-              >
-                <span>Open project dossier</span>
-                <ArrowUpRight
-                  className="h-5 w-5 shrink-0 text-sage transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-                  aria-hidden="true"
-                />
-              </Link>
+              {/* Two exits: straight to the code, or the short dossier */}
+              <div className="flex flex-wrap items-center gap-3 border-t border-line pt-4">
+                <SourceLink href={project.github} />
+                <Link
+                  href={`/projects/${project.slug}`}
+                  className={`inline-flex min-h-11 items-center gap-2 rounded-sm border border-accent bg-accent/30 px-4 font-mono text-sm font-bold uppercase tracking-wide text-ink transition-colors hover:bg-accent ${focusRing}`}
+                >
+                  Open dossier
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+                </Link>
+              </div>
             </div>
           </article>
         ))}

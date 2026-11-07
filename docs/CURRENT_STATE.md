@@ -417,3 +417,20 @@
 - Dossier properties are now Category · Framework (Next.js 16 · React 19) · Language (TypeScript); sections renumbered 01–07.
 - File Properties shows MY ROLE / COLLABORATOR only for projects that have a `contribution` (Adaptive UI Engine keeps both, plus its "My contribution" section).
 - `tsc` and ESLint clean; both dossiers checked in the browser with no console errors.
+
+## Prototype branch: Shorter Project Pages (2026-11-07, `prototype/declassify`, uncommitted)
+- Project cards are self-sufficient: summary, up to 6 tech chips (+N more), and two exits — **SOURCE ↗** (straight to GitHub) and **OPEN DOSSIER →**.
+- Both dossiers now render through one shared `src/components/projects/ProjectDossier.tsx` with four sections: What it is → How it works (flow diagram + supporting systems) → Highlights (states / signature features) → Stack & source. A SOURCE ↗ button sits under each title; Adaptive UI Engine keeps a one-line role/collaborator credit.
+- Removed `AdaptiveUIEngineDocument.tsx` and `ParthArchiveDocument.tsx`, and the now-unused `implementation` / `iterations` data. Added `overview`, `repoName`, `flowTitle`, `highlightsTitle` to each project record. `/projects/[slug]` renders any project in `projects.ts`; unknown slugs still 404.
+- `tsc` and ESLint clean; checked at 1440px and 375px.
+
+## Prototype branch: Less Duplication (2026-11-07, `prototype/declassify`, uncommitted)
+- "VERIFIED" now appears only once (title-bar pulse). Navigator footer is a single line "STORAGE // LOCAL · 06 RECORDS"; the status-bar "UTF-8 // VERIFIED" is replaced by a live clock in Parth's time zone ("IST 16:41", `useSyncExternalStore`, shows "IST --:--" until hydrated).
+- Dossier headers no longer repeat category or "My role" — those live only in the File Properties panel. Header is title, subtitle, and SOURCE ↗.
+- File Properties trimmed to what the page doesn't already show (≤4 items): dossier — category, my role, collaborator, primary stack; Projects — count, technologies used, GitHub; Experience — records, highlight (finalist); Contact — email, channels. About keeps its quick reference.
+- `tsc` and ESLint clean; checked every page's panel at 1440px.
+
+## Prototype branch: Status-bar Social Icons (2026-11-07, `prototype/declassify`, uncommitted)
+- The status bar's duplicate breadcrumb (bottom-left) is replaced by tiny icon links in `src/components/SocialLinks.tsx`: envelope → `mailto:` email, GitHub → profile (new tab). The title-bar breadcrumb pill stays.
+- Instagram (https://www.instagram.com/pxrthh_h) added to `src/content/contact.ts`; all three icons now show.
+- lucide-react 1.x has no brand icons, so GitHub and Instagram marks are small inline SVGs.
