@@ -1,11 +1,17 @@
 export const adaptiveUIEngine = {
   slug: "adaptive-ui-engine",
+  label: "COLLABORATIVE SYSTEMS",
   title: "Adaptive UI Engine",
   subtitle: "A Context-Aware Desktop Interface System",
   category: "WINDOWS UTILITY · CONTEXT-AWARE INTERFACE",
   summary:
     "A collaborative Windows desktop utility that reads keyboard and pointer activity, interprets interaction through a threshold-based finite state machine, and adapts the interface to the detected context.",
+  overview:
+    "Instead of treating the desktop as a fixed surface, the system observes activity, classifies a changing interaction context, and responds with a corresponding overlay or Windows-level adjustment.",
   github: "https://github.com/broParth/Adaptive-UI-Interface",
+  repoName: "Adaptive-UI-Interface",
+  flowTitle: "Input to adaptive response",
+  highlightsTitle: "The four states",
   technologies: [
     "Python",
     "CustomTkinter",
@@ -72,33 +78,6 @@ export const adaptiveUIEngine = {
       response: "A warning overlay",
     },
   ],
-  implementation: [
-    {
-      label: "SYSTEM-WIDE INPUT",
-      detail:
-        "Pynput monitors keyboard input, mouse clicks, and scrolling. Win32 GetCursorPos is polled at approximately 60 Hz, with a small movement threshold to filter cursor jitter.",
-    },
-    {
-      label: "ACTIVITY ANALYSIS",
-      detail:
-        "Keyboard activity, pointer movement, clicks, scrolling, and inactivity duration are aggregated and smoothed with moving averages.",
-    },
-    {
-      label: "STATE TRANSITIONS",
-      detail:
-        "Threshold-based classification and candidate-state buffering help manage transitions between the four interaction states.",
-    },
-    {
-      label: "WINDOWS OS INTEGRATION",
-      detail:
-        "Win32 API and ctypes support system-level responses, including brightness and mouse-speed adjustments, alongside desktop notifications.",
-    },
-    {
-      label: "BACKGROUND OPERATION",
-      detail:
-        "A system-tray utility can open the dashboard, pause or resume monitoring, and shut down gracefully. The project can be packaged as a standalone Windows executable.",
-    },
-  ],
   contribution: {
     role: "UI Design & Windows OS Integration",
     description:
@@ -108,4 +87,82 @@ export const adaptiveUIEngine = {
   },
 } as const;
 
-export const projects = [adaptiveUIEngine] as const;
+export const parthArchive = {
+  slug: "parth-archive",
+  label: "PERSONAL BUILD",
+  title: "Parth Archive",
+  subtitle: "An Interactive Archival Developer Portfolio",
+  category: "WEB APPLICATION · INTERACTIVE PORTFOLIO",
+  summary:
+    "This portfolio, built as an explorable research archive: a book-authorization intro opens onto a desktop-style workspace with document tabs, a notebook navigator, a rotating 3D graph of the site, and page-aware file properties.",
+  overview:
+    "Instead of a conventional scrolling template, every section is a document inside one shared archive workspace, so navigation, context, and content stay on screen together. All copy lives in typed content files, and the workspace derives its menu, graph, and properties from that same data.",
+  github: "https://github.com/broParth/parth-portfolio",
+  repoName: "parth-portfolio",
+  flowTitle: "Content to rendered archive",
+  highlightsTitle: "Signature features",
+  technologies: [
+    "Next.js 16 (App Router)",
+    "React 19",
+    "TypeScript",
+    "Tailwind CSS v4",
+    "Framer Motion",
+    "Lucide React",
+    "SVG",
+    "ESLint",
+  ],
+  architecture: [
+    {
+      label: "CONTENT SOURCES",
+      detail: "Typed content files for About, Projects, Experience, and Contact",
+    },
+    {
+      label: "DERIVED DATA",
+      detail: "Menu, graph nodes, breadcrumbs, and file properties built from content",
+    },
+    {
+      label: "ARCHIVE WORKSHELL",
+      detail: "Shared chrome: tabs, navigator, graph view, properties, status bar",
+    },
+    {
+      label: "DOCUMENTS",
+      detail: "One page per section, plus a dossier per project",
+    },
+  ],
+  supportingSystems: [
+    {
+      label: "DESIGN TOKENS",
+      detail:
+        "Every colour is a Tailwind v4 theme token in one stylesheet — the archive palette of cream ink, sage, burgundy, red, and neon green — so visual changes are one-line edits.",
+    },
+    {
+      label: "ROUTING",
+      detail:
+        "Next.js App Router pages for each section; unknown project addresses return a real 404, and retired routes redirect to About.",
+    },
+  ],
+  features: [
+    {
+      name: "BOOK AUTHORIZATION",
+      detail: "A floating 3D archive book that opens on hover or tap",
+      response: "AUTHORIZE plays a curtain transition into the workspace",
+    },
+    {
+      name: "RETICULAR GRAPH",
+      detail: "An SVG 3D orbit with the site's pages as nodes on rings",
+      response: "Depth-scaled, clickable nodes; pauses on hover",
+    },
+    {
+      name: "ARCHIVE WORKSPACE",
+      detail: "Tabs, notebook navigator, and sticky side panels",
+      response: "File properties change with the open document",
+    },
+    {
+      name: "SCROLL THUMB",
+      detail: "A short custom magenta scroll indicator",
+      response: "Tracks position and can be dragged",
+    },
+  ],
+} as const;
+
+export const projects = [adaptiveUIEngine, parthArchive] as const;

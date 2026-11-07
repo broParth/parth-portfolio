@@ -75,10 +75,12 @@ export default function AuthorizationTransitionProvider({
   );
 
   useEffect(() => {
+    // phaseRef guards against starting the reveal twice; the public phase stays
+    // non-idle until the curtain has fully lifted, then resets in the callback.
     if (phase !== "covering" || pathname !== "/about") return;
+    if (phaseRef.current !== "covering") return;
 
     phaseRef.current = "revealing";
-    setPhase("revealing");
     void curtainControls
       .start(
         reduceMotion
@@ -99,7 +101,7 @@ export default function AuthorizationTransitionProvider({
         aria-hidden="true"
         initial={reduceMotion ? { opacity: 0 } : { y: "100%" }}
         animate={curtainControls}
-        className="fixed inset-0 z-[100] pointer-events-none bg-[#121211]"
+        className="fixed inset-0 z-[100] pointer-events-none bg-canvas"
         style={{ willChange: "transform, opacity" }}
       />
     </AuthorizationTransitionContext.Provider>

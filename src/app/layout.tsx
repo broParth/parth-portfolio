@@ -3,6 +3,7 @@ import { Syne, Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import AtmosphericBackground from "@/components/AtmosphericBackground";
 import AuthorizationTransitionProvider from "@/components/AuthorizationTransition";
+import ScrollThumb from "@/components/ScrollThumb";
 
 const displayFont = Syne({
   variable: "--font-display",
@@ -14,7 +15,7 @@ const displayFont = Syne({
 const sansFont = Plus_Jakarta_Sans({
   variable: "--font-sans",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 
@@ -27,7 +28,7 @@ const monoFont = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: "Parth | Developer Portfolio",
-  description: "Personal portfolio of Parth â€” Computer Science, AI, Software Engineering, Cybersecurity.",
+  description: "Personal portfolio of Parth — Computer Science, AI, Software Engineering, Cybersecurity.",
 };
 
 export default function RootLayout({
@@ -43,11 +44,13 @@ export default function RootLayout({
     >
       <body
         suppressHydrationWarning
-        className="min-h-full flex flex-col bg-[#0c0b0a] text-[#f4f0ea] font-sans selection:bg-[#d97736]/30 selection:text-[#f4f0ea]"
+        className="min-h-full flex flex-col bg-desk text-ink font-sans selection:bg-accent/60 selection:text-ink"
       >
         <AuthorizationTransitionProvider>
           {/* Layer 10: Film Grain, Vignette & Ambient Light Overlay */}
           <AtmosphericBackground />
+          {/* Small custom page scroll indicator (native page scrollbar is hidden) */}
+          <ScrollThumb />
 
           <div className="relative z-20 flex-1 flex flex-col">{children}</div>
         </AuthorizationTransitionProvider>

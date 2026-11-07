@@ -76,8 +76,13 @@ export default function AuthorizationIntro() {
   const bookOpenRef = useRef(bookOpen);
   const transitionRef = useRef(isTransitioning);
   const mountedRef = useRef(false);
-  bookOpenRef.current = bookOpen;
-  transitionRef.current = isTransitioning;
+
+  // Keep refs in sync for async animation callbacks (declared first so it
+  // runs before the effects below that read these refs).
+  useEffect(() => {
+    bookOpenRef.current = bookOpen;
+    transitionRef.current = isTransitioning;
+  }, [bookOpen, isTransitioning]);
 
   const startIdleRotation = useCallback(() => {
     if (!mountedRef.current) return;
@@ -206,7 +211,7 @@ export default function AuthorizationIntro() {
   }, [isTransitioning]);
 
   return (
-    <main className="relative z-20 isolate flex min-h-[100svh] items-center justify-center overflow-hidden bg-[#121211] px-4 py-12 sm:px-8 sm:py-14">
+    <main className="relative z-20 isolate flex min-h-[100svh] items-center justify-center overflow-hidden bg-canvas px-4 py-12 sm:px-8 sm:py-14">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_45%_34%_at_50%_42%,rgba(233,224,208,0.045),transparent_78%)]"
@@ -305,13 +310,13 @@ export default function AuthorizationIntro() {
                       <div className="absolute inset-x-[12%] top-[14%] h-px bg-[#E9E0D0]/40" />
                       <div className="absolute inset-x-[12%] bottom-[14%] h-px bg-[#E9E0D0]/40" />
                       <div className="absolute inset-0 flex flex-col items-center justify-center px-5 text-[#E9E0D0]">
-                        <span className="font-mono text-[8px] tracking-[0.35em] text-[#A1AAA0] sm:text-[10px]">
+                        <span className="font-mono text-[10px] tracking-[0.35em] text-[#A1AAA0] sm:text-[10px]">
                           PARTH ARCHIVE
                         </span>
                         <span className="mt-3 font-display text-lg font-bold tracking-[0.12em] sm:text-2xl">
                           BUREAU
                         </span>
-                        <span className="mt-1 font-mono text-[8px] tracking-[0.28em] text-[#E9E0D0]/60 sm:text-[9px]">
+                        <span className="mt-1 font-mono text-[10px] tracking-[0.28em] text-[#E9E0D0]/70 sm:text-[11px]">
                           PERSONNEL FILE · 001
                         </span>
                         <span className="mt-6 h-5 w-5 rotate-45 border border-[#A1AAA0]/55" />
@@ -325,14 +330,14 @@ export default function AuthorizationIntro() {
                         backfaceVisibility: "hidden",
                       }}
                     >
-                      <span className="font-mono text-[8px] tracking-[0.28em] text-[#642D3D] sm:text-[10px]">
+                      <span className="font-mono text-[10px] tracking-[0.28em] text-[#642D3D] sm:text-[10px]">
                         ARCHIVE ACCESS
                       </span>
                       <span className="mt-3 font-display text-lg font-semibold tracking-wide sm:text-xl">
                         BUREAU FILE
                       </span>
                       <span className="mt-2 h-px w-12 bg-[#642D3D]/50" />
-                      <span className="mt-3 font-mono text-[8px] tracking-[0.16em] text-[#5c5c54] sm:text-[9px]">
+                      <span className="mt-3 font-mono text-[10px] tracking-[0.16em] text-[#5c5c54] sm:text-[11px]">
                         HANDLE WITH CARE
                       </span>
                     </div>
@@ -356,10 +361,10 @@ export default function AuthorizationIntro() {
           </button>
 
           <div className="space-y-2">
-            <h1 className="font-display text-xl font-semibold uppercase tracking-[0.24em] text-[#E9E0D0] sm:text-2xl">
-              BUREAUCRATIC FILE
+            <h1 className="font-display text-xl font-semibold uppercase tracking-[0.24em] text-ink sm:text-2xl">
+              Parth Chourasia
             </h1>
-            <p className="font-mono text-[9px] uppercase tracking-[0.22em] text-[#A1AAA0] sm:text-[10px]">
+            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-ink-muted sm:text-[11px]">
               AUTHORIZED ACCESS ONLY
             </p>
           </div>
@@ -368,11 +373,11 @@ export default function AuthorizationIntro() {
             type="button"
             onClick={handleAuthorize}
             disabled={isTransitioning}
-            className="mt-6 inline-flex min-h-11 items-center justify-center gap-3 border border-[#642D3D] bg-[#181716]/80 px-6 py-2.5 font-mono text-xs font-medium uppercase tracking-[0.24em] text-[#E9E0D0] transition-colors duration-300 hover:bg-[#642D3D] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A1AAA0] focus-visible:ring-offset-4 focus-visible:ring-offset-[#121211] disabled:cursor-wait"
+            className="mt-6 inline-flex min-h-11 items-center justify-center gap-3 border border-accent bg-surface/80 px-6 py-2.5 font-mono text-xs font-medium uppercase tracking-[0.24em] text-ink transition-colors duration-300 hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-muted focus-visible:ring-offset-4 focus-visible:ring-offset-canvas disabled:cursor-wait"
           >
-            <span aria-hidden="true" className="h-1.5 w-1.5 rotate-45 bg-[#A1AAA0]" />
+            <span aria-hidden="true" className="h-1.5 w-1.5 rotate-45 bg-ink-muted" />
             AUTHORIZE
-            <span aria-hidden="true" className="h-1.5 w-1.5 rotate-45 bg-[#A1AAA0]" />
+            <span aria-hidden="true" className="h-1.5 w-1.5 rotate-45 bg-ink-muted" />
           </button>
 
         </div>

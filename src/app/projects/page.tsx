@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function ProjectsPage() {
   return (
-    <ArchiveWorkshell activeSection="projects">
+    <ArchiveWorkshell>
       <ProjectsDocument />
     </ArchiveWorkshell>
   );

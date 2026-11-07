@@ -205,12 +205,36 @@
 - `npx next build --webpack`: **SUCCESS**, all 10 routes compiled.
 - **Architecture Verification**: `/` renders the authorization intro; AUTHORIZE transitions to `/about`. `/about`, `/projects`, `/experience`, `/stack`, `/contact`, and `/projects/[slug]` remain available in the shared workspace.
 
+### Phase 10 — Continuous Archive Soundtrack
+- [x] Confirmed the supplied `public/audio/archive-theme.mp3` exists (2,650,207 bytes) and wired that file as the looping soundtrack.
+- [x] Mounted one audio controller in the root client layout so playback continues across client-side navigation; the root intro attempts autoplay and fades toward 18% volume over 2 seconds.
+- [x] Added a discreet, accessible mute/unmute control to the archival workspace toolbar. The mute state is held by the persistent controller while browsing.
+- [x] Playback errors are caught independently from the authorization transition; reduced-motion preference skips audio fades.
+- [x] Browser checks confirmed AUTHORIZE starts the single audio element, mute/unmute works, and playback remains active with mute state preserved when navigating to `/projects`.
+- [x] `npx tsc --noEmit` and `npx next build --webpack` passed.
+- **Status:** Implemented in the working tree; not staged or committed.
+- Final rerun note (2026-10-29): `npx tsc --noEmit` passed. `npx next build --webpack` compiled and passed its TypeScript phase but failed during prerender while creating generated `.next` directories (`EPERM`, including with one build worker); no source/config change was retained to work around the environment error.
+
+### Phase 11 — Intro Autoplay and Sound Fallback
+- [x] The persistent audio controller makes one guarded autoplay attempt when the `/` book intro mounts; it does not wait for hover or AUTHORIZE and does not retry automatically after rejection.
+- [x] An intro control was added for blocked autoplay; this was superseded in Phase 13 to keep the landing page visually clean and use AUTHORIZE as the recovery interaction.
+- [x] `npx tsc --noEmit` passed. A Webpack build using an isolated temporary output directory reached font loading and failed because network access to `fonts.googleapis.com` was unavailable; the temporary config change and output directory were removed.
+- **Status:** Implemented in the working tree; not staged or committed.
+
 ### Phase 12 — About Document Content Trim
 - [x] Removed the dedicated Objectives section and its section-only content shape from `src/content/about.ts`.
 - [x] Removed the Current Investigations lead and explanatory paragraphs while preserving its heading and all five focus-area cards.
 - [x] Removed only the first Field Notes paragraph. Remaining copy and the shared Quick Reference metadata, including its long-term objective fact, remain unchanged.
 - [x] `npx tsc --noEmit` passed. Live About preview confirmed the remaining sections and quick facts render without Objective or removed paragraphs.
 - [ ] `npx next build --webpack` could not complete in this environment: generated `.next/types` directory creation failed with `EPERM` while the development server was active.
+- **Status:** Implemented in the working tree; not staged or committed.
+
+### Phase 13 — Landing Audio Autoplay Recovery
+- [x] The root intro attempts audible playback once after mount with `muted=false`, starting at a quiet nonzero volume (3%) and fading toward 18% over 2 seconds.
+- [x] Removed the landing-page sound control. If autoplay is rejected, AUTHORIZE retries playback from the user gesture; an already-playing track is not restarted.
+- [x] Kept the single audio element in the persistent root layout and retained the workspace mute/unmute control.
+- [x] Browser verification confirmed no landing-page audio control, AUTHORIZE recovery after autoplay rejection, one player continuing into `/about` and `/projects`, and mute/unmute without a playback-position reset.
+- [x] `npx tsc --noEmit` passed. `npx next build --webpack` compiled and passed TypeScript, then failed during prerender while creating `.next/server/app/about.segments/about` (`EPERM`).
 - **Status:** Implemented in the working tree; not staged or committed.
 
 ### Phase 14 — About Header Typography Match
@@ -238,7 +262,7 @@
 - [x] Added a shared project record for Adaptive UI Engine, used by both the Projects index and `/projects/adaptive-ui-engine`.
 - [x] Replaced the Projects placeholder entry with a collaborative project listing, concise technical summary, technology preview, and dossier link.
 - [x] Added an archival project dossier covering overview, input-to-output architecture, the four FSM states, implementation, Parth's UI/Windows integration contribution, Nishant's architecture/FSM contribution, the supplied technologies, and repository link.
-- [x] Kept the dynamic route's existing generic dossier fallback for other slugs and did not change workspace, route, or intro behavior.
+- [x] Kept the dynamic route's existing generic dossier fallback for other slugs and did not change workspace, route, audio, or intro behavior.
 - [x] `npx tsc --noEmit` passed.
 - [ ] `npx next build --webpack` remains blocked by `ENOTFOUND fonts.googleapis.com` and also reported `EPERM` creating `.next/server/app/contact`. No Node process or listener on ports 3000, 3001, or 3010 was visible before the build.
 - **Status:** Implemented in the working tree; not staged or committed.
@@ -268,3 +292,145 @@
 - Added one shared `archive-document-heading` style for all stamped cream document titles. Font size now follows the document pane width through container query units, scales down proportionally, and wraps long words instead of clipping.
 - Applied it to About, Projects, project dossiers (including the generic slug fallback), Experience, and Contact. Added the missing `max-w-full` constraint to the Projects title banner.
 - Validation: `npx tsc --noEmit` passed and `git diff --check` passed. Browser verification used the running IDE server at its available viewport; exact narrow viewport widths could not be set in the available browser controls.
+
+## Follow-up: Mobile Book Motion and Focus Refinement (2026-11-01)
+- Preserved the responsive two-page interaction area and recentering behavior while matching its open/close durations to the existing cover animation (720ms open, 560ms close).
+- Kept the original `IDLE_FLOAT` motion and 3D cover transforms; the positioning wrapper now preserves the 3D context. The centered shadow follows the same gentle vertical float.
+- Removed the focus ring from the enlarged mobile hit area and retained keyboard focus feedback on the existing cover borders.
+- Live browser checks covered closed/open states at 320px, 360px, 390px, and 430px, plus open/close hover behavior at 1024px and 1440px. No horizontal overflow was observed. Reduced-motion logic was source-checked; browser emulation was unavailable.
+- `npx tsc --noEmit` and `git diff --check` passed. No files were staged or committed.
+
+## Follow-up: About Technology Ticker Interaction (2026-11-01)
+- Removed the hover pause from the Languages & Tools marquee. The CSS-only ticker continues at its existing 48-second leftward loop; duplicate copies and reduced-motion static fallback are unchanged.
+- Browser checks at 390px and 1440px confirmed animation remains running during mouse hover and click. Copy widths matched exactly for a seamless half-track loop. The in-app browser had no touch emulation; no ticker JavaScript touch handlers exist, and the pause selector was removed.
+- `git diff --check` passed. No files were staged or committed.
+
+## Follow-up: Soundtrack and Unused Component Removal (2026-11-06)
+- Branch: `cleanup/remove-audio` (uncommitted; not pushed or merged).
+- Removed the archive soundtrack entirely for copyright safety: deleted `src/components/ArchiveAudio.tsx` and `public/audio/archive-theme.mp3`, removed `ArchiveAudioProvider` from the root layout, the mute/unmute control from the `ArchiveWorkshell` toolbar, and the intro autoplay/AUTHORIZE playback calls from `AuthorizationIntro`. Supersedes Phases 10, 11, and 13.
+- Deleted the unused `src/components/RevealSection.tsx` placeholder after confirming no imports or references in `src/`.
+- Kept the layout metadata description encoding fix (em dash).
+- Validation: `npx tsc --noEmit` passed. ESLint still reports the 4 pre-existing errors (AuthorizationIntro ref writes during render, AuthorizationTransition setState in effect, ContactDocument `//` text node); none introduced. Browser check: `/` intro → AUTHORIZE → `/about` works, no `<audio>` element, no sound control, no console errors.
+
+## Improvements Pass — Readability, Declutter, Navigation (2026-11-06)
+- Branch: `improvements` (uncommitted; `main` untouched at `86d543b`). Includes the soundtrack removal above.
+- **Design tokens:** `globals.css` now defines all UI colours as Tailwind v4 theme tokens (`canvas`, `surface`, `surface-raised`, `line`, `line-strong`, `ink`, `ink-muted`, `ink-faint`, `accent`, `accent-deep`, `accent-text`, `paper`, `paper-ink`, `paper-muted`). Components use utilities (`bg-canvas`, `text-ink`, …) instead of hex. Only the book illustration in `AuthorizationIntro` keeps its own hex shading. Base background lifted from `#121211` to `#1c1a18`; secondary text raised to WCAG AA; vignette softened; orange ambient glow removed.
+- **Typography:** body text 16–18px, labels ≥12px; removed 8–11px UI text outside the book cover. Measured on `/about`: ~76% of text is 16–18px (previously ~66% was ≤12px).
+- **Shell (`ArchiveWorkshell`):** replaced the faux Obsidian window (window dots, fake tabs/close/new-tab, file tree with fake entries, graph view, properties sidebar, status bar with hardcoded counters) with a sticky top bar (name + About/Projects/Experience/Contact), a centred `max-w-3xl` reading column, skip link, and a footer with GitHub/LinkedIn/Résumé. Now a server component; `select-none` removed so text (e.g. email) can be copied. `activeSection` is optional.
+- **Documents:** shared `PageHeader`/`SectionLabel`/`focusRing` in `src/components/DocumentParts.tsx`. Removed the fake "YAML properties" tables from About/Projects/Contact and the fake RECORD_ID from the project dossier (replaced with a real facts list). About now leads with Identity; Quick Reference moved from the old sidebar into About section 04. All copy unchanged.
+- **Accents** reduced to burgundy + cream (removed neon green, red, orange, blue, gold).
+- **Landing:** shows "Parth Chourasia" and "Computer Science student · Software, security & AI"; page title now "Parth Chourasia | Portfolio". Book interaction and AUTHORIZE transition unchanged.
+- **Routing:** `/projects/[slug]` looks projects up from `content/projects.ts` + a slug→document map, uses `generateStaticParams` and `dynamicParams = false`; unknown slugs return a real 404. Added a styled `src/app/not-found.tsx`.
+- **Lint:** fixed all 4 ESLint errors (ref sync moved into an effect in `AuthorizationIntro`; reveal no longer calls `setState` synchronously in an effect in `AuthorizationTransition`; `//` text wrapped in JSX expressions).
+- Validation: `npx tsc --noEmit` and `npx eslint src` pass with 0 problems. Browser checks at 1440px and 375px: intro → AUTHORIZE → `/about`, all pages render, `/projects/banana` → 404, no horizontal overflow, nav links 44px tall, no console errors. Production `next build` not run in this pass.
+- Not done (step 7, needs user decisions): About copy tone, README, OG image/sitemap, docs tidy.
+
+## Revision: Archive Workspace Restored, About Shortened (2026-11-06)
+- User feedback on the simplified top-nav layout: it felt generic and lost the archive's character. Restored the archival workspace concept in `ArchiveWorkshell`, rebuilt to be readable and truthful:
+  - Window chrome (dots, breadcrumb pill, "Vault open"), document tab strip (all four tabs; scrolls horizontally on small screens), notebook navigator, vertical spine, graph view, File Properties panel, and status bar are back.
+  - Everything shown is real: navigator folders contain only real documents (Personnel → About; Projects → index + each project from `content/projects.ts`; Records → Experience; Comms → Contact). Removed the fake "Meeting — Project Restructure", "2026 Logs", search/bookmark/new-tab/edit icons, and hardcoded word/node counts. Status bar shows the current path and real section/project counts.
+  - Graph view nodes are the real documents (About, Projects, Experience, Contact, plus each project) and are clickable links; the current document is highlighted.
+  - Active document derived from the URL (`usePathname`); `activeSection` prop is now optional/unused.
+  - Readability: text ≥12px throughout the chrome, 14px tabs and navigator, tokenised colours. New tokens `desk` (page behind the window) and `panel` (chrome/sidebars); `canvas` (document page) lifted to `#201e1b` so the reading area is the lightest region.
+  - Small screens: Navigator / Document / Graph & info switcher (44px targets).
+- About shortened to the page header plus the Field Notes container: headline, a short intro (what I do), a four-item "What I bring" list (what I can offer), and the Languages & Tools ticker. `content/about.ts` now holds `fieldNotes`; the removed identity/investigations/personal-notes copy remains on `main` if needed. Quick Reference stays in the File Properties panel.
+- `/projects/[slug]`: removed `generateStaticParams`/`dynamicParams` (the dev server's static-paths worker crashed repeatedly in this environment); unknown slugs still 404 via `notFound()`.
+- Validation: `tsc` and ESLint clean. Browser at 1440px and 375px: About, Adaptive UI Engine, graph-node navigation, `/projects/banana` 404, no horizontal overflow. Production build not run.
+
+## Revision: Original Palette, Flat Menu, Landing Type (2026-11-06)
+- **Colours:** tokens in `globals.css` now carry the original palette — canvas `#121211`, panel `#151413`, surface `#181716`/`#201e1d`, desk `#0c0b0a`, ink `#E9E0D0`, ink-muted `#A1AAA0`, sage `#B8C6BE`, burgundy `#642D3D`/`#A83D50`, ember `#D97736`, and neon `#74F65B` (new `neon` token). `accent-text` (`#E0707A`) is a brightened burgundy-red used only for small text, since the original `#C24141` is below contrast at small sizes. Text tokens are used at full opacity.
+- **Background:** original `AtmosphericBackground` (orange ambient glow, grid) and the original 0.75 vignette restored.
+- **Neon green** used for status only: title-bar "VERIFIED" pulse, navigator "VAULT: VERIFIED", graph "NODES" count, status bar "UTF-8 // VERIFIED".
+- **Left menu panel:** original "Notebook Navigator / Files" header with a flat list (no folder headings): Parth — Personnel File, Projects Portfolio (project dossiers indented beneath), Work Experience, Operator Contact; burgundy active pill; footer "STORAGE // LOCAL · VAULT: VERIFIED · RECORD ENTRIES". Now visible from 768px (previously 1024px); below that it's under the "Menu" switcher.
+- **Landing:** typography matched to the first version — `h1` text-xl/2xl uppercase, 0.24em tracking ("Parth Chourasia"); 10–11px mono subtitle; original AUTHORIZE button styling.
+- **Titles** size to the document column (container query units) and only wrap between words.
+- Validation: `tsc` and ESLint clean; browser checks at 1440px, 768px, and 375px with no horizontal overflow.
+
+## Revision: Original Proportions, Middle Type Scale, 3D Graph (2026-11-07)
+- **Workspace structure** restored to the first version's proportions: outer `px-4 sm:px-8 lg:px-12 py-16 sm:py-24` centred, `max-w-[88rem]` rounded window with `shadow-2xl`, `min-h-[750px]` workspace, original xl columns `[minmax(15rem,0.95fr)_minmax(2.75rem,0.35fr)_minmax(38rem,2.2fr)_minmax(18rem,1.1fr)]` and lg 3/6/3 split, filled burgundy active tab, NAV/DOC/GRAPH switcher back inside the tab strip, original chrome text sizes (9–11px labels, 12px tabs/menu). Menu panel also visible from 768px.
+- **Type scale** in documents stepped down one notch from the last pass (body ~16px, secondary 14px, labels 11px, mono subtitles 13px); stamped titles back to the original `clamp(1.125rem, 5.5cqi, 1.875rem)`; ticker 12px.
+- **Graph** moved to `src/components/ArchiveGraph.tsx`: a slowly rotating 3D orbit — PARTH hub floating above a tilted floor of concentric rings; section nodes on the outer ring, project dossiers on the inner ring trailing Projects, satellites on the middle ring; depth scales node size/opacity/label size; nodes are links; rotation pauses on hover/focus and is static under reduced motion. Header text back to 10px/9px.
+- **Landing:** subtitle restored to "AUTHORIZED ACCESS ONLY" (name remains the heading).
+- Validation: `tsc` and ESLint clean; browser checks at 1440px and 375px.
+
+## Revision: Navigator Icons, Tab Plus, Document Text +1 Step (2026-11-07)
+- Restored the original decorative toolbar icons (Search, Bookmark, Sliders) in the Notebook Navigator header and the "+" after the Contact tab. Both are purely decorative: `aria-hidden`, not buttons, no pointer cursor.
+- Document text nudged up: body 17px, secondary 15px, mono subtitles/links 14px, labels 12px. Headings and chrome unchanged.
+- `tsc` and ESLint clean; checked at 1440px.
+
+## Revision: Thinner Spine (2026-11-07)
+- The vertical "PARTH // BUREAU" spine column is now a fixed 1.75rem (28px) instead of `minmax(2.75rem, 0.35fr)`, which grew to ~80px on wide screens. The freed width goes to the document column (xl track `minmax(38rem, 2.4fr)`). Checked at 1600px: spine 28px, no overflow.
+
+## Revision: Original Archive Red Restored (2026-11-07)
+- `accent-text` token set back to the original red `#C24141` (was a softened `#E0707A`). It drives every red marker: section/record numbers, "INFO", "UNFILTERED MEMO", Experience status labels, project card index, contact icons/arrows, and the active graph label.
+- Restored the red "PROPERTIES / PROJECT RECORD" header on the Adaptive UI Engine facts block and the red Workflow icon on "Input to adaptive response".
+- Graph: the active node is now red with a cream ring (like the original "SPECIMEN" node).
+- Note: `#C24141` is ~3.6:1 on the canvas — fine for bold/uppercase labels and icons, not for body text.
+- Dev server note: the "Jest worker encountered 2 child process exceptions" 500 recurred on a long-running dev server; restarting `next dev` clears it (environment issue, not code).
+- `tsc` and ESLint clean; checked at 1440px.
+
+## Revision: Original Text Palette Restored (2026-11-07)
+- Restored the first version's per-element text colours (tokens, no hex):
+  - **Sage `#B8C6BE`** (`text-sage`): section header labels, Experience "Current status" and organisation lines, project category line, Projects/dossier/source arrows, Contact channel icons, dossier supporting-system labels, state "RESPONSE" lines, implementation labels, technology chips, Languages & Tools ticker.
+  - **Burgundy-pink `#A83D50`** (`text-accent-bright`): Experience status labels and the architecture arrows.
+  - **Red `#C24141`** (`text-accent-text`): numbers, PROPERTIES, INFO, UNFILTERED MEMO (unchanged from last pass).
+  - **Grey `#A1AAA0`** (`text-ink-muted`): secondary labels where the original used it.
+  - **Neon `#74F65B`**: status markers in the chrome (unchanged).
+- `SectionLabel` restored to the original Experience header style: cream number chip + bold sage uppercase label.
+- Restored the original sage "OPEN TRANSMISSION" label and "FILE: PARTH_CHOURASIA_RESUME.PDF" line on Contact.
+- `tsc` and ESLint clean; checked Experience and Contact at 1440px.
+
+## Revision: Sticky Panels + Page-Specific File Properties (2026-11-07)
+- **Sticky side panels (lg+/md+):** the Notebook Navigator and the Graph/File Properties panel stay pinned 16px from the top while the document scrolls; the right panel scrolls internally if taller than the screen. Required changing the window from `overflow-hidden` to `overflow-clip`, and `html, body { overflow-x }` from `hidden` to `clip` (hidden made `body` a scroll container, which silently disables `position: sticky`).
+- **Page-specific File Properties:** new `src/content/fileProperties.ts` derives the panel from existing content per route — About/404: personnel quick reference; Projects: count, index, focus, technologies, source; project dossier: category, role, collaborator, states, stack, source; Experience: status, institution, record counts, hackathons, community; Contact: email, LinkedIn, GitHub, résumé, channels. Header reads "FILE PROPERTIES FOR {SUBJECT}".
+- New `src/content/contact.ts` holds email/LinkedIn/GitHub/résumé; ContactDocument now reads from it (single source).
+- Item 5 (mobile spacing) was mocked up in the browser only — not implemented. Proposal: phone outer padding 8px, short tab labels (ABOUT/PROJECTS/EXPERIENCE/CONTACT) so all fit, NAV/DOC/GRAPH as a full-width bar under the tabs, document padding 16–20px.
+- `tsc` and ESLint clean; sticky verified at 1440px (panels at top: 16px after scrolling 1600px); no horizontal overflow at 375px.
+
+## Revision: Phone Layout + Subtle Scrollbars (2026-11-07)
+- **Phone layout (item 5), desktop untouched:** all changes use `max-md:` / `max-sm:` variants only. Below 768px: short tab labels (ABOUT / PROJECTS / EXPERIENCE / CONTACT, icons hidden) so all four fit; NAV / DOC / GRAPH moved to a full-width bar under the tabs (equal thirds, 40px tall). Below 640px: outer padding 8px/6px (was 64px/16px), document padding 20px/16px, and no forced 750px workspace height. Verified at 1440px that outer padding (96/48), document padding (48), tab labels, and 750px min-height are unchanged; no horizontal overflow at 375px or 768px.
+- **Scrollbars:** replaced the grey/white defaults with a thin, semi-transparent magenta thumb (`#A83D50` at 45%, 75–80% on hover) on a transparent track; no arrow buttons. Standard `scrollbar-width`/`scrollbar-color` in `@layer base` (so utilities like the tab strip's `scrollbar-width:none` still win) plus `::-webkit-scrollbar` fallbacks. Removed the per-panel `[scrollbar-width:thin]`, which had made Chrome draw its default light bar.
+- `tsc` and ESLint clean.
+
+## Revision: Short Custom Scroll Thumb (2026-11-07)
+- Native scrollbar thumbs scale with content length (the graph panel's was nearly full height), and CSS cannot cap that. Added `src/components/ScrollThumb.tsx`: a fixed 36px × 3px magenta pill (`#A83D50` at 45%, 85% on hover) that slides to show scroll position and can be dragged with a mouse.
+- Used for the page (rendered once in `layout.tsx`, fixed to the right edge) and the sticky graph/properties panel (absolute, inside a `relative` sticky wrapper around the scroller). Native bars are hidden only there (`html { scrollbar-width: none }` + `html::-webkit-scrollbar`; panel `[scrollbar-width:none]`). Other scroll areas keep the thin magenta native style.
+- Thumbs hide when there is nothing to scroll. Verified at 1366×680: page thumb position matches scroll (400/663 → 387px), panel thumb reaches the bottom, dragging the page thumb scrolls the page. `tsc` and ESLint clean.
+
+## Cleanup: Unused Code Removed (2026-11-07)
+- Uninstalled unused dependencies `clsx` and `tailwind-merge` (never imported).
+- Removed the ignored `activeSection` prop from every page and the `ActiveSection` type (the workspace reads the URL), the always-true `isStandalone` prop on `AboutDocument` (About title stays the page `h1`), the never-displayed `quickReference.title`, the unused Plus Jakarta Sans 300 weight, and the empty `public/images/` folder.
+- Intentionally kept: `/stack` and `/portfolio` redirects (protect any old shared links), `AtmosphericBackground` (unchanged by request).
+- Verified: `tsc` and ESLint clean; all routes respond as before (`/`, `/about`, `/projects`, `/projects/adaptive-ui-engine`, `/experience`, `/contact` 200; `/projects/banana` 404; `/stack`, `/portfolio` 307; `/resume.pdf` 200); About renders with no console errors.
+
+## Addition: Parth Archive (this portfolio) as Project 02 (2026-11-07)
+- New record `parthArchive` in `src/content/projects.ts` (slug `parth-archive`, repo https://github.com/broParth/parth-portfolio). Content is factual to this codebase: overview, architecture flow (content sources → derived data → archive workshell → documents), design tokens and routing, four signature features (book authorization, reticular graph, archive workspace, scroll thumb), implementation notes, design iterations (feedback → rework → refinement), solo contribution, and the real stack from `package.json`.
+- New dossier `src/components/projects/ParthArchiveDocument.tsx` (same visual structure as Adaptive UI Engine); route map in `src/app/projects/[slug]/page.tsx` updated.
+- Projects card label is now per-project (`label` field: COLLABORATIVE SYSTEMS / PERSONAL BUILD) instead of a hardcoded string.
+- File Properties for a project now adapt: collaborator vs "Built by: Solo project", interaction states vs signature features, stack summary.
+- Graph: project nodes fan out ±0.95 rad around Projects on the inner ring so labels don't stack; checked at several rotation angles.
+- Navigator, graph (NODES: 7), breadcrumbs, and status bar ("2 PROJECTS") pick up the new project automatically.
+- Verified: `tsc` and ESLint clean; `/projects`, both dossiers 200; `/projects/banana` 404; no console errors.
+
+## Revision: Parth Archive — Ownership Labels Removed (2026-11-07)
+- Removed "My role", "Built by / Solo project", and the "My contribution" section from the Parth Archive dossier (it's self-evidently Parth's own build). The record no longer has a `contribution` field.
+- Dossier properties are now Category · Framework (Next.js 16 · React 19) · Language (TypeScript); sections renumbered 01–07.
+- File Properties shows MY ROLE / COLLABORATOR only for projects that have a `contribution` (Adaptive UI Engine keeps both, plus its "My contribution" section).
+- `tsc` and ESLint clean; both dossiers checked in the browser with no console errors.
+
+## Prototype branch: Shorter Project Pages (2026-11-07, `prototype/declassify`, uncommitted)
+- Project cards are self-sufficient: summary, up to 6 tech chips (+N more), and two exits — **SOURCE ↗** (straight to GitHub) and **OPEN DOSSIER →**.
+- Both dossiers now render through one shared `src/components/projects/ProjectDossier.tsx` with four sections: What it is → How it works (flow diagram + supporting systems) → Highlights (states / signature features) → Stack & source. A SOURCE ↗ button sits under each title; Adaptive UI Engine keeps a one-line role/collaborator credit.
+- Removed `AdaptiveUIEngineDocument.tsx` and `ParthArchiveDocument.tsx`, and the now-unused `implementation` / `iterations` data. Added `overview`, `repoName`, `flowTitle`, `highlightsTitle` to each project record. `/projects/[slug]` renders any project in `projects.ts`; unknown slugs still 404.
+- `tsc` and ESLint clean; checked at 1440px and 375px.
+
+## Prototype branch: Less Duplication (2026-11-07, `prototype/declassify`, uncommitted)
+- "VERIFIED" now appears only once (title-bar pulse). Navigator footer is a single line "STORAGE // LOCAL · 06 RECORDS"; the status-bar "UTF-8 // VERIFIED" is replaced by a live clock in Parth's time zone ("IST 16:41", `useSyncExternalStore`, shows "IST --:--" until hydrated).
+- Dossier headers no longer repeat category or "My role" — those live only in the File Properties panel. Header is title, subtitle, and SOURCE ↗.
+- File Properties trimmed to what the page doesn't already show (≤4 items): dossier — category, my role, collaborator, primary stack; Projects — count, technologies used, GitHub; Experience — records, highlight (finalist); Contact — email, channels. About keeps its quick reference.
+- `tsc` and ESLint clean; checked every page's panel at 1440px.
+
+## Prototype branch: Status-bar Social Icons (2026-11-07, `prototype/declassify`, uncommitted)
+- The status bar's duplicate breadcrumb (bottom-left) is replaced by tiny icon links in `src/components/SocialLinks.tsx`: envelope → `mailto:` email, GitHub → profile (new tab). The title-bar breadcrumb pill stays.
+- Instagram (https://www.instagram.com/pxrthh_h) added to `src/content/contact.ts`; all three icons now show.
+- lucide-react 1.x has no brand icons, so GitHub and Instagram marks are small inline SVGs.

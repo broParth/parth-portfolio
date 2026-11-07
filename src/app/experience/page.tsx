@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function ExperiencePage() {
   return (
-    <ArchiveWorkshell activeSection="experience">
+    <ArchiveWorkshell>
       <ExperienceDocument />
     </ArchiveWorkshell>
   );
